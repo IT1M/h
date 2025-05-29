@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الذكاء الاصطناعي لاستقطاب المواهب - مشرقة AI</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #667eea; /* Bootstrap primary-like */
+            --secondary-color: #764ba2; /* Bootstrap secondary-like */
+            --accent-color: #f093fb;
+            --success-color: #10b981; /* Bootstrap success-like */
+            --warning-color: #f59e0b; /* Bootstrap warning-like */
+            --error-color: #ef4444;   /* Bootstrap danger-like */
+            --info-color: #0dcaf0;    /* Bootstrap info-like */
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: #f0f2f5; /* Lighter, more neutral background */
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container-fluid {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 50px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: white; /* Ensure text is white on gradient */
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .header .company-logo {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .section-card {
+            background: var(--bg-primary);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+        }
+
+        .section-icon { /* Re-using for consistency if needed, or use i tags directly */
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border-right: 5px solid var(--primary-color);
+            position: relative;
+        }
+        .intro-text::before {
+            content: '“'; /* Using a more standard quote */
+            position: absolute;
+            top: -5px;
+            right: 20px;
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary-color);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: var(--bg-secondary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .upload-area:hover {
+            background: #e9ecef; /* Light hover for Bootstrap feel */
+            border-color: var(--secondary-color);
+        }
+        .upload-area.dragover {
+            background: #dde2e6;
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+        .upload-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite; /* Keeping bounce animation */
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .btn { /* General btn enhancements if needed, Bootstrap handles most */
+            padding: 10px 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 8px;
+            margin: 5px; /* Bootstrap's margin utilities can also be used */
+        }
+        .btn-primary {
+             background-color: var(--primary-color);
+             border-color: var(--primary-color);
+        }
+        .btn-primary:hover {
+             background-color: darken(var(--primary-color), 10%);
+             border-color: darken(var(--primary-color), 10%);
+        }
+        /* Custom gradients for specific buttons if desired */
+        .btn-gradient-success {
+            background: linear-gradient(45deg, var(--success-color), #059669);
+            color: white;
+        }
+        .btn-gradient-warning {
+            background: linear-gradient(45deg, var(--warning-color), #d97706);
+            color: white;
+        }
+         .btn-gradient-danger {
+            background: linear-gradient(45deg, var(--error-color), #dc2626);
+            color: white;
+        }
+
+
+        .input-field { /* Will be replaced by form-control mostly */
+            border-radius: 8px;
+        }
+
+        .output-box { /* For general output, can be styled like a card-body */
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        /* New result display card */
+        .analysis-result-card {
+            margin-top: 20px;
+            border-left: 5px solid var(--success-color);
+        }
+        .analysis-result-card .card-title {
+            color: var(--success-color);
+        }
+        .analysis-result-card .list-group-item {
+            background-color: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+
+        .candidate-card-bs { /* Bootstrap candidate card */
+            border-radius: 15px;
+            padding: 25px;
+        }
+        .candidate-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        .compatibility-score {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+        .score-high { background: linear-gradient(45deg, var(--success-color), #059669); }
+        .score-medium { background: linear-gradient(45deg, var(--warning-color), #d97706); }
+        .score-low { background: linear-gradient(45deg, var(--error-color), #dc2626); }
+
+        .questions-list .list-group-item {
+            background: white;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-right: 4px solid var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .questions-list .list-group-item:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chat-container {
+            height: 350px;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            max-width: 80%;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .user-message {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            margin-right: auto;
+            border-bottom-right-radius: 5px;
+        }
+        .ai-message {
+            background: white;
+            border: 1px solid var(--border-color);
+            margin-left: auto;
+            border-bottom-left-radius: 5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .value-points .card {
+            border-right: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        .value-points .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        .value-points .card h3 {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        .loading { display: none; text-align: center; color: var(--primary-color); font-style: italic; font-size: 1rem; padding: 15px; }
+        .loading.show { display: block; }
+        .loading-spinner { display: inline-block; width: 25px; height: 25px; border: 3px solid rgba(102, 126, 234, 0.3); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; margin-left: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .progress-bar-custom { /* Custom name to avoid conflict with Bootstrap's .progress-bar */
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        .progress-fill-custom {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .sidebar {
+            background-color: var(--bg-primary);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+        }
+        .sidebar h4 {
+            color: var(--primary-color);
+        }
+        .sidebar ul li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+        }
+        .sidebar ul li i {
+            margin-left: 8px; /* For RTL, this should be margin-right if icons are before text */
+        }
+
+        /* Floating shapes - kept from original */
+        .floating-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+        .shape { position: absolute; opacity: 0.07; animation: float 10s ease-in-out infinite; } /* Slower animation, less opacity */
+        .shape:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; width: 100px; height: 100px; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); border-radius: 50%;}
+        .shape:nth-child(2) { top: 55%; right: 8%; animation-delay: 3s; width: 80px; height: 80px; background: linear-gradient(45deg, var(--secondary-color), var(--accent-color)); border-radius: 20px;}
+        .shape:nth-child(3) { bottom: 10%; left: 15%; animation-delay: 6s; width: 120px; height: 120px; background: linear-gradient(45deg, var(--accent-color), var(--primary-color)); clip-path: polygon(50% 0%, 0% 100%, 100% 100%);}
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(45deg) scale(1.05); }
+        }
+
+        /* Ensure FontAwesome icons are vertically aligned with text */
+        .fas, .far, .fal, .fab {
+            vertical-align: middle;
+        }
+        .section-title .fas {
+            margin-left: 10px; /* Adjust for RTL if icon is after title */
+        }
+        
+        /* Alert styling */
+        .alert {
+            padding: 1rem; /* Bootstrap default, can adjust */
+        }
+        .alert-success-custom {
+            background-color: #d1e7dd; /* Bootstrap success background */
+            color: #0f5132; /* Bootstrap success text */
+            border-color: #badbcc; /* Bootstrap success border */
+        }
+        .alert-danger-custom {
+            background-color: #f8d7da; /* Bootstrap danger background */
+            color: #842029; /* Bootstrap danger text */
+            border-color: #f5c2c7; /* Bootstrap danger border */
+        }
+        
+        /* Voice controls adjustments */
+        .voice-controls .btn {
+            margin: 5px;
+        }
+        .voice-status {
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid transparent;
+        }
+        .status-listening {
+            background: linear-gradient(45deg, #dcfce7, #bbf7d0);
+            color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        .status-stopped {
+            background: linear-gradient(45deg, #fef3c7, #fde68a);
+            color: var(--warning-color);
+            border-color: var(--warning-color);
+        }
+         .audio-wave {
+            display: none;
+            width: 50px; /* Slightly smaller */
+            height: 35px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40"><rect x="5" y="15" width="4" height="10" fill="%23667eea"><animate attributeName="height" values="10;25;10" dur="0.8s" repeatCount="indefinite"/></rect><rect x="15" y="10" width="4" height="20" fill="%23667eea"><animate attributeName="height" values="20;35;20" dur="0.8s" repeatCount="indefinite" begin="0.2s"/></rect><rect x="25" y="12" width="4" height="16" fill="%23667eea"><animate attributeName="height" values="16;30;16" dur="0.8s" repeatCount="indefinite" begin="0.4s"/></rect><rect x="35" y="8" width="4" height="24" fill="%23667eea"><animate attributeName="height" values="24;32;24" dur="0.8s" repeatCount="indefinite" begin="0.6s"/></rect><rect x="45" y="14" width="4" height="12" fill="%23667eea"><animate attributeName="height" values="12;22;12" dur="0.8s" repeatCount="indefinite" begin="0.8s"/></rect></svg>') no-repeat center;
+            background-size: contain;
+        }
+        .audio-wave.show {
+            display: inline-block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container-fluid py-4">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-brain me-2"></i>نظام الذكاء الاصطناعي لاستقطاب المواهب</h1>
+            <p class="subtitle">حلول متقدمة للتوظيف الذكي في الجهات الحكومية</p>
+            <div class="company-logo">
+                <i class="fas fa-building me-1"></i> مشرقة AI
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 order-lg-last mb-4 mb-lg-0">
+                <div class="sidebar sticky-top" style="top: 20px;">
+                    <h4 class="mb-3"><i class="fas fa-star me-2"></i> فوائد النظام الأساسية</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-tachometer-alt text-success fa-fw me-2"></i> وفّر ما يصل إلى <strong>67%</strong> من وقت الموظف الإداري.</li>
+                        <li class="mb-2"><i class="fas fa-users-cog text-info fa-fw me-2"></i> تعزيز دقة اختيار المرشحين بنسبة عالية.</li>
+                        <li class="mb-2"><i class="fas fa-chart-line text-warning fa-fw me-2"></i> تحسين تجربة التقديم للمرشحين والموظفين.</li>
+                        <li class="mb-2"><i class="fas fa-dollar-sign text-danger fa-fw me-2"></i> تقليل تكاليف التوظيف بشكل ملحوظ.</li>
+                        <li class="mb-2"><i class="fas fa-balance-scale text-primary fa-fw me-2"></i> ضمان الموضوعية والحياد في التقييم.</li>
+                         <li class="mb-2"><i class="fas fa-microphone-alt text-secondary fa-fw me-2"></i> مقابلات صوتية ذكية باللغة العربية.</li>
+                    </ul>
+                    <hr>
+                    <p class="text-muted small">نظام مشرقة AI: نحو مستقبل توظيف أكثر ذكاءً وكفاءة.</p>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9 order-lg-first">
+                <!-- القسم الأول: تعريف النظام -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-info-circle"></i></span>
+                            تعريف النظام
+                        </h2>
+                        <div class="intro-text">
+                            نظام الذكاء الاصطناعي الخاص بنا هو حل تقني متقدم مصمم لتحويل عمليات استقطاب المواهب في الجهات الحكومية إلى عمليات ذكية، مؤتمتة، وسريعة. يعتمد النظام على قدرات متقدمة في تحليل البيانات، التنبؤ، وتوليد المحتوى، بالإضافة إلى إجراء مقابلات مبدئية بنظام صوتي ذكي باللغة العربية لمساعدة فرق الموارد البشرية على اتخاذ قرارات دقيقة بكفاءة أعلى وموضوعية تامة.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم الثاني: استقبال السير الذاتية -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-file-upload"></i></span>
+                            استقبال وتحليل السير الذاتية
+                        </h2>
+                        <div class="upload-area mb-3" id="uploadArea">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <p style="font-size: 1.1rem; margin-bottom: 10px;">اسحب وأفلت السيرة الذاتية هنا أو انقر للاختيار</p>
+                            <p class="text-muted small">يدعم ملفات PDF و Word (حتى 10 ميجابايت)</p>
+                            <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" class="d-none">
+                        </div>
+                        <button class="btn btn-primary" onclick="document.getElementById('resumeFile').click()">
+                            <i class="fas fa-folder-open me-2"></i> اختيار ملف السيرة الذاتية
+                        </button>
+                        
+                        <div class="file-info mt-3 p-3 border rounded bg-light" id="fileInfo" style="display: none;">
+                            <h5 class="mb-2"><i class="fas fa-file-alt me-2 text-primary"></i> معلومات الملف:</h5>
+                            <div class="row">
+                                <div class="col-md-4"><small><strong>اسم الملف:</strong> <span id="fileName">-</span></small></div>
+                                <div class="col-md-4"><small><strong>حجم الملف:</strong> <span id="fileSize">-</span></small></div>
+                                <div class="col-md-4"><small><strong>نوع الملف:</strong> <span id="fileType">-</span></small></div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-danger-custom mt-3" id="errorMessage" style="display: none;"></div>
+                        <div class="alert alert-success-custom mt-3" id="successMessage" style="display: none;"></div>
+
+                        <button class="btn btn-gradient-success mt-3" id="analyzeResumeBtn" onclick="analyzeResume()" disabled>
+                            <i class="fas fa-brain me-2"></i> تحليل السيرة الذاتية بالذكاء الاصطناعي
+                        </button>
+                        
+                        <div class="loading mt-3" id="resumeLoading">
+                            <i class="fas fa-cog fa-spin me-1"></i> جاري تحليل السيرة الذاتية...
+                            <div class="loading-spinner"></div>
+                        </div>
+                        
+                        <div class="progress-bar-custom mt-3" id="progressBar" style="display: none;">
+                            <div class="progress-fill-custom" id="progressFill"></div>
+                        </div>
+                        
+                        <!-- Enhanced Result Display -->
+                        <div class="card analysis-result-card mt-3" id="analysisResultCard" style="display: none;">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3"><i class="fas fa-check-circle me-2"></i> تم تحليل الملف بنجاح!</h5>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong><i class="fas fa-file-signature me-2 text-primary"></i> اسم الملف:</strong> <span id="resultFileNameDisplay">-</span></li>
+                                    <li class="list-group-item"><strong><i class="fas fa-info-circle me-2 text-info"></i> معلومات مستخرجة:</strong> <span id="resultInfoCountDisplay">-</span> نقاط رئيسية.</li>
+                                    <li class="list-group-item"><strong><i class="fas fa-star me-2 text-warning"></i> تقييم أولي:</strong> <span id="resultClassificationDisplay">-</span></li>
+                                </ul>
+                                <button class="btn btn-outline-primary btn-sm mt-3" data-bs-toggle="collapse" href="#fullAnalysisDetails" role="button" aria-expanded="false" aria-controls="fullAnalysisDetails">
+                                    عرض التحليل الكامل <i class="fas fa-chevron-down ms-1"></i>
+                                </button>
+                                <div class="collapse mt-2" id="fullAnalysisDetails">
+                                    <div class="output-box" id="resumeOutput"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم الثالث: تقييم المرشحين -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-user-check"></i></span>
+                            تقييم المرشحين
+                        </h2>
+                        <div class="card candidate-card-bs" id="candidateCard" style="display: none;">
+                             <div class="d-flex align-items-center mb-3">
+                                <div class="candidate-avatar me-3">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <h3 id="candidateName" class="mb-0" style="color: var(--text-primary);">اسم المرشح</h3>
+                            </div>
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6"><p><i class="fas fa-birthday-cake me-2 text-primary"></i><strong>العمر:</strong> <span id="candidateAge">-</span></p></div>
+                                <div class="col-md-6"><p><i class="fas fa-graduation-cap me-2 text-primary"></i><strong>المؤهل:</strong> <span id="candidateQualification">-</span></p></div>
+                                <div class="col-md-6"><p><i class="fas fa-briefcase me-2 text-primary"></i><strong>الخبرة:</strong> <span id="candidateExperience">-</span></p></div>
+                                <div class="col-md-6"><p><i class="fas fa-map-marker-alt me-2 text-primary"></i><strong>الموقع:</strong> <span id="candidateLocation">-</span></p></div>
+                            </div>
+                            <button class="btn btn-gradient-warning" onclick="evaluateCandidate()">
+                                <i class="fas fa-chart-line me-2"></i> تحليل الذكاء الاصطناعي المتقدم
+                            </button>
+                            <div class="loading mt-3" id="evaluationLoading">
+                                <i class="fas fa-brain fa-spin me-1"></i> جاري تقييم المرشح بالذكاء الاصطناعي...
+                                <div class="loading-spinner"></div>
+                            </div>
+                            <div id="evaluationResult" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم الرابع: توليد أسئلة المقابلات -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                           <span class="section-icon"><i class="fas fa-question-circle"></i></span>
+                            توليد أسئلة المقابلات المخصصة
+                        </h2>
+                        <textarea class="form-control input-field mb-3" id="jobDescription" placeholder="أدخل وصف الوظيفة أو المتطلبات المحددة للمنصب..." rows="5"></textarea>
+                        <button class="btn btn-primary" onclick="generateQuestions()">
+                            <i class="fas fa-magic me-2"></i> توليد الأسئلة بالذكاء الاصطناعي
+                        </button>
+                        <div class="loading mt-3" id="questionsLoading">
+                            <i class="fas fa-lightbulb fa-spin me-1"></i> جاري توليد أسئلة مخصصة...
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="questions-list list-group mt-3" id="questionsList"></div>
+                    </div>
+                </div>
+
+                <!-- القسم الخامس: المقابلات الصوتية -->
+                <div class="section-card card">
+                     <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-microphone"></i></span>
+                            المقابلات الصوتية المبدئية
+                        </h2>
+                        <p class="mb-3 text-muted">
+                            <i class="fas fa-info-circle me-1 text-primary"></i> يمكن للمتقدم إجراء مقابلة مبدئية تفاعلية بالصوت باللغة العربية مع نظام الذكاء الاصطناعي.
+                        </p>
+                        
+                        <div class="voice-controls d-flex flex-wrap align-items-center mb-3">
+                            <button class="btn btn-success me-2 mb-2" id="startInterviewBtn" onclick="startVoiceInterview()">
+                                <i class="fas fa-play me-1"></i> بدء المقابلة
+                            </button>
+                            <button class="btn btn-danger me-2 mb-2" id="stopInterviewBtn" onclick="stopVoiceInterview()" disabled>
+                                <i class="fas fa-stop me-1"></i> إيقاف المقابلة
+                            </button>
+                            <div class="voice-status me-2 mb-2" id="voiceStatus">
+                                <i class="fas fa-microphone-slash me-1"></i> غير نشط
+                            </div>
+                            <div class="audio-wave mb-2" id="audioWave"></div>
+                        </div>
+                        
+                        <div class="chat-container" id="voiceChat">
+                            <div class="ai-message">
+                                <i class="fas fa-robot me-1"></i> مرحباً بك في المقابلة المبدئية الذكية. سأطرح عليك بعض الأسئلة العامة لتقييم مؤهلاتك. تحدث بوضوح وسأقوم بالاستماع إليك وتحليل إجاباتك.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم السادس: المساعد الذكي التفاعلي -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-robot"></i></span>
+                            المساعد الذكي التفاعلي
+                        </h2>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="ai-message">
+                                <i class="fas fa-robot me-1"></i> مرحباً! أنا المساعد الذكي المتخصص في أنظمة التوظيف والموارد البشرية. كيف يمكنني مساعدتك اليوم؟
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2 mt-3">
+                            <input type="text" class="form-control input-field" id="chatInput" placeholder="اكتب استفسارك هنا...">
+                            <button class="btn btn-primary" onclick="sendChatMessage()">
+                                <i class="fas fa-paper-plane me-1"></i> إرسال
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- القسم السابع: تلخيص المرشح والتوصية النهائية -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-clipboard-check"></i></span>
+                            تلخيص المرشح والتوصية النهائية
+                        </h2>
+                        <button class="btn btn-gradient-warning" onclick="generateRecommendation()">
+                            <i class="fas fa-file-contract me-2"></i> توليد التوصية النهائية
+                        </button>
+                        <div class="loading mt-3" id="recommendationLoading">
+                            <i class="fas fa-chart-pie fa-spin me-1"></i> جاري إعداد التقرير النهائي...
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <div class="output-box mt-3" id="recommendationOutput"></div>
+                    </div>
+                </div>
+
+                <!-- القسم الثامن: القيمة المضافة للنظام -->
+                <div class="section-card card">
+                    <div class="card-body">
+                        <h2 class="section-title">
+                            <span class="section-icon"><i class="fas fa-gem"></i></span>
+                            القيمة المضافة للنظام
+                        </h2>
+                        <div class="row g-4 value-points">
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-rocket fa-2x text-primary mb-2"></i>
+                                        <h3 class="h5">تسريع عملية التوظيف</h3>
+                                        <p class="small text-muted">تقليل وقت المراجعة من أسابيع إلى ساعات مع دقة عالية.</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-coins fa-2x text-success mb-2"></i>
+                                        <h3 class="h5">تقليل التكاليف</h3>
+                                        <p class="small text-muted">توفير كبير في تكاليف الموارد البشرية والوقت والجهد.</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-balance-scale fa-2x text-warning mb-2"></i>
+                                        <h3 class="h5">توصيات محايدة</h3>
+                                        <p class="small text-muted">قرارات موضوعية بناءً على البيانات والتحليل العلمي.</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-chart-bar fa-2x text-info mb-2"></i>
+                                        <h3 class="h5">تقارير ذكية</h3>
+                                        <p class="small text-muted">تقارير تفصيلية وتحليلية جاهزة لصاحب القرار.</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-smile fa-2x text-secondary mb-2"></i>
+                                        <h3 class="h5">تحسين التجربة</h3>
+                                        <p class="small text-muted">تجربة محسنة للمتقدمين والموظفين على حد سواء.</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-microphone-alt fa-2x" style="color: var(--accent-color);" mb-2></i>
+                                        <h3 class="h5">مقابلات صوتية ذكية</h3>
+                                        <p class="small text-muted">تقييم مبدئي تفاعلي بالذكاء الاصطناعي باللغة العربية.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Main Content Col -->
+        </div> <!-- End Row -->
+    </div> <!-- End Container Fluid -->
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        // Gemini API Configuration
+        const GEMINI_API_KEY = 'AIzaSyAO8Dw-QeBiGiPZZfCx_3ueTl0LiK9ZFj0'; // استخدم مفتاح API الخاص بك هنا
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'; // تم التحديث إلى 1.5 flash
+
+        // Global variables
+        let currentCandidate = null;
+        let recognition = null;
+        let isInterviewActive = false;
+        let interviewQuestions = [
+            "حدثني عن نفسك وخبراتك المهنية بشكل مختصر.",
+            "ما هي نقاط قوتك الرئيسية التي تميزك عن المرشحين الآخرين؟",
+            "لماذا تريد العمل في القطاع الحكومي تحديداً؟",
+            "كيف تتعامل مع ضغط العمل والمواعيد النهائية الضيقة؟",
+            "ما هي أهدافك المهنية للسنوات القادمة؟",
+            "اذكر موقفاً واجهت فيه تحدياً في العمل وكيف تعاملت معه."
+        ];
+        let currentQuestionIndex = 0;
+
+        const SYSTEM_PROMPTS = {
+            resumeAnalysis: `أنت محلل سير ذاتية خبير متخصص في التوظيف الحكومي. قم بتحليل السيرة الذاتية المرفقة بدقة عالية واستخرج المعلومات التالية بتنسيق منظم ومهني:
+
+            📋 **المعلومات الشخصية:**
+            - الاسم الكامل: [استخرجه هنا]
+            - العمر (إذا متوفر): [استخرجه هنا]
+            - الجنسية: [استخرجه هنا]
+            - مكان الإقامة: [استخرجه هنا]
+            - معلومات الاتصال: [استخرجه هنا]
+
+            🎓 **المؤهلات التعليمية:**
+            - الدرجات العلمية مع التخصص: [استخرجه هنا]
+            - الجامعات والمعاهد: [استخرجه هنا]
+            - سنوات التخرج: [استخرجه هنا]
+            - المعدل التراكمي (إذا متوفر): [استخرجه هنا]
+
+            💼 **الخبرة المهنية:**
+            - إجمالي سنوات الخبرة: [استخرجه هنا]
+            - المناصب السابقة: [استخرجه هنا]
+            - أسماء الشركات/المؤسسات: [استخرجه هنا]
+            - فترات العمل: [استخرجه هنا]
+            - الإنجازات الرئيسية: [استخرجه هنا]
+
+            🛠️ **المهارات والكفاءات:**
+            - المهارات التقنية: [استخرجه هنا]
+            - المهارات الشخصية: [استخرجه هنا]
+            - اللغات ومستوى الإجادة: [استخرجه هنا]
+            - الشهادات المهنية: [استخرجه هنا]
+
+            ⭐ **نقاط القوة:**
+            - أبرز نقاط القوة المستخرجة من السيرة: [استخرجه هنا]
+            - المميزات التنافسية: [استخرجه هنا]
+            - الخبرات المتخصصة: [استخرجه هنا]
+
+            📊 **ملخص مهني وتقييم أولي:**
+            - تقييم عام للمرشح: [اكتب تقييمًا موجزًا هنا]
+            - مدى ملاءمته للعمل الحكومي: [اكتب تقييمًا موجزًا هنا]
+            - التوصيات الأولية: [اكتب توصية أولية موجزة هنا، مثل "مرشح واعد" أو "يحتاج لمزيد من الخبرة في X"]
+            - عدد النقاط الرئيسية المستخرجة: [اذكر عددًا تقريبيًا للمعلومات الهامة التي تم استخراجها]
+
+            اكتب الرد باللغة العربية بشكل منظم ومهني مع استخدام الرموز التعبيرية للتنسيق. تأكد من أن المعلومات قابلة للاستخراج بسهولة.`,
+            
+            candidateEvaluation: `أنت خبير تقييم مرشحين متخصص في التوظيف للجهات الحكومية. بناءً على بيانات المرشح المقدمة، قم بإجراء تقييم شامل ومفصل:
+
+            🎯 **تقييم التوافق مع المتطلبات:**
+            - نسبة التوافق الإجمالية (من 100%): [ضع نسبة هنا]
+            - تفصيل درجات التقييم لكل معيار: [اشرح هنا]
+            - مبررات النسبة المعطاة: [وضح هنا]
+
+            💪 **تحليل نقاط القوة:**
+            - نقاط القوة الرئيسية: [اذكرها هنا]
+            - المهارات المميزة: [اذكرها هنا]
+            - الخبرات ذات القيمة المضافة: [اذكرها هنا]
+
+            ⚠️ **نقاط التحسين المطلوبة:**
+            - المجالات التي تحتاج تطوير: [اذكرها هنا]
+            - التدريب المقترح: [اذكره هنا]
+            - الخبرات الناقصة: [اذكرها هنا]
+
+            🏛️ **ملاءمة العمل الحكومي:**
+            - مدى توافق الخلفية مع البيئة الحكومية: [اشرح هنا]
+            - القدرة على التكيف مع اللوائح: [اشرح هنا]
+            - الالتزام بالقيم الحكومية: [اشرح هنا]
+
+            📋 **تعليق مهني شامل:**
+            - تقييم عام للمرشح: [اكتب تقييمك هنا]
+            - التوصية الأولية: [اكتب توصيتك هنا]
+            - الخطوات التالية المقترحة: [اذكرها هنا]
+
+            اكتب الرد باللغة العربية بشكل مهني ومفصل.`,
+            
+            questionGeneration: `أنت خبير في إعداد أسئلة المقابلات للوظائف الحكومية. بناءً على وصف الوظيفة المقدم، قم بتوليد مجموعة شاملة من الأسئلة المهنية (إجمالي 5-7 أسئلة متنوعة):
+
+            📝 **أسئلة الخبرة المهنية (2-3 أسئلة):**
+            1. [سؤال هنا]
+            2. [سؤال هنا]
+            
+            🔧 **أسئلة المهارات التقنية والسلوكية (2 أسئلة):**
+            3. [سؤال هنا]
+            4. [سؤال هنا]
+
+            🏛️ **أسئلة القيم والمواقف (1-2 سؤال):**
+            5. [سؤال هنا]
+
+            قم بصياغة الأسئلة باللغة العربية بشكل واضح ومهني، مع ترقيم كل سؤال.`,
+            
+            chatAssistant: `أنت مساعد ذكي متخصص ومتقدم في أنظمة التوظيف والموارد البشرية للجهات الحكومية. تخصصك يشمل:
+
+            🏛️ **التوظيف الحكومي:** عمليات التوظيف، اللوائح، معايير التقييم.
+            🤖 **أنظمة الذكاء الاصطناعي:** تطبيقات AI في HR، أتمتة العمليات، تحليل البيانات.
+            👥 **إدارة المواهب:** استقطاب، تقييم، تطوير.
+            📊 **التحليل والتقييم:** مؤشرات أداء، تقارير، اتخاذ قرارات.
+
+            قم بالرد على استفسارات المستخدمين بشكل مفيد ومهني ومفصل باللغة العربية. استخدم تنسيقًا واضحًا ورموزًا تعبيرية إذا كان ذلك مناسبًا.`,
+            
+            voiceInterview: `أنت مقابل ذكي متخصص في إجراء المقابلات المبدئية للجهات الحكومية. دورك هو:
+
+            🎯 **إجراء مقابلة مهنية:** طرح أسئلة مناسبة، تقييم الإجابات بموضوعية، تقديم تعليقات بناءة.
+            📋 **معايير التقييم:** وضوح التعبير، ملاءمة الإجابات، الثقة، المعرفة.
+            💬 **أسلوب التفاعل:** كن مهنياً ومشجعاً، استخدم لغة واضحة.
+
+            عند تقييم إجابة المستخدم، قدم تعليقًا موجزًا (جملة أو اثنتين) وركز على تشجيع المستخدم أو طلب توضيح إذا لزم الأمر قبل الانتقال للسؤال التالي. اكتب باللغة العربية.`,
+            
+            finalRecommendation: `أنت خبير في إعداد التوصيات النهائية للمرشحين في الجهات الحكومية. قم بإعداد تقرير شامل ومفصل:
+
+            📋 **الملخص التنفيذي:**
+            - نظرة عامة على المرشح، أبرز النقاط الإيجابية، الملاحظات الرئيسية.
+
+            ⭐ **نقاط القوة:**
+            - المؤهلات والخبرات المميزة، المهارات الاستثنائية، الإنجازات البارزة.
+
+            ⚠️ **نقاط الضعف أو التحسين:**
+            - المجالات التي تحتاج تطوير، الخبرات الناقصة، التدريب المطلوب.
+
+            🎯 **التوصية النهائية:**
+            - (اختر واحدة: مؤهل للمقابلة النهائية / مؤهل مع تحفظات / بحاجة لمراجعة إضافية / غير مناسب للمنصب) مع شرح موجز.
+
+            📊 **مبررات التوصية:**
+            - الأسباب التفصيلية للقرار، المعايير المستخدمة، المقارنة مع متطلبات الوظيفة.
+
+            🔄 **الخطوات التالية:**
+            - التوصيات للمرحلة القادمة، المتطلبات الإضافية، الجدول الزمني المقترح.
+
+            اكتب التقرير باللغة العربية بشكل مهني ومفصل وموضوعي.`
+        };
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        async function extractTextFromPDF(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = '';
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + '\n';
+                }
+                return fullText;
+            } catch (error) {
+                console.error('Error extracting PDF text:', error);
+                throw new Error('فشل في قراءة ملف PDF');
+            }
+        }
+
+        async function extractTextFromWord(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const result = await mammoth.extractRawText({ arrayBuffer });
+                return result.value;
+            } catch (error) {
+                console.error('Error extracting Word text:', error);
+                throw new Error('فشل في قراءة ملف Word');
+            }
+        }
+
+        function validateFile(file) {
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+            if (!allowedTypes.includes(file.type)) throw new Error('نوع الملف غير مدعوم. يرجى اختيار ملف PDF أو Word');
+            if (file.size > maxSize) throw new Error('حجم الملف كبير جداً. الحد الأقصى 10 ميجابايت');
+            return true;
+        }
+
+        function showFileInfo(file) {
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = (file.size / 1024 / 1024).toFixed(2) + ' ميجابايت';
+            document.getElementById('fileType').textContent = file.type.includes('pdf') ? 'PDF' : 'Word Document';
+            document.getElementById('fileInfo').style.display = 'block';
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.innerHTML = `<i class="fas fa-exclamation-circle me-2"></i> ${message}`;
+            errorEl.style.display = 'block';
+            // setTimeout(() => errorEl.style.display = 'none', 7000); // Longer display for errors
+        }
+
+        function showSuccess(message) {
+            const successEl = document.getElementById('successMessage');
+            successEl.innerHTML = `<i class="fas fa-check-circle me-2"></i> ${message}`;
+            successEl.style.display = 'block';
+            setTimeout(() => successEl.style.display = 'none', 4000);
+        }
+        
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+
+        function animateProgress(duration = 3000) {
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
+            progressBar.style.display = 'block';
+            progressFill.style.width = '0%';
+            let progress = 0;
+            const intervalTime = 50; // Faster updates for smoother animation
+            const steps = duration / intervalTime;
+            const increment = 100 / steps;
+
+            let currentStep = 0;
+            const interval = setInterval(() => {
+                currentStep++;
+                progress = Math.min(100, currentStep * increment);
+                progressFill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                     setTimeout(() => {
+                        // Keep progress bar at 100% until results are shown or error
+                        // progressBar.style.display = 'none'; 
+                    }, 500);
+                }
+            }, intervalTime);
+             // Fallback to hide progress bar after a max duration if something goes wrong
+            setTimeout(() => {
+                clearInterval(interval);
+                if (progressBar.style.display === 'block' && progress < 100) {
+                     progressFill.style.width = '100%'; // Complete it
+                     setTimeout(() => { progressBar.style.display = 'none'; }, 500);
+                }
+            }, duration + 1000);
+        }
+
+        async function callGeminiAPI(prompt, systemPrompt, retries = 2) { // Reduced retries for faster user feedback
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: `${systemPrompt}\n\nالمدخل: ${prompt}` }] }],
+                            generationConfig: { temperature: 0.6, topK: 30, topP: 0.9, maxOutputTokens: 3000 } // Adjusted for potentially longer outputs
+                        })
+                    });
+                    if (!response.ok) throw new Error(`خطأ في الاتصال بالـ API: ${response.status}`);
+                    const data = await response.json();
+                    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) throw new Error('صيغة الرد من الـ API غير صالحة');
+                    return data.candidates[0].content.parts[0].text;
+                } catch (error) {
+                    console.error(`API call attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, 800 * (i + 1))); // Shorter retry delay
+                }
+            }
+        }
+
+        document.getElementById('resumeFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                hideMessages();
+                try {
+                    validateFile(file);
+                    showFileInfo(file);
+                    document.getElementById('analyzeResumeBtn').disabled = false;
+                    document.querySelector('#uploadArea p').textContent = `تم اختيار: ${file.name}`;
+                    showSuccess('تم اختيار الملف بنجاح. يمكنك الآن الضغط على زر التحليل.');
+                    document.getElementById('analysisResultCard').style.display = 'none'; // Hide previous results
+                    document.getElementById('resumeOutput').textContent = '';
+                } catch (error) {
+                    showError(error.message);
+                    document.getElementById('analyzeResumeBtn').disabled = true;
+                }
+            }
+        });
+
+        const uploadArea = document.getElementById('uploadArea');
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => uploadArea.addEventListener(eventName, preventDefaults, false));
+        function preventDefaults(e) { e.preventDefault(); e.stopPropagation(); }
+        ['dragenter', 'dragover'].forEach(eventName => uploadArea.addEventListener(eventName, () => uploadArea.classList.add('dragover'), false));
+        ['dragleave', 'drop'].forEach(eventName => uploadArea.addEventListener(eventName, () => uploadArea.classList.remove('dragover'), false));
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length > 0) {
+                const file = files[0];
+                 hideMessages();
+                try {
+                    validateFile(file);
+                    document.getElementById('resumeFile').files = files; // Assign to file input
+                    showFileInfo(file);
+                    document.getElementById('analyzeResumeBtn').disabled = false;
+                    document.querySelector('#uploadArea p').textContent = `تم اختيار: ${file.name}`;
+                    showSuccess('تم سحب وإفلات الملف بنجاح. يمكنك الآن الضغط على زر التحليل.');
+                    document.getElementById('analysisResultCard').style.display = 'none'; // Hide previous results
+                    document.getElementById('resumeOutput').textContent = '';
+                } catch (error) {
+                    showError(error.message);
+                    document.getElementById('analyzeResumeBtn').disabled = true;
+                }
+            }
+        }
+        
+        // Helper to extract specific info from analysis text based on prompts
+        function extractInfoFromAnalysis(text, field) {
+            const regexes = {
+                name: /الاسم الكامل:\s*(.*)/,
+                infoCount: /عدد النقاط الرئيسية المستخرجة:\s*(\d+)/,
+                classification: /التوصيات الأولية:\s*(.*)/
+            };
+            const match = text.match(regexes[field]);
+            return match && match[1] ? match[1].trim() : '-';
+        }
+
+
+        async function analyzeResume() {
+            const fileInput = document.getElementById('resumeFile');
+            const file = fileInput.files[0];
+            if (!file) { showError('يرجى اختيار ملف السيرة الذاتية أولاً'); return; }
+
+            hideMessages();
+            document.getElementById('resumeLoading').classList.add('show');
+            document.getElementById('analysisResultCard').style.display = 'none';
+            document.getElementById('resumeOutput').textContent = '';
+            document.getElementById('progressBar').style.display = 'block'; // Show progress bar
+            document.getElementById('progressFill').style.width = '0%'; // Reset progress fill
+            animateProgress(5000); // Increased duration for analysis
+
+            try {
+                let extractedText = '';
+                if (file.type === 'application/pdf') extractedText = await extractTextFromPDF(file);
+                else if (file.type.includes('word') || file.type.includes('document')) extractedText = await extractTextFromWord(file);
+                if (!extractedText.trim()) throw new Error('لم يتم العثور على نص في الملف');
+
+                const analysis = await callGeminiAPI(extractedText, SYSTEM_PROMPTS.resumeAnalysis);
+                
+                document.getElementById('resumeOutput').innerHTML = analysis.replace(/\n/g, '<br>'); // Use innerHTML for line breaks
+                
+                // Populate new result display
+                document.getElementById('resultFileNameDisplay').textContent = file.name;
+                document.getElementById('resultInfoCountDisplay').textContent = extractInfoFromAnalysis(analysis, 'infoCount') || 'عدة';
+                document.getElementById('resultClassificationDisplay').textContent = extractInfoFromAnalysis(analysis, 'classification') || 'يرجى مراجعة التفاصيل';
+                document.getElementById('analysisResultCard').style.display = 'block';
+
+
+                currentCandidate = {
+                    name: extractInfoFromAnalysis(analysis, 'name') || 'غير محدد', // More robust extraction
+                    age: extractDataPoint(analysis, /العمر \(إذا متوفر\):\s*([^\n]*)/) || 'غير محدد',
+                    qualification: extractDataPoint(analysis, /الدرجات العلمية مع التخصص:\s*([^\n]*)/) || 'غير محدد',
+                    experience: extractDataPoint(analysis, /إجمالي سنوات الخبرة:\s*([^\n]*)/) || 'غير محدد',
+                    location: extractDataPoint(analysis, /مكان الإقامة:\s*([^\n]*)/) || 'غير محدد',
+                    fullAnalysis: analysis,
+                    originalText: extractedText
+                };
+                showCandidateCard();
+                showSuccess('تم تحليل السيرة الذاتية بنجاح وعرض النتائج.');
+
+            } catch (error) {
+                document.getElementById('resumeOutput').textContent = 'حدث خطأ في تحليل السيرة الذاتية: ' + error.message;
+                showError('فشل في تحليل السيرة الذاتية: ' + error.message);
+            } finally {
+                 document.getElementById('resumeLoading').classList.remove('show');
+                 document.getElementById('progressBar').style.display = 'none'; // Hide progress bar
+            }
+        }
+        
+        function extractDataPoint(text, regex) {
+            const match = text.match(regex);
+            return match && match[1] && match[1].trim() !== '[استخرجه هنا]' ? match[1].trim() : null;
+        }
+
+
+        function showCandidateCard() {
+            if (currentCandidate) {
+                document.getElementById('candidateName').textContent = currentCandidate.name;
+                document.getElementById('candidateAge').textContent = currentCandidate.age;
+                document.getElementById('candidateQualification').textContent = currentCandidate.qualification;
+                document.getElementById('candidateExperience').textContent = currentCandidate.experience;
+                document.getElementById('candidateLocation').textContent = currentCandidate.location;
+                document.getElementById('candidateCard').style.display = 'block';
+                document.getElementById('candidateCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        async function evaluateCandidate() {
+            if (!currentCandidate) { showError('يرجى تحليل السيرة الذاتية أولاً'); return; }
+            hideMessages();
+            document.getElementById('evaluationLoading').classList.add('show');
+            document.getElementById('evaluationResult').innerHTML = '';
+            
+            try {
+                const candidateData = `الاسم: ${currentCandidate.name}\nالعمر: ${currentCandidate.age}\nالمؤهل: ${currentCandidate.qualification}\nالخبرة: ${currentCandidate.experience}\nالموقع: ${currentCandidate.location}\n\nالتحليل الكامل للسيرة:\n${currentCandidate.fullAnalysis}`;
+                const evaluation = await callGeminiAPI(candidateData, SYSTEM_PROMPTS.candidateEvaluation);
+                const scoreMatch = evaluation.match(/نسبة التوافق الإجمالية \(من 100%\):\s*(\d+)%/);
+                const score = scoreMatch ? parseInt(scoreMatch[1]) : generateCompatibilityScore(evaluation); // Fallback if not in text
+                const scoreClass = score >= 85 ? 'score-high' : score >= 70 ? 'score-medium' : 'score-low';
+                const scoreIcon = score >= 85 ? '🟢' : score >= 70 ? '🟡' : '🔴';
+                
+                document.getElementById('evaluationResult').innerHTML = `
+                    <div class="compatibility-score ${scoreClass} mb-3">
+                        ${scoreIcon} نسبة التوافق: ${score}%
+                    </div>
+                    <div class="output-box">${evaluation.replace(/\n/g, '<br>')}</div>`;
+                currentCandidate.evaluation = evaluation;
+                currentCandidate.compatibilityScore = score;
+                showSuccess('تم تقييم المرشح بنجاح.');
+            } catch (error) {
+                document.getElementById('evaluationResult').innerHTML = `<div class="alert alert-danger-custom">حدث خطأ: ${error.message}</div>`;
+                showError('فشل في تقييم المرشح.');
+            } finally {
+                document.getElementById('evaluationLoading').classList.remove('show');
+            }
+        }
+
+        function generateCompatibilityScore(evaluationText) { // Fallback if not extracted
+            let score = 70; 
+            if (evaluationText.includes('ممتاز') || evaluationText.includes('مؤهل جدا')) score += 20;
+            if (evaluationText.includes('جيد')) score += 10;
+            if (evaluationText.includes('ضعيف') || evaluationText.includes('غير مناسب')) score -= 15;
+            return Math.min(Math.max(Math.round(score), 45), 98);
+        }
+
+        async function generateQuestions() {
+            const jobDescription = document.getElementById('jobDescription').value;
+            if (!jobDescription.trim()) { showError('يرجى إدخال وصف الوظيفة أولاً'); return; }
+            hideMessages();
+            document.getElementById('questionsLoading').classList.add('show');
+            document.getElementById('questionsList').innerHTML = '';
+
+            try {
+                const questionsText = await callGeminiAPI(jobDescription, SYSTEM_PROMPTS.questionGeneration);
+                const questionArray = questionsText.split('\n').map(q => q.replace(/^\d+[\.\-\)]\s*/, '').trim()).filter(q => q && q.length > 10 && q.includes('؟'));
+                
+                if (questionArray.length === 0) {
+                    document.getElementById('questionsList').innerHTML = `<div class="list-group-item text-warning"><i class="fas fa-exclamation-triangle me-2"></i> لم يتم توليد أسئلة مناسبة. يرجى تحسين وصف الوظيفة.</div>`;
+                } else {
+                    let questionsHTML = `<h5 class="mb-3 text-primary"><i class="fas fa-list-ul me-2"></i> الأسئلة المولدة (${questionArray.length}):</h5>`;
+                    questionArray.forEach((question, index) => {
+                        questionsHTML += `<div class="list-group-item"><strong>السؤال ${index + 1}:</strong> ${question}</div>`;
+                    });
+                    document.getElementById('questionsList').innerHTML = questionsHTML;
+                    showSuccess('تم توليد الأسئلة بنجاح.');
+                }
+            } catch (error) {
+                document.getElementById('questionsList').innerHTML = `<div class="list-group-item text-danger"><i class="fas fa-times-circle me-2"></i> حدث خطأ: ${error.message}</div>`;
+                showError('فشل في توليد الأسئلة.');
+            } finally {
+                document.getElementById('questionsLoading').classList.remove('show');
+            }
+        }
+
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'ar-SA';
+                recognition.continuous = false; // Set to false to process after each pause
+                recognition.interimResults = false; // Only final results
+
+                recognition.onstart = () => {
+                    document.getElementById('voiceStatus').innerHTML = '<i class="fas fa-microphone me-1"></i> جاري الاستماع...';
+                    document.getElementById('voiceStatus').className = 'voice-status status-listening me-2 mb-2';
+                    document.getElementById('audioWave').classList.add('show');
+                };
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript.trim();
+                    if (transcript) handleVoiceInput(transcript);
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    showError('حدث خطأ في التعرف على الصوت: ' + event.error);
+                    if(isInterviewActive) stopVoiceInterview(); // Stop if error occurs
+                };
+
+                recognition.onend = () => {
+                    document.getElementById('voiceStatus').innerHTML = '<i class="fas fa-microphone-slash me-1"></i> متوقف';
+                    document.getElementById('voiceStatus').className = 'voice-status status-stopped me-2 mb-2';
+                    document.getElementById('audioWave').classList.remove('show');
+                    // If interview is still active and not all questions asked, can prompt to restart listening or auto-restart
+                    // For now, it stops, and user might need to interact or AI asks next question which might re-trigger listening.
+                };
+            } else {
+                showError('المتصفح لا يدعم التعرف على الصوت.');
+            }
+        }
+        
+        function startVoiceInterview() {
+            if (!recognition) initSpeechRecognition();
+            if (recognition) {
+                isInterviewActive = true;
+                currentQuestionIndex = 0;
+                document.getElementById('startInterviewBtn').disabled = true;
+                document.getElementById('stopInterviewBtn').disabled = false;
+                document.getElementById('voiceChat').innerHTML = `<div class="ai-message"><i class="fas fa-robot me-1"></i> مرحباً بك في المقابلة المبدئية الذكية. سأطرح عليك ${interviewQuestions.length} أسئلة. استعد للسؤال الأول...</div>`;
+                setTimeout(() => askNextQuestionAndListen(), 2000);
+                showSuccess('تم بدء المقابلة الصوتية.');
+            } else {
+                 showError('لا يمكن بدء المقابلة، خاصية التعرف على الصوت غير متاحة.');
+            }
+        }
+
+        function stopVoiceInterview() {
+            isInterviewActive = false;
+            if (recognition) recognition.stop();
+            document.getElementById('startInterviewBtn').disabled = false;
+            document.getElementById('stopInterviewBtn').disabled = true;
+            addVoiceMessage('شكراً لك على إجراء المقابلة. سيتم مراجعة إجاباتك.', 'ai');
+            showSuccess('تم إنهاء المقابلة الصوتية.');
+        }
+
+        function askNextQuestionAndListen() {
+            if (!isInterviewActive) return;
+
+            if (currentQuestionIndex < interviewQuestions.length) {
+                const question = `السؤال ${currentQuestionIndex + 1}/${interviewQuestions.length}: ${interviewQuestions[currentQuestionIndex]}`;
+                addVoiceMessage(question, 'ai');
+                currentQuestionIndex++;
+                // Start listening after asking the question
+                if (recognition && isInterviewActive) {
+                     setTimeout(() => recognition.start(), 500); // Short delay before listening
+                }
+            } else {
+                addVoiceMessage('تم الانتهاء من جميع الأسئلة. شكراً جزيلاً لك على وقتك.', 'ai');
+                stopVoiceInterview();
+            }
+        }
+        
+        async function handleVoiceInput(transcript) {
+            addVoiceMessage(transcript, 'user');
+            if (!isInterviewActive) return;
+
+            // Show AI thinking
+            const thinkingMsg = addVoiceMessage('<i class="fas fa-spinner fa-spin"></i> أفكر في ردك...', 'ai', true);
+
+            try {
+                const promptText = `سؤال المقابلة: "${interviewQuestions[currentQuestionIndex -1]}"\nإجابة المتقدم: "${transcript}"\n\nقم بتقييم الإجابة وتقديم تعليق مختصر ومشجع (جملة أو اثنتين فقط).`;
+                const response = await callGeminiAPI(promptText, SYSTEM_PROMPTS.voiceInterview);
+                thinkingMsg.innerHTML = `<i class="fas fa-robot me-1"></i> ${response}`; // Update thinking message with actual response
+                
+                setTimeout(() => askNextQuestionAndListen(), 2500); // Ask next question after AI response
+            } catch (error) {
+                thinkingMsg.innerHTML = `<i class="fas fa-robot me-1"></i> شكراً لإجابتك. دعنا ننتقل للسؤال التالي.`;
+                showError('حدث خطأ أثناء معالجة ردك الصوتي.');
+                setTimeout(() => askNextQuestionAndListen(), 2000);
+            }
+        }
+
+
+        function addVoiceMessage(message, sender, isThinking = false) {
+            const chatContainer = document.getElementById('voiceChat');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.innerHTML = sender === 'ai' ? `<i class="fas fa-robot me-1"></i> ${message}` : `<i class="fas fa-user me-1"></i> ${message}`;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            if (isThinking) return messageDiv; // Return the element if it's a temporary thinking message
+        }
+
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+            addChatMessage(message, 'user');
+            input.value = '';
+            const typingDiv = addChatMessage('<i class="fas fa-spinner fa-spin"></i> جاري الكتابة...', 'ai', true);
+            try {
+                const response = await callGeminiAPI(message, SYSTEM_PROMPTS.chatAssistant);
+                typingDiv.innerHTML = `<i class="fas fa-robot me-1"></i> ${response.replace(/\n/g, '<br>')}`;
+            } catch (error) {
+                typingDiv.innerHTML = '<i class="fas fa-robot me-1"></i> عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.';
+                showError('فشل في الحصول على رد من المساعد الذكي.');
+            }
+        }
+
+        function addChatMessage(message, sender, isTyping = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            messageDiv.innerHTML = sender === 'ai' ? `<i class="fas fa-robot me-1"></i> ${message}` : `<i class="fas fa-user me-1"></i> ${message}`;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            if(isTyping) return messageDiv;
+        }
+
+        async function generateRecommendation() {
+            if (!currentCandidate) { showError('يرجى تحليل السيرة الذاتية أولاً'); return; }
+            hideMessages();
+            document.getElementById('recommendationLoading').classList.add('show');
+            document.getElementById('recommendationOutput').textContent = '';
+            try {
+                const candidateData = `معلومات المرشح:\nالاسم: ${currentCandidate.name}\nالعمر: ${currentCandidate.age}\nالمؤهل: ${currentCandidate.qualification}\nالخبرة: ${currentCandidate.experience}\n\nتحليل السيرة الذاتية:\n${currentCandidate.fullAnalysis}\n\n${currentCandidate.evaluation ? `تقييم المرشح:\n${currentCandidate.evaluation}` : ''}\n${currentCandidate.compatibilityScore ? `نسبة التوافق: ${currentCandidate.compatibilityScore}%` : ''}`;
+                const recommendation = await callGeminiAPI(candidateData, SYSTEM_PROMPTS.finalRecommendation);
+                document.getElementById('recommendationOutput').innerHTML = recommendation.replace(/\n/g, '<br>');
+                showSuccess('تم إنشاء التوصية النهائية بنجاح.');
+            } catch (error) {
+                document.getElementById('recommendationOutput').textContent = 'حدث خطأ: ' + error.message;
+                showError('فشل في توليد التوصية النهائية.');
+            } finally {
+                document.getElementById('recommendationLoading').classList.remove('show');
+            }
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+
+        window.addEventListener('load', () => {
+            initSpeechRecognition();
+            // Initial animations or setup can go here
+            document.querySelectorAll('.section-card, .header, .sidebar').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
+            });
+
+            let delay = 0;
+            document.querySelectorAll('.header, .sidebar, .section-card').forEach(el => {
+                setTimeout(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, delay);
+                delay += 100; // Stagger animation
+            });
+        });
+    </script>
+</body>
+</html>
