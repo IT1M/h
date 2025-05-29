@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             /* overflow: hidden; */ /* تم التعليق للسماح بالتمرير على الهواتف */
+            perspective: 1000px; /* Add perspective for 3D effect */
         }
 
         .presentation-container {
@@ -25,6 +26,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            padding: 20px; /* Add some padding around the container */
         }
 
         .slide {
@@ -33,13 +35,14 @@
             max-height: 100vh;
             background: rgba(255, 255, 255, 0.98);
             border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
             padding: 40px 60px;
             display: none;
             animation: slideIn 0.6s ease-out;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             overflow-y: auto;
+            transform-style: preserve-3d; /* Preserve 3D space for children */
         }
 
         .slide.active {
@@ -50,11 +53,11 @@
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px) translateZ(-100px); /* Add Z translation */
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) translateZ(0);
             }
         }
 
@@ -104,7 +107,8 @@
             color: white;
             font-size: 3rem;
             font-weight: bold;
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4); /* Enhanced shadow */
+            transform-style: preserve-3d;
         }
 
         .company-info {
@@ -128,12 +132,14 @@
             border-radius: 15px;
             padding: 25px;
             border-left: 5px solid #667eea;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add shadow to transition */
+            transform-style: preserve-3d;
         }
 
         .project-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) translateZ(10px); /* Add slight Z translation */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* More prominent shadow on hover */
         }
 
         .project-title {
@@ -173,8 +179,9 @@
             border-radius: 20px;
             padding: 40px;
             border-right: 6px solid #667eea;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
             margin-bottom: 20px;
+            transform-style: preserve-3d;
         }
 
         .project-icon {
@@ -188,6 +195,8 @@
             color: white;
             font-size: 1.8rem;
             margin-bottom: 20px;
+            box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3); /* Add shadow */
+            transform-style: preserve-3d;
         }
 
         .stats-section {
@@ -195,6 +204,8 @@
             justify-content: space-around;
             margin: 40px 0;
             text-align: center;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            gap: 20px; /* Add gap */
         }
 
         .stat-item {
@@ -202,6 +213,15 @@
             padding: 20px;
             border-radius: 15px;
             min-width: 150px;
+            flex: 1; /* Allow items to grow */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Add shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .stat-item:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
         .stat-number {
@@ -222,6 +242,8 @@
             padding: 40px;
             border-radius: 20px;
             margin-top: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+            transform-style: preserve-3d;
         }
 
         .navigation {
@@ -245,12 +267,14 @@
             color: #2c3e50;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Add shadow */
         }
 
         .nav-btn:hover {
             background: #667eea;
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
         }
 
         .slide-counter {
@@ -262,6 +286,8 @@
             border-radius: 20px;
             font-weight: 600;
             color: #2c3e50;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
         }
 
         .tech-badges {
@@ -297,46 +323,164 @@
             margin-left: 10px;
         }
 
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+             .slide {
+                padding: 30px 40px;
+             }
+             .slide-title {
+                font-size: 2.2rem;
+             }
+             .slide-subtitle {
+                font-size: 1.1rem;
+             }
+             .project-grid {
+                gap: 20px;
+             }
+             .project-card {
+                padding: 20px;
+             }
+             .single-project {
+                padding: 30px;
+             }
+             .stats-section {
+                gap: 15px;
+             }
+             .stat-item {
+                min-width: 120px;
+             }
+             .stat-number {
+                font-size: 2rem;
+             }
+             .stat-label {
+                font-size: 0.95rem;
+             }
+        }
+
+
         @media (max-width: 768px) {
             .slide {
                 width: 100vw;
                 min-height: 100vh;
                 max-height: none;
-                padding: 12px 2vw;
+                padding: 20px; /* Adjust padding */
                 border-radius: 0;
             }
             .presentation-container {
                 align-items: flex-start;
+                padding: 0; /* Remove container padding */
             }
             .slide-title {
-                font-size: 1.5rem;
+                font-size: 1.8rem; /* Adjust font size */
+            }
+             .slide-subtitle {
+                font-size: 1rem; /* Adjust font size */
             }
             .slide-header {
                 margin-bottom: 20px;
             }
+            .project-grid {
+                grid-template-columns: 1fr; /* Stack cards on mobile */
+                gap: 15px; /* Adjust gap */
+            }
+            .project-card {
+                padding: 15px; /* Adjust padding */
+            }
+            .single-project {
+                padding: 20px; /* Adjust padding */
+            }
             .stats-section {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px; /* Adjust gap */
             }
             .stat-item {
                 min-width: unset;
-                margin-bottom: 10px;
+                width: 100%; /* Full width */
+                padding: 15px;
+            }
+            .closing-section {
+                padding: 20px;
+            }
+            .slide-counter {
+                top: 10px;
+                right: 10px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            .navigation {
+                bottom: 20px; /* Adjust position */
+                gap: 10px;
+            }
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 0.95rem;
+            }
+            .logo {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+            .project-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+            .company-info {
+                font-size: 1.1rem;
+            }
+             .project-title {
+                font-size: 1.3rem;
+            }
+             .stat-number {
+                font-size: 2.2rem;
+            }
+             .stat-label {
+                font-size: 0.9rem;
+            }
+             .feature-list li {
+                font-size: 1rem;
+             }
+        }
+        @media (max-width: 480px) {
+            .slide {
+                padding: 15px; /* Adjust padding */
+            }
+            .slide-header {
+                margin-bottom: 15px;
+            }
+            .slide-title {
+                font-size: 1.5rem; /* Adjust font size */
+            }
+            .slide-subtitle {
+                font-size: 0.9rem; /* Adjust font size */
+            }
+            .stats-section {
+                gap: 10px;
+            }
+            .stat-item {
+                padding: 10px;
+            }
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            .stat-label {
+                font-size: 0.85rem;
             }
             .single-project {
                 padding: 15px;
             }
             .project-card {
-                padding: 12px;
+                padding: 10px;
             }
             .closing-section {
                 padding: 15px;
                 font-size: 1rem;
             }
             .slide-counter {
-                top: 10px;
-                right: 10px;
-                padding: 6px 12px;
-                font-size: 0.9rem;
+                top: 5px;
+                right: 5px;
+                padding: 5px 10px;
+                font-size: 0.8rem;
             }
             .navigation {
                 bottom: 10px;
@@ -344,11 +488,11 @@
             }
             .nav-btn {
                 padding: 8px 14px;
-                font-size: 0.95rem;
+                font-size: 0.9rem;
             }
             .logo {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
                 font-size: 2rem;
             }
             .project-icon {
@@ -356,80 +500,21 @@
                 height: 40px;
                 font-size: 1.1rem;
             }
-            .company-info {
-                font-size: 1rem;
+            .company-info, .project-details, .feature-list li {
+                font-size: 0.9rem;
             }
-        }
-        @media (max-width: 480px) {
-            .slide {
-                width: 100vw;
-                min-height: 100vh;
-                max-height: none;
-                padding: 6px 1vw;
-                border-radius: 0;
-            }
-            .presentation-container {
-                align-items: flex-start;
-            }
-            .slide-header {
-                margin-bottom: 10px;
-            }
-            .slide-title {
+             .project-title {
                 font-size: 1.1rem;
             }
-            .slide-subtitle {
-                font-size: 0.95rem;
-            }
-            .stats-section {
-                flex-direction: column;
-                gap: 5px;
-            }
-            .stat-item {
-                padding: 10px;
-                font-size: 0.95rem;
-            }
-            .stat-number {
+             .closing-section h2 {
                 font-size: 1.3rem;
-            }
-            .single-project {
-                padding: 8px;
-                font-size: 0.95rem;
-            }
-            .project-card {
-                padding: 7px;
-                font-size: 0.95rem;
-            }
-            .closing-section {
-                padding: 8px;
-                font-size: 0.95rem;
-            }
-            .slide-counter {
-                top: 2px;
-                right: 2px;
-                padding: 3px 7px;
-                font-size: 0.8rem;
-            }
-            .navigation {
-                bottom: 2px;
-                gap: 4px;
-            }
-            .nav-btn {
-                padding: 5px 8px;
-                font-size: 0.85rem;
-            }
-            .logo {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
-            }
-            .project-icon {
-                width: 25px;
-                height: 25px;
+             }
+             .closing-section h4 {
+                font-size: 1rem;
+             }
+             .closing-section p {
                 font-size: 0.9rem;
-            }
-            .company-info {
-                font-size: 0.9rem;
-            }
+             }
         }
     </style>
 </head>
