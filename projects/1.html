@@ -424,15 +424,15 @@
             .container {
                 padding: 10px;
             }
-            
+
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .section {
                 padding: 20px;
             }
-            
+
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
@@ -457,6 +457,36 @@
             font-size: 1.05rem;
             direction: rtl;
         }
+
+        /* Add styles for Markdown elements */
+        .output-card h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 5px;
+        }
+
+        .output-card ul,
+        .output-card ol {
+            margin: 10px 0;
+            padding-right: 25px; /* Adjust for RTL */
+        }
+
+        .output-card li {
+            margin-bottom: 8px;
+            line-height: 1.8;
+        }
+
+        .output-card p {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .output-card strong {
+            color: #764ba2;
+        }
     </style>
 </head>
 <body>
@@ -465,7 +495,7 @@
         <div class="header">
             <h1>نظام الذكاء الاصطناعي لاستقطاب المواهب</h1>
             <p class="subtitle">مقدم من شركة مشرقة AI للجهات الحكومية</p>
-            
+
             <!-- Navigation Tabs -->
             <div class="nav-tabs">
                 <button class="nav-tab active" onclick="showTab('dashboard')">لوحة التحكم</button>
@@ -553,7 +583,7 @@
         <div id="candidates" class="tab-content">
             <div class="section">
                 <h2 class="section-title">👥 إدارة المرشحين</h2>
-                
+
                 <div class="search-filter">
                     <input type="text" class="input-field" id="searchCandidates" placeholder="البحث عن مرشح..." style="flex: 1; margin-bottom: 0;">
                     <select class="filter-select" id="filterByScore">
@@ -607,13 +637,13 @@
             <div class="section">
                 <h2 class="section-title">🎤 المقابلات الصوتية</h2>
                 <p style="margin-bottom: 15px;">يمكن للمتقدم إجراء مقابلة مبدئية بالصوت باللغة العربية</p>
-                
+
                 <div style="display: flex; gap: 10px; align-items: center; margin: 15px 0;">
                     <button class="btn" id="startInterviewBtn" onclick="startVoiceInterview()">بدء المقابلة الصوتية</button>
                     <button class="btn btn-danger" id="stopInterviewBtn" onclick="stopVoiceInterview()" disabled>إيقاف المقابلة</button>
                     <div id="voiceStatus" style="padding: 8px 15px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; background: #ffeaa7; color: #d63031;">غير نشط</div>
                 </div>
-                
+
                 <div style="height: 300px; overflow-y: auto; background: #f8f9fa; border-radius: 8px; padding: 15px; margin-bottom: 15px;" id="voiceChat">
                     <div style="margin-bottom: 15px; padding: 10px 15px; border-radius: 10px; max-width: 80%; background: white; border: 1px solid #e0e0e0; margin-left: auto;">
                         مرحباً بك في المقابلة المبدئية. سأطرح عليك بعض الأسئلة العامة. تحدث بوضوح وسأقوم بالاستماع إليك.
@@ -639,7 +669,7 @@
         <div id="skills-test" class="tab-content">
             <div class="section">
                 <h2 class="section-title">🧠 اختبارات المهارات</h2>
-                
+
                 <div style="margin-bottom: 20px;">
                     <label>اختر نوع الاختبار:</label>
                     <select class="filter-select" id="testType" onchange="generateSkillsTest()">
@@ -652,7 +682,7 @@
                 </div>
 
                 <div id="skillsTestContainer"></div>
-                
+
                 <div style="text-align: center; margin-top: 20px;">
                     <button class="btn" id="submitTestBtn" onclick="submitSkillsTest()" style="display: none;">إرسال الاختبار</button>
                 </div>
@@ -663,9 +693,9 @@
             <div class="section">
                 <h2 class="section-title">🧘 التقييم النفسي</h2>
                 <p style="margin-bottom: 15px;">تقييم الشخصية والاستعداد النفسي للعمل</p>
-                
+
                 <button class="btn" onclick="startPsychologicalTest()">بدء التقييم النفسي</button>
-                
+
                 <div id="psychTestContainer" style="display: none;">
                     <div class="progress-bar">
                         <div class="progress-fill" id="psychProgress" style="width: 0%;"></div>
@@ -685,7 +715,7 @@
         <div id="reports" class="tab-content">
             <div class="section">
                 <h2 class="section-title">📊 التقارير والإحصائيات</h2>
-                
+
                 <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
                     <button class="btn" onclick="generateMonthlyReport()">تقرير شهري</button>
                     <button class="btn" onclick="generateDepartmentReport()">تقرير حسب القسم</button>
@@ -724,7 +754,7 @@
         <div id="settings" class="tab-content">
             <div class="section">
                 <h2 class="section-title">⚙️ إعدادات النظام</h2>
-                
+
                 <div style="margin-bottom: 20px;">
                     <label><strong>عدد الأسئلة في الاختبارات:</strong></label>
                     <input type="number" class="input-field" id="questionsCount" value="10" min="5" max="20">
@@ -797,7 +827,7 @@
         // Global Variables
         const GEMINI_API_KEY = 'AIzaSyAO8Dw-QeBiGiPZZfCx_3ueTl0LiK9ZFj0';
         const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-        
+
         let currentCandidate = null;
         let candidates = JSON.parse(localStorage.getItem('candidates') || '[]');
         let recognition = null;
@@ -868,46 +898,39 @@
             ]
         };
 
-        // System Prompts
+        // System Prompts - Updated to request Markdown
         const SYSTEM_PROMPTS = {
-            resumeAnalysis: `أنت محلل سير ذاتية خبير. قم بتحليل السيرة الذاتية المرفقة واستخرج المعلومات التالية بتنسيق واضح:
-            - الاسم الكامل
-            - العمر (إذا متوفر)
-            - المؤهلات التعليمية
-            - سنوات الخبرة
-            - المهارات الرئيسية
-            - نقاط القوة
-            - ملخص مهني قصير
-            اكتب الرد باللغة العربية بشكل منظم ومهني.`,
-            
+            resumeAnalysis: `أنت محلل سير ذاتية خبير. قم بتحليل السيرة الذاتية المرفقة واستخرج المعلومات التالية بتنسيق Markdown احترافي:
+- **الاسم الكامل**: [الاسم]
+- **العمر** (إذا متوفر): [العمر]
+- **المؤهلات التعليمية**: استخدم قائمة نقطية (-)
+- **سنوات الخبرة**: [السنوات]
+- **المهارات الرئيسية**: استخدم قائمة نقطية (-)
+- **نقاط القوة**: استخدم قائمة نقطية (-)
+- **ملخص مهني قصير**: [الملخص]
+اكتب الرد باللغة العربية.`,
+
             candidateEvaluation: `أنت خبير تقييم مرشحين للوظائف الحكومية. بناءً على بيانات المرشح المقدمة، قم بتقييم مدى توافقه مع متطلبات العمل الحكومي وأعط:
-            - نسبة التوافق (من 100%)
-            - تحليل نقاط القوة
-            - نقاط التحسين المطلوبة
-            - تعليق مهني شامل
-            اكتب الرد باللغة العربية.`,
-            
-            questionGeneration: `أنت خبير في إعداد أسئلة المقابلات للوظائف الحكومية. بناءً على وصف الوظيفة المقدم، قم بتوليد 8-10 أسئلة مقابلة مناسبة تغطي:
-            - الخبرة المهنية
-            - المهارات التقنية
-            - القدرة على العمل الجماعي
-            - التعامل مع الضغوط
-            - الالتزام بالقيم الحكومية
-            اكتب الأسئلة باللغة العربية بشكل واضح ومهني.`,
-            
-            chatAssistant: `أنت مساعد ذكي متخصص في أنظمة التوظيف والموارد البشرية للجهات الحكومية. قم بالرد على استفسارات المستخدمين بشكل مفيد ومهني. تخصصك يشمل:
-            - عمليات التوظيف
-            - تقييم المرشحين
-            - أنظمة الذكاء الاصطناعي في HR
-            - اللوائح الحكومية للتوظيف
-            اكتب ردودك باللغة العربية بشكل واضح ومفيد.`,
-            
-            finalRecommendation: `أنت خبير في إعداد التوصيات النهائية للمرشحين في الجهات الحكومية. بناءً على جميع البيانات المتاحة عن المرشح، قم بإعداد تقرير شامل يتضمن:
-            - ملخص تنفيذي
-            - نقاط القوة والضعف
-            - التوصية النهائية (مؤهل للمقابلة / بحاجة لمراجعة إضافية / غير مناسب)
-            - مبررات التوصية
-            اكتب التقرير باللغة العربية بشكل مهني ومفصل.`
+- **نسبة التوافق**: [النسبة]%
+- **تحليل نقاط القوة**: استخدم قائمة نقطية (-)
+- **نقاط التحسين المطلوبة**: استخدم قائمة نقطية (-)
+- **تعليق مهني شامل**: [التعليق]
+اكتب الرد باللغة العربية بتنسيق Markdown.`,
+
+            questionGeneration: `أنت خبير في إعداد أسئلة المقابلات للوظائف الحكومية. بناءً على وصف الوظيفة المقدم، قم بتوليد 8-10 أسئلة مقابلة مناسبة تغطي الجوانب المطلوبة (الخبرة المهنية، المهارات التقنية، القدرة على العمل الجماعي، التعامل مع الضغوط، الالتزام بالقيم الحكومية). اكتب الأسئلة باللغة العربية في قائمة مرقمة باستخدام Markdown (1. السؤال).`,
+
+            chatAssistant: `أنت مساعد ذكي متخصص في أنظمة التوظيف والموارد البشرية للجهات الحكومية. قم بالرد على استفسارات المستخدمين بشكل مفيد ومهني باللغة العربية. تخصصك يشمل: عمليات التوظيف، تقييم المرشحين، أنظمة الذكاء الاصطناعي في HR، اللوائح الحكومية للتوظيف. استخدم تنسيق Markdown للردود (مثل القوائم النقطية أو العناوين الفرعية إذا لزم الأمر).`,
+
+            finalRecommendation: `أنت خبير في إعداد التوصيات النهائية للمرشحين في الجهات الحكومية. بناءً على جميع البيانات المتاحة عن المرشح، قم بإعداد تقرير شامل بتنسيق Markdown يتضمن:
+## ملخص تنفيذي
+[الملخص]
+## نقاط القوة والضعف
+- **نقاط القوة**: استخدم قائمة نقطية (-)
+- **نقاط الضعف**: استخدم قائمة نقطية (-)
+## التوصية النهائية
+**التوصية**: [مؤهل للمقابلة / بحاجة لمراجعة إضافية / غير مناسب]
+**مبررات التوصية**: [المبررات]
+اكتب التقرير باللغة العربية بشكل مهني ومفصل.`
         };
 
         // Initialize Application
@@ -918,6 +941,7 @@
             initSpeechRecognition();
             setupEventListeners();
             initCharts();
+            updateCandidateSelect(); // Ensure candidate select is populated on load
         });
 
         function initializeApp() {
@@ -934,7 +958,7 @@
         function setupEventListeners() {
             // File upload
             document.getElementById('resumeFile').addEventListener('change', handleFileSelect);
-            
+
             // Drag and drop
             const uploadArea = document.getElementById('uploadArea');
             uploadArea.addEventListener('dragover', handleDragOver);
@@ -966,42 +990,69 @@
 
             // Show selected tab
             document.getElementById(tabName).classList.add('active');
-            
+
             // Add active class to clicked nav tab
-            event.target.classList.add('active');
+            // Use event.currentTarget to get the button that was clicked
+            const clickedButton = event.currentTarget;
+            if (clickedButton) {
+                 clickedButton.classList.add('active');
+            }
+
 
             // Update dashboard if dashboard tab is selected
             if (tabName === 'dashboard') {
                 updateDashboard();
+                // Re-initialize charts if needed, or ensure they update with data
+                // This is a basic update, more complex charts might need full redraw or dataset updates
+                // Let's assume updateDashboard is enough for now, or charts are static examples.
+            }
+             // Update candidate select list when going to reports tab
+            if (tabName === 'reports') {
+                updateCandidateSelect();
             }
         }
 
         // Dashboard Functions
         function updateDashboard() {
             const totalCandidates = candidates.length;
-            const qualifiedCandidates = candidates.filter(c => c.score >= 70).length;
+            const qualifiedCandidates = candidates.filter(c => (c.score || 0) >= (parseInt(document.getElementById('minScore').value) || 70)).length; // Use minScore setting
             const interviewsCompleted = candidates.filter(c => c.interviewed).length;
-            const avgScore = totalCandidates > 0 ? 
+            const avgScore = totalCandidates > 0 ?
                 Math.round(candidates.reduce((sum, c) => sum + (c.score || 0), 0) / totalCandidates) : 0;
 
             document.getElementById('totalCandidates').textContent = totalCandidates;
             document.getElementById('qualifiedCandidates').textContent = qualifiedCandidates;
             document.getElementById('interviewsCompleted').textContent = interviewsCompleted;
             document.getElementById('avgScore').textContent = avgScore + '%';
+
+            // Update charts data (assuming charts are initialized)
+            // This is a basic update, more complex charts might need full redraw or dataset updates
+            if (window.candidatesChartInstance) {
+                 window.candidatesChartInstance.data.datasets[0].data = [
+                    candidates.filter(c => (c.score || 0) >= 85).length,
+                    candidates.filter(c => (c.score || 0) >= (parseInt(document.getElementById('minScore').value) || 70) && (c.score || 0) < 85).length,
+                    candidates.filter(c => (c.score || 0) < (parseInt(document.getElementById('minScore').value) || 70)).length
+                 ];
+                 window.candidatesChartInstance.update();
+            }
+             // Performance chart is static example, no update needed based on candidate data
         }
 
         function initCharts() {
             // Candidates Chart
             const ctx1 = document.getElementById('candidatesChart').getContext('2d');
-            new Chart(ctx1, {
+            if (window.candidatesChartInstance) {
+                window.candidatesChartInstance.destroy(); // Destroy existing instance if any
+            }
+            window.candidatesChartInstance = new Chart(ctx1, {
                 type: 'doughnut',
                 data: {
                     labels: ['مؤهل', 'بحاجة مراجعة', 'غير مناسب'],
                     datasets: [{
                         data: [
-                            candidates.filter(c => c.score >= 85).length,
-                            candidates.filter(c => c.score >= 70 && c.score < 85).length,
-                            candidates.filter(c => c.score < 70).length
+                            candidates.filter(c => (c.score || 0) >= 85).length,
+                            candidates.filter(c => (c.score || 0) >= (parseInt(document.getElementById('minScore').value) || 70) && (c.score || 0) < 85).length,
+                            candidates.filter(c => (c.score || 0) < (parseInt(document.getElementById('minScore').value) || 70)).length
                         ],
                         backgroundColor: ['#27ae60', '#f39c12', '#e74c3c']
                     }]
@@ -1016,9 +1067,12 @@
                 }
             });
 
-            // Performance Chart
+            // Performance Chart (Static Example)
             const ctx2 = document.getElementById('performanceChart').getContext('2d');
-            new Chart(ctx2, {
+             if (window.performanceChartInstance) {
+                window.performanceChartInstance.destroy(); // Destroy existing instance if any
+            }
+            window.performanceChartInstance = new Chart(ctx2, {
                 type: 'line',
                 data: {
                     labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
@@ -1039,14 +1093,66 @@
                     }
                 }
             });
+
+             // Qualifications Chart (Reports Tab)
+            const ctx3 = document.getElementById('qualificationsChart').getContext('2d');
+             if (window.qualificationsChartInstance) {
+                window.qualificationsChartInstance.destroy(); // Destroy existing instance if any
+            }
+            // Example data - replace with actual data processing if needed
+            window.qualificationsChartInstance = new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: ['هندسة', 'إدارة', 'حاسوب', 'أخرى'],
+                    datasets: [{
+                        label: 'عدد المرشحين',
+                        data: [15, 10, 20, 5], // Example data
+                        backgroundColor: ['#667eea', '#764ba2', '#27ae60', '#f39c12']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+             // Success Rate Chart (Reports Tab)
+            const ctx4 = document.getElementById('successRateChart').getContext('2d');
+             if (window.successRateChartInstance) {
+                window.successRateChartInstance.destroy(); // Destroy existing instance if any
+            }
+             // Example data - replace with actual data processing if needed
+            window.successRateChartInstance = new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: ['نجاح', 'رسوب', 'لم يكمل'],
+                    datasets: [{
+                        data: [70, 20, 10], // Example data
+                        backgroundColor: ['#27ae60', '#e74c3c', '#95a5a6']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
         }
+
 
         // File Handling
         function handleFileSelect(e) {
             const file = e.target.files[0];
             if (file) {
                 document.getElementById('analyzeResumeBtn').disabled = false;
-                document.querySelector('.upload-area p').textContent = `تم اختيار: ${file.name}`;
+                document.querySelector('#uploadArea p').textContent = `تم اختيار: ${file.name}`; // Use #uploadArea for specificity
             }
         }
 
@@ -1067,7 +1173,7 @@
             if (files.length > 0) {
                 document.getElementById('resumeFile').files = files;
                 document.getElementById('analyzeResumeBtn').disabled = false;
-                document.querySelector('.upload-area p').textContent = `تم اختيار: ${files[0].name}`;
+                document.querySelector('#uploadArea p').textContent = `تم اختيار: ${files[0].name}`; // Use #uploadArea for specificity
             }
         }
 
@@ -1075,6 +1181,11 @@
         async function callGeminiAPI(prompt, systemPrompt) {
             try {
                 const apiKey = localStorage.getItem('geminiApiKey') || GEMINI_API_KEY;
+                 if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY') {
+                     showNotification('يرجى تعيين مفتاح API الخاص بـ Gemini في الإعدادات.', 'error');
+                     throw new Error('API Key not set');
+                 }
+
                 const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
                     method: 'POST',
                     headers: {
@@ -1085,15 +1196,36 @@
                             parts: [{
                                 text: `${systemPrompt}\n\nالمدخل: ${prompt}`
                             }]
-                        }]
+                        }],
+                         generationConfig: {
+                            temperature: 0.7, // Adjust temperature for creativity/determinism
+                            maxOutputTokens: 800, // Limit output length
+                        },
                     })
                 });
 
+                 if (!response.ok) {
+                     const errorData = await response.json();
+                     console.error('API Error:', response.status, errorData);
+                     showNotification(`خطأ في API: ${response.status} - ${errorData.error?.message || response.statusText}`, 'error');
+                     throw new Error(`API Error: ${response.status}`);
+                 }
+
+
                 const data = await response.json();
-                return data.candidates[0].content.parts[0].text;
+                 // Check if data structure is as expected
+                 if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                    return data.candidates[0].content.parts[0].text;
+                 } else {
+                     console.error('Unexpected API response structure:', data);
+                     showNotification('عذراً، استجابة غير متوقعة من الخدمة.', 'error');
+                     return 'عذراً، استجابة غير متوقعة من الخدمة.';
+                 }
+
             } catch (error) {
                 console.error('Error calling Gemini API:', error);
-                showNotification('عذراً، حدث خطأ في الاتصال بالخدمة. يرجى المحاولة مرة أخرى.', 'error');
+                // Notification is already shown by the specific error handlers above
+                // showNotification('عذراً، حدث خطأ في الاتصال بالخدمة. يرجى المحاولة مرة أخرى.', 'error');
                 return 'عذراً، حدث خطأ في الاتصال بالخدمة. يرجى المحاولة مرة أخرى.';
             }
         }
@@ -1102,47 +1234,58 @@
         async function analyzeResume() {
             const fileInput = document.getElementById('resumeFile');
             const file = fileInput.files[0];
-            
+
             if (!file) {
                 showNotification('يرجى اختيار ملف السيرة الذاتية أولاً', 'error');
                 return;
             }
 
             document.getElementById('resumeLoading').classList.add('show');
-            document.getElementById('resumeOutput').innerHTML = '';
+            document.getElementById('resumeOutput').innerHTML = ''; // Use innerHTML
 
             try {
                 let resumeText = '';
-                
+
                 if (file.type === 'application/pdf') {
                     resumeText = await extractTextFromPDF(file);
                 } else if (file.type.includes('word')) {
                     resumeText = await extractTextFromWord(file);
                 } else {
+                    // Attempt to read as text for other types
                     resumeText = await file.text();
                 }
 
+                 if (!resumeText.trim()) {
+                     showNotification('لم يتم استخلاص نص من الملف.', 'error');
+                     document.getElementById('resumeLoading').classList.remove('show');
+                     document.getElementById('resumeOutput').textContent = 'لم يتم استخلاص نص من الملف.';
+                     return;
+                 }
+
+
                 const analysis = await callGeminiAPI(resumeText, SYSTEM_PROMPTS.resumeAnalysis);
-                
+
                 document.getElementById('resumeLoading').classList.remove('show');
                 document.getElementById('resumeOutput').innerHTML = `
                     <div class="output-card">
                         <h3 style="color:#667eea; margin-bottom:10px;">نتيجة تحليل السيرة الذاتية</h3>
-                        <div style="white-space:pre-line; line-height:2;">${formatApiOutput(analysis)}</div>
+                        ${formatApiOutput(analysis)}
                     </div>
                 `;
 
-                // Extract candidate data
+                // Extract candidate data (basic extraction from formatted text)
                 currentCandidate = {
                     id: Date.now(),
-                    name: extractNameFromAnalysis(analysis),
-                    age: extractAgeFromAnalysis(analysis),
-                    qualification: extractQualificationFromAnalysis(analysis),
-                    experience: extractExperienceFromAnalysis(analysis),
-                    fullAnalysis: analysis,
+                    name: extractValueFromFormattedAnalysis(analysis, 'الاسم الكامل'),
+                    age: extractValueFromFormattedAnalysis(analysis, 'العمر'),
+                    qualification: extractListFromFormattedAnalysis(analysis, 'المؤهلات التعليمية').join(', ') || 'غير محدد',
+                    experience: extractValueFromFormattedAnalysis(analysis, 'سنوات الخبرة'),
+                    fullAnalysis: analysis, // Store the raw formatted analysis
                     dateAdded: new Date().toLocaleDateString('ar-SA'),
                     status: 'pending',
-                    interviewed: false
+                    interviewed: false,
+                    score: null, // Initialize score
+                    evaluation: null // Initialize evaluation
                 };
 
                 showCandidateCard();
@@ -1150,50 +1293,64 @@
 
             } catch (error) {
                 document.getElementById('resumeLoading').classList.remove('show');
-                document.getElementById('resumeOutput').textContent = 'حدث خطأ في تحليل السيرة الذاتية';
-                showNotification('حدث خطأ في تحليل السيرة الذاتية', 'error');
+                // Notification is handled by callGeminiAPI or specific error checks
+                // document.getElementById('resumeOutput').textContent = 'حدث خطأ في تحليل السيرة الذاتية';
+                // showNotification('حدث خطأ في تحليل السيرة الذاتية', 'error');
             }
         }
 
+        // Helper to extract value from formatted Markdown output
+        function extractValueFromFormattedAnalysis(analysis, key) {
+            const regex = new RegExp(`\\*\\*${key}\\*\\*:\\s*(.*?)(?=\\n|$)`, 'i');
+            const match = analysis.match(regex);
+            return match ? match[1].trim() : 'غير محدد';
+        }
+
+         // Helper to extract list items from formatted Markdown output
+        function extractListFromFormattedAnalysis(analysis, key) {
+            const regex = new RegExp(`\\*\\*${key}\\*\\*:\\s*\\n((- .*\\n)*- .*|)`, 'i');
+            const match = analysis.match(regex);
+            if (match && match[1]) {
+                return match[1].split('\n').map(item => item.substring(2).trim()).filter(item => item);
+            }
+            return [];
+        }
+
+
         async function extractTextFromPDF(file) {
             const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+            // Ensure pdfjsLib is loaded
+            if (typeof pdfjsLib === 'undefined') {
+                 console.error("pdfjsLib is not loaded.");
+                 showNotification("خطأ: مكتبة PDF.js غير محملة بشكل صحيح.", "error");
+                 return "";
+            }
+            pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
             let text = '';
-            
+
             for (let i = 1; i <= pdf.numPages; i++) {
                 const page = await pdf.getPage(i);
                 const textContent = await page.getTextContent();
                 text += textContent.items.map(item => item.str).join(' ') + '\n';
             }
-            
+
             return text;
         }
 
         async function extractTextFromWord(file) {
             const arrayBuffer = await file.arrayBuffer();
+             // Ensure mammoth is loaded
+             if (typeof mammoth === 'undefined') {
+                 console.error("mammoth is not loaded.");
+                 showNotification("خطأ: مكتبة Mammoth.js غير محملة بشكل صحيح.", "error");
+                 return "";
+             }
             const result = await mammoth.extractRawText({arrayBuffer});
             return result.value;
         }
 
-        function extractNameFromAnalysis(analysis) {
-            const nameMatch = analysis.match(/الاسم[:\s]*([^\n]+)/i);
-            return nameMatch ? nameMatch[1].trim() : 'غير محدد';
-        }
-
-        function extractAgeFromAnalysis(analysis) {
-            const ageMatch = analysis.match(/العمر[:\s]*(\d+)/i);
-            return ageMatch ? ageMatch[1] + ' سنة' : 'غير محدد';
-        }
-
-        function extractQualificationFromAnalysis(analysis) {
-            const qualMatch = analysis.match(/المؤهل[:\s]*([^\n]+)/i);
-            return qualMatch ? qualMatch[1].trim() : 'غير محدد';
-        }
-
-        function extractExperienceFromAnalysis(analysis) {
-            const expMatch = analysis.match(/الخبرة[:\s]*([^\n]+)/i);
-            return expMatch ? expMatch[1].trim() : 'غير محدد';
-        }
 
         function showCandidateCard() {
             if (currentCandidate) {
@@ -1202,6 +1359,7 @@
                 document.getElementById('candidateQualification').textContent = currentCandidate.qualification;
                 document.getElementById('candidateExperience').textContent = currentCandidate.experience;
                 document.getElementById('candidateCard').style.display = 'block';
+                 document.getElementById('evaluationResult').innerHTML = ''; // Clear previous evaluation
             }
         }
 
@@ -1213,26 +1371,39 @@
             }
 
             document.getElementById('evaluationLoading').classList.add('show');
-            
+            document.getElementById('evaluationResult').innerHTML = ''; // Use innerHTML
+
             try {
+                // Pass relevant candidate data to the API
+                const candidateDataForAPI = {
+                    name: currentCandidate.name,
+                    age: currentCandidate.age,
+                    qualification: currentCandidate.qualification,
+                    experience: currentCandidate.experience,
+                    fullAnalysis: currentCandidate.fullAnalysis // Include full analysis for context
+                };
+
                 const evaluation = await callGeminiAPI(
-                    `بيانات المرشح: ${JSON.stringify(currentCandidate)}`,
+                    `بيانات المرشح: ${JSON.stringify(candidateDataForAPI)}`,
                     SYSTEM_PROMPTS.candidateEvaluation
                 );
 
                 document.getElementById('evaluationLoading').classList.remove('show');
-                
-                const score = Math.floor(Math.random() * 30) + 70;
-                const scoreClass = score >= 85 ? 'score-high' : score >= 70 ? 'score-medium' : 'score-low';
-                
+
+                // Attempt to extract score from evaluation text, or use a fallback
+                let scoreMatch = evaluation.match(/نسبة التوافق:\s*(\d+)/);
+                let score = scoreMatch ? parseInt(scoreMatch[1]) : Math.floor(Math.random() * 30) + 70; // Fallback to random if not found
+
+                const scoreClass = score >= 85 ? 'score-high' : score >= (parseInt(document.getElementById('minScore').value) || 70) ? 'score-medium' : 'score-low'; // Use minScore setting
+
                 currentCandidate.score = score;
                 currentCandidate.evaluation = evaluation;
-                
+
                 document.getElementById('evaluationResult').innerHTML = `
                     <div class="compatibility-score ${scoreClass}">نسبة التوافق: ${score}%</div>
                     <div class="output-card" style="margin-top:15px;">
                         <h4 style="color:#764ba2; margin-bottom:8px;">تقييم الذكاء الاصطناعي</h4>
-                        <div style="white-space:pre-line; line-height:2;">${formatApiOutput(evaluation)}</div>
+                        ${formatApiOutput(evaluation)}
                     </div>
                 `;
 
@@ -1240,8 +1411,9 @@
 
             } catch (error) {
                 document.getElementById('evaluationLoading').classList.remove('show');
-                document.getElementById('evaluationResult').textContent = 'حدث خطأ في تقييم المرشح';
-                showNotification('حدث خطأ في تقييم المرشح', 'error');
+                // Notification is handled by callGeminiAPI
+                // document.getElementById('evaluationResult').textContent = 'حدث خطأ في تقييم المرشح';
+                // showNotification('حدث خطأ في تقييم المرشح', 'error');
             }
         }
 
@@ -1251,14 +1423,25 @@
                 return;
             }
 
-            candidates.push(currentCandidate);
+             // Check if candidate already exists (basic check by ID or name)
+             const existingIndex = candidates.findIndex(c => c.id === currentCandidate.id);
+             if (existingIndex > -1) {
+                 // Update existing candidate
+                 candidates[existingIndex] = currentCandidate;
+                 showNotification('تم تحديث بيانات المرشح بنجاح');
+             } else {
+                 // Add new candidate
+                 candidates.push(currentCandidate);
+                 showNotification('تم حفظ المرشح بنجاح');
+             }
+
+
             localStorage.setItem('candidates', JSON.stringify(candidates));
-            
+
             updateDashboard();
             loadCandidatesTable();
             updateCandidateSelect();
-            
-            showNotification('تم حفظ المرشح بنجاح');
+
         }
 
         // Candidates Management
@@ -1266,16 +1449,18 @@
             const tbody = document.getElementById('candidatesTableBody');
             tbody.innerHTML = '';
 
-            candidates.forEach(candidate => {
+            const filtered = filterCandidates(true); // Get filtered candidates without updating the table yet
+
+            filtered.forEach(candidate => { // Use filtered list
                 const row = document.createElement('tr');
-                const scoreClass = candidate.score >= 85 ? 'score-high' : 
-                                 candidate.score >= 70 ? 'score-medium' : 'score-low';
-                
+                const scoreClass = (candidate.score || 0) >= 85 ? 'score-high' :
+                                 (candidate.score || 0) >= (parseInt(document.getElementById('minScore').value) || 70) ? 'score-medium' : 'score-low'; // Use minScore setting
+
                 row.innerHTML = `
                     <td>${candidate.name}</td>
                     <td>${candidate.qualification}</td>
                     <td>${candidate.experience}</td>
-                    <td><span class="compatibility-score ${scoreClass}">${candidate.score || 0}%</span></td>
+                    <td>${candidate.score !== null ? `<span class="compatibility-score ${scoreClass}">${candidate.score}%</span>` : 'لم يتم التقييم'}</td>
                     <td>${getStatusText(candidate.status)}</td>
                     <td>${candidate.dateAdded}</td>
                     <td>
@@ -1297,25 +1482,28 @@
             return statusMap[status] || status;
         }
 
-        function filterCandidates() {
+        function filterCandidates(returnArray = false) { // Added parameter to optionally return array
             const searchTerm = document.getElementById('searchCandidates').value.toLowerCase();
             const scoreFilter = document.getElementById('filterByScore').value;
             const statusFilter = document.getElementById('filterByStatus').value;
+            const minScoreSetting = parseInt(document.getElementById('minScore').value) || 70;
 
             let filteredCandidates = candidates;
 
             if (searchTerm) {
-                filteredCandidates = filteredCandidates.filter(c => 
-                    c.name.toLowerCase().includes(searchTerm) ||
-                    c.qualification.toLowerCase().includes(searchTerm)
+                filteredCandidates = filteredCandidates.filter(c =>
+                    (c.name || '').toLowerCase().includes(searchTerm) ||
+                    (c.qualification || '').toLowerCase().includes(searchTerm) ||
+                    (c.experience || '').toLowerCase().includes(searchTerm)
                 );
             }
 
             if (scoreFilter) {
                 filteredCandidates = filteredCandidates.filter(c => {
-                    if (scoreFilter === 'high') return c.score >= 85;
-                    if (scoreFilter === 'medium') return c.score >= 70 && c.score < 85;
-                    if (scoreFilter === 'low') return c.score < 70;
+                    const score = c.score || 0;
+                    if (scoreFilter === 'high') return score >= 85;
+                    if (scoreFilter === 'medium') return score >= minScoreSetting && score < 85;
+                    if (scoreFilter === 'low') return score < minScoreSetting;
                     return true;
                 });
             }
@@ -1324,30 +1512,35 @@
                 filteredCandidates = filteredCandidates.filter(c => c.status === statusFilter);
             }
 
-            // Update table with filtered results
-            const tbody = document.getElementById('candidatesTableBody');
-            tbody.innerHTML = '';
+            if (returnArray) {
+                return filteredCandidates;
+            } else {
+                // Update table with filtered results
+                const tbody = document.getElementById('candidatesTableBody');
+                tbody.innerHTML = ''; // Clear table before adding filtered results
 
-            filteredCandidates.forEach(candidate => {
-                const row = document.createElement('tr');
-                const scoreClass = candidate.score >= 85 ? 'score-high' : 
-                                 candidate.score >= 70 ? 'score-medium' : 'score-low';
-                
-                row.innerHTML = `
-                    <td>${candidate.name}</td>
-                    <td>${candidate.qualification}</td>
-                    <td>${candidate.experience}</td>
-                    <td><span class="compatibility-score ${scoreClass}">${candidate.score || 0}%</span></td>
-                    <td>${getStatusText(candidate.status)}</td>
-                    <td>${candidate.dateAdded}</td>
-                    <td>
-                        <button class="btn" style="padding: 5px 10px; margin: 2px;" onclick="viewCandidate(${candidate.id})">عرض</button>
-                        <button class="btn btn-danger" style="padding: 5px 10px; margin: 2px;" onclick="deleteCandidate(${candidate.id})">حذف</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+                filteredCandidates.forEach(candidate => {
+                    const row = document.createElement('tr');
+                    const scoreClass = (candidate.score || 0) >= 85 ? 'score-high' :
+                                     (candidate.score || 0) >= minScoreSetting ? 'score-medium' : 'score-low';
+
+                    row.innerHTML = `
+                        <td>${candidate.name}</td>
+                        <td>${candidate.qualification}</td>
+                        <td>${candidate.experience}</td>
+                        <td>${candidate.score !== null ? `<span class="compatibility-score ${scoreClass}">${candidate.score}%</span>` : 'لم يتم التقييم'}</td>
+                        <td>${getStatusText(candidate.status)}</td>
+                        <td>${candidate.dateAdded}</td>
+                        <td>
+                            <button class="btn" style="padding: 5px 10px; margin: 2px;" onclick="viewCandidate(${candidate.id})">عرض</button>
+                            <button class="btn btn-danger" style="padding: 5px 10px; margin: 2px;" onclick="deleteCandidate(${candidate.id})">حذف</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
         }
+
 
         function viewCandidate(id) {
             const candidate = candidates.find(c => c.id === id);
@@ -1357,12 +1550,11 @@
                     <p><strong>العمر:</strong> ${candidate.age}</p>
                     <p><strong>المؤهل:</strong> ${candidate.qualification}</p>
                     <p><strong>الخبرة:</strong> ${candidate.experience}</p>
-                    <p><strong>النقاط:</strong> ${candidate.score || 0}%</p>
+                    <p><strong>النقاط:</strong> ${candidate.score !== null ? candidate.score + '%' : 'لم يتم التقييم'}</p>
                     <p><strong>الحالة:</strong> ${getStatusText(candidate.status)}</p>
-                    <h3>التحليل الكامل:</h3>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; white-space: pre-wrap;">${candidate.fullAnalysis}</div>
-                    ${candidate.evaluation ? `<h3>التقييم:</h3><div style="background: #f8f9fa; padding: 15px; border-radius: 8px; white-space: pre-wrap;">${candidate.evaluation}</div>` : ''}
-                `;
+                    ${candidate.fullAnalysis ? `<h3>التحليل الكامل:</h3><div class="output-card">${formatApiOutput(candidate.fullAnalysis)}</div>` : ''}
+                    ${candidate.evaluation ? `<h3>التقييم:</h3><div class="output-card">${formatApiOutput(candidate.evaluation)}</div>` : ''}
+                `; // Use output-card and formatApiOutput for modal content
                 document.getElementById('modal').style.display = 'block';
             }
         }
@@ -1392,31 +1584,32 @@
         // Interview Questions Generation
         async function generateQuestions() {
             const jobDescription = document.getElementById('jobDescription').value;
-            
+
             if (!jobDescription.trim()) {
                 showNotification('يرجى إدخال وصف الوظيفة أولاً', 'error');
                 return;
             }
 
             document.getElementById('questionsLoading').classList.add('show');
-            document.getElementById('questionsList').innerHTML = '';
+            document.getElementById('questionsList').innerHTML = ''; // Use innerHTML
 
             try {
                 const questions = await callGeminiAPI(jobDescription, SYSTEM_PROMPTS.questionGeneration);
-                
+
                 document.getElementById('questionsLoading').classList.remove('show');
                 document.getElementById('questionsList').innerHTML = `
                     <div class="output-card">
                         <h4 style="color:#667eea; margin-bottom:8px;">أسئلة المقابلة المقترحة</h4>
-                        <div style="white-space:pre-line; line-height:2;">${formatApiOutput(questions)}</div>
+                        ${formatApiOutput(questions)}
                     </div>
-                `;
+                `; // Use formatApiOutput
                 showNotification('تم توليد الأسئلة بنجاح');
 
             } catch (error) {
                 document.getElementById('questionsLoading').classList.remove('show');
-                document.getElementById('questionsList').textContent = 'حدث خطأ في توليد الأسئلة';
-                showNotification('حدث خطأ في توليد الأسئلة', 'error');
+                // Notification handled by callGeminiAPI
+                // document.getElementById('questionsList').textContent = 'حدث خطأ في توليد الأسئلة';
+                // showNotification('حدث خطأ في توليد الأسئلة', 'error');
             }
         }
 
@@ -1442,7 +1635,7 @@
                             finalTranscript += event.results[i][0].transcript;
                         }
                     }
-                    
+
                     if (finalTranscript) {
                         handleVoiceInput(finalTranscript);
                     }
@@ -1451,19 +1644,38 @@
                 recognition.onerror = function(event) {
                     console.error('Speech recognition error:', event.error);
                     showNotification('خطأ في التعرف على الصوت', 'error');
+                     document.getElementById('voiceStatus').textContent = 'خطأ';
+                     document.getElementById('voiceStatus').style.background = '#fdecea';
+                     document.getElementById('voiceStatus').style.color = '#e74c3c';
+                     isInterviewActive = false; // Stop interview on error
+                     document.getElementById('startInterviewBtn').disabled = false;
+                     document.getElementById('stopInterviewBtn').disabled = true;
                 };
 
                 recognition.onend = function() {
                     document.getElementById('voiceStatus').textContent = 'متوقف';
                     document.getElementById('voiceStatus').style.background = '#ffeaa7';
                     document.getElementById('voiceStatus').style.color = '#d63031';
-                    
+
                     if (isInterviewActive) {
+                        // Attempt to restart recognition if it stopped unexpectedly
                         setTimeout(() => {
-                            recognition.start();
+                             try {
+                                recognition.start();
+                             } catch (e) {
+                                 console.error("Error restarting recognition:", e);
+                                 showNotification('تعذر إعادة تشغيل التعرف على الصوت', 'error');
+                                 stopVoiceInterview(); // Stop if restart fails
+                             }
                         }, 1000);
                     }
                 };
+            } else {
+                 document.getElementById('voiceStatus').textContent = 'غير مدعوم';
+                 document.getElementById('voiceStatus').style.background = '#fdecea';
+                 document.getElementById('voiceStatus').style.color = '#e74c3c';
+                 document.getElementById('startInterviewBtn').disabled = true;
+                 showNotification('المتصفح لا يدعم التعرف على الصوت', 'error');
             }
         }
 
@@ -1472,28 +1684,45 @@
                 showNotification('المتصفح لا يدعم التعرف على الصوت', 'error');
                 return;
             }
-            
+
             isInterviewActive = true;
             currentQuestionIndex = 0;
-            
+
             document.getElementById('startInterviewBtn').disabled = true;
             document.getElementById('stopInterviewBtn').disabled = false;
-            
-            askNextQuestion();
-            recognition.start();
+             document.getElementById('voiceChat').innerHTML = ''; // Clear previous chat
+
+            addVoiceMessage('مرحباً بك في المقابلة المبدئية. سأطرح عليك بعض الأسئلة العامة. تحدث بوضوح وسأقوم بالاستماع إليك.', 'ai');
+
+            // Wait a moment before asking the first question
+            setTimeout(() => {
+                 askNextQuestion();
+                 try {
+                    recognition.start();
+                 } catch (e) {
+                     console.error("Error starting recognition:", e);
+                     showNotification('تعذر بدء التعرف على الصوت', 'error');
+                     stopVoiceInterview();
+                 }
+            }, 1500);
+
             showNotification('تم بدء المقابلة الصوتية');
         }
 
         function stopVoiceInterview() {
             isInterviewActive = false;
-            
+
             if (recognition) {
-                recognition.stop();
+                 try {
+                    recognition.stop();
+                 } catch (e) {
+                     console.error("Error stopping recognition:", e);
+                 }
             }
-            
+
             document.getElementById('startInterviewBtn').disabled = false;
             document.getElementById('stopInterviewBtn').disabled = true;
-            
+
             addVoiceMessage('شكراً لك على إجراء المقابلة. سيتم مراجعة إجاباتك وسنتواصل معك قريباً.', 'ai');
             showNotification('تم إنهاء المقابلة الصوتية');
         }
@@ -1508,25 +1737,30 @@
             }
         }
 
-        function handleVoiceInput(transcript) {
+        async function handleVoiceInput(transcript) {
             addVoiceMessage(transcript, 'user');
-            
+
+            // Simulate AI processing time
             setTimeout(async () => {
                 try {
+                    // Send the user's transcript to the chat assistant API
                     const response = await callGeminiAPI(
                         `إجابة المتقدم: "${transcript}". قم بتقييم الإجابة وتقديم تعليق مختصر.`,
-                        SYSTEM_PROMPTS.chatAssistant
+                        SYSTEM_PROMPTS.chatAssistant // Use chat assistant prompt for evaluation feedback
                     );
-                    
+
                     addVoiceMessage(response, 'ai');
-                    
+
+                    // Wait a moment before asking the next question
                     setTimeout(() => {
                         if (isInterviewActive) {
                             askNextQuestion();
                         }
-                    }, 2000);
-                    
+                    }, 2000); // Wait 2 seconds before next question
+
                 } catch (error) {
+                    console.error("Error processing voice input with API:", error);
+                    // If API fails, just move to the next question
                     addVoiceMessage('شكراً لإجابتك. دعنا ننتقل للسؤال التالي.', 'ai');
                     setTimeout(() => {
                         if (isInterviewActive) {
@@ -1534,7 +1768,7 @@
                         }
                     }, 2000);
                 }
-            }, 1000);
+            }, 1000); // Simulate 1 second processing delay
         }
 
         function addVoiceMessage(message, sender) {
@@ -1544,18 +1778,25 @@
             messageDiv.style.padding = '10px 15px';
             messageDiv.style.borderRadius = '10px';
             messageDiv.style.maxWidth = '80%';
-            
+
             if (sender === 'user') {
                 messageDiv.style.background = '#667eea';
                 messageDiv.style.color = 'white';
                 messageDiv.style.marginRight = 'auto';
+                messageDiv.textContent = message; // User message is plain text
             } else {
-                messageDiv.style.background = 'white';
-                messageDiv.style.border = '1px solid #e0e0e0';
-                messageDiv.style.marginLeft = 'auto';
+                // AI message uses output-card styling
+                messageDiv.className = 'output-card'; // Apply the class
+                messageDiv.style.marginLeft = 'auto'; // Keep alignment
+                // Remove conflicting inline styles if output-card provides them
+                messageDiv.style.background = '';
+                messageDiv.style.border = '';
+                messageDiv.style.padding = '';
+                messageDiv.style.margin = '';
+
+                messageDiv.innerHTML = formatApiOutput(message); // Use innerHTML for formatted output
             }
-            
-            messageDiv.textContent = message;
+
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -1564,16 +1805,17 @@
         async function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
-            
+
             if (!message) return;
-            
+
             addChatMessage(message, 'user');
             input.value = '';
-            
+
             try {
                 const response = await callGeminiAPI(message, SYSTEM_PROMPTS.chatAssistant);
-                addChatMessage(formatApiOutput(response, true), 'ai');
+                addChatMessage(response, 'ai'); // formatApiOutput is called inside addChatMessage
             } catch (error) {
+                 console.error("Error sending chat message:", error);
                 addChatMessage('عذراً، حدث خطأ. يرجى المحاولة مرة أخرى.', 'ai');
             }
         }
@@ -1581,22 +1823,28 @@
         function addChatMessage(message, sender) {
             const chatContainer = document.getElementById('chatContainer');
             const messageDiv = document.createElement('div');
-            messageDiv.style.marginBottom = '15px';
-            messageDiv.style.padding = '10px 15px';
-            messageDiv.style.borderRadius = '10px';
-            messageDiv.style.maxWidth = '80%';
-            
+            messageDiv.style.marginBottom = '15px'; // Keep margin-bottom for spacing between messages
+            messageDiv.style.maxWidth = '80%'; // Keep max-width
+
             if (sender === 'user') {
+                messageDiv.style.padding = '10px 15px';
+                messageDiv.style.borderRadius = '10px';
                 messageDiv.style.background = '#667eea';
                 messageDiv.style.color = 'white';
                 messageDiv.style.marginRight = 'auto';
+                messageDiv.textContent = message;
             } else {
-                messageDiv.style.background = 'white';
-                messageDiv.style.border = '1px solid #e0e0e0';
-                messageDiv.style.marginLeft = 'auto';
+                messageDiv.className = 'output-card'; // Use the class for styling
+                messageDiv.style.marginLeft = 'auto'; // Keep margin-left for alignment
+                 // Remove conflicting inline styles if output-card provides them
+                messageDiv.style.background = '';
+                messageDiv.style.border = '';
+                messageDiv.style.padding = '';
+                messageDiv.style.margin = '';
+
+                messageDiv.innerHTML = formatApiOutput(message); // Use innerHTML for formatted output
             }
-            
-            messageDiv.textContent = message;
+
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
@@ -1604,13 +1852,26 @@
         // Skills Test Functions
         function generateSkillsTest() {
             const testType = document.getElementById('testType').value;
-            if (!testType) return;
+            if (!testType) {
+                 document.getElementById('skillsTestContainer').innerHTML = '';
+                 document.getElementById('submitTestBtn').style.display = 'none';
+                 document.getElementById('testResults').style.display = 'none';
+                 return;
+            }
 
             const questions = skillsTests[testType] || [];
             const container = document.getElementById('skillsTestContainer');
-            
+
             container.innerHTML = '';
-            skillsTestAnswers = [];
+            skillsTestAnswers = []; // Reset answers
+
+            if (questions.length === 0) {
+                 container.innerHTML = '<p>لا توجد أسئلة متاحة لهذا النوع من الاختبار حالياً.</p>';
+                 document.getElementById('submitTestBtn').style.display = 'none';
+                 document.getElementById('testResults').style.display = 'none';
+                 return;
+            }
+
 
             questions.forEach((q, index) => {
                 const questionDiv = document.createElement('div');
@@ -1630,6 +1891,7 @@
             });
 
             document.getElementById('submitTestBtn').style.display = 'block';
+             document.getElementById('testResults').style.display = 'none'; // Hide previous results
         }
 
         function submitSkillsTest() {
@@ -1637,6 +1899,7 @@
             const questions = skillsTests[testType] || [];
             let score = 0;
             let answers = [];
+            let allAnswered = true;
 
             questions.forEach((q, index) => {
                 const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
@@ -1646,19 +1909,28 @@
                     if (answer === q.correct) {
                         score++;
                     }
+                } else {
+                    allAnswered = false;
                 }
             });
 
-            const percentage = Math.round((score / questions.length) * 100);
+            if (!allAnswered) {
+                 showNotification('يرجى الإجابة على جميع الأسئلة قبل الإرسال.', 'error');
+                 return;
+            }
+
+            skillsTestAnswers = answers; // Store answers
+
+            const percentage = questions.length > 0 ? Math.round((score / questions.length) * 100) : 0;
             const resultDiv = document.getElementById('testResults');
-            
+
             resultDiv.innerHTML = `
                 <h3>نتائج الاختبار</h3>
                 <p><strong>النقاط:</strong> ${score} من ${questions.length}</p>
                 <p><strong>النسبة المئوية:</strong> ${percentage}%</p>
                 <p><strong>التقييم:</strong> ${percentage >= 80 ? 'ممتاز' : percentage >= 60 ? 'جيد' : 'يحتاج تحسين'}</p>
             `;
-            
+
             resultDiv.style.display = 'block';
             showNotification('تم إرسال الاختبار بنجاح');
         }
@@ -1667,7 +1939,8 @@
         function startPsychologicalTest() {
             currentPsychQuestion = 0;
             psychAnswers = [];
-            
+             document.getElementById('psychResults').style.display = 'none'; // Hide previous results
+
             document.getElementById('psychTestContainer').style.display = 'block';
             showPsychQuestion();
         }
@@ -1680,7 +1953,7 @@
 
             const question = psychQuestions[currentPsychQuestion];
             const container = document.getElementById('psychQuestions');
-            
+
             container.innerHTML = `
                 <div class="question">
                     <h4>السؤال ${currentPsychQuestion + 1} من ${psychQuestions.length}</h4>
@@ -1705,18 +1978,28 @@
                 </div>
             `;
 
+             // Pre-select answer if already exists
+             if (psychAnswers[currentPsychQuestion] !== undefined) {
+                 const valueToSelect = psychAnswers[currentPsychQuestion];
+                 const radio = document.querySelector(`input[name="psychAnswer"][value="${valueToSelect}"]`);
+                 if (radio) {
+                     radio.checked = true;
+                 }
+             }
+
+
             updatePsychProgress();
             updatePsychButtons();
         }
 
         function updatePsychProgress() {
-            const progress = ((currentPsychQuestion + 1) / psychQuestions.length) * 100;
+            const progress = ((currentPsychQuestion) / psychQuestions.length) * 100; // Progress based on completed questions
             document.getElementById('psychProgress').style.width = progress + '%';
         }
 
         function updatePsychButtons() {
             document.getElementById('prevPsychBtn').disabled = currentPsychQuestion === 0;
-            document.getElementById('nextPsychBtn').textContent = 
+            document.getElementById('nextPsychBtn').textContent =
                 currentPsychQuestion === psychQuestions.length - 1 ? 'إنهاء' : 'التالي';
         }
 
@@ -1739,22 +2022,34 @@
 
         function prevPsychQuestion() {
             if (currentPsychQuestion > 0) {
+                 const selectedAnswer = document.querySelector('input[name="psychAnswer"]:checked');
+                 if (selectedAnswer) {
+                     psychAnswers[currentPsychQuestion] = parseInt(selectedAnswer.value); // Save current answer before moving back
+                 }
                 currentPsychQuestion--;
                 showPsychQuestion();
             }
         }
 
         function showPsychResults() {
+             if (psychAnswers.length === 0) {
+                 document.getElementById('psychTestContainer').style.display = 'none';
+                 document.getElementById('psychResults').innerHTML = '<p>لم يتم إكمال التقييم النفسي.</p>';
+                 document.getElementById('psychResults').style.display = 'block';
+                 return;
+             }
             const avgScore = psychAnswers.reduce((sum, score) => sum + score, 0) / psychAnswers.length;
-            const personality = avgScore >= 4 ? 'شخصية قيادية' : 
-                              avgScore >= 3 ? 'شخصية متوازنة' : 'شخصية تحتاج تطوير';
+            const personality = avgScore >= 4.5 ? 'شخصية قيادية ومبادرة' :
+                              avgScore >= 4 ? 'شخصية قيادية' :
+                              avgScore >= 3.5 ? 'شخصية متوازنة ومستقرة' :
+                              avgScore >= 3 ? 'شخصية متوازنة' : 'شخصية تحتاج تطوير في بعض الجوانب';
 
             document.getElementById('psychTestContainer').style.display = 'none';
             document.getElementById('psychResults').innerHTML = `
                 <h3>نتائج التقييم النفسي</h3>
                 <p><strong>المتوسط العام:</strong> ${avgScore.toFixed(1)} من 5</p>
                 <p><strong>نوع الشخصية:</strong> ${personality}</p>
-                <p><strong>التوصية:</strong> ${avgScore >= 3.5 ? 'مناسب للعمل الحكومي' : 'يحتاج تدريب إضافي'}</p>
+                <p><strong>التوصية:</strong> ${avgScore >= 3.5 ? 'مناسب للعمل الحكومي ويتكيف مع البيئة التنظيمية' : 'يحتاج تدريب إضافي على التكيف والتعامل مع الضغوط'}</p>
             `;
             document.getElementById('psychResults').style.display = 'block';
             showNotification('تم إكمال التقييم النفسي');
@@ -1762,19 +2057,27 @@
 
         // Reports Functions
         function generateMonthlyReport() {
+            const totalCandidates = candidates.length;
+            const qualifiedCandidates = candidates.filter(c => (c.score || 0) >= (parseInt(document.getElementById('minScore').value) || 70)).length;
+            const interviewsCompleted = candidates.filter(c => c.interviewed).length;
+            const avgScore = totalCandidates > 0 ?
+                Math.round(candidates.reduce((sum, c) => sum + (c.score || 0), 0) / totalCandidates) : 0;
+
+            const topCandidates = candidates.filter(c => c.score !== null).sort((a, b) => b.score - a.score).slice(0, 5);
+
             const report = `
-تقرير شهري - ${new Date().toLocaleDateString('ar-SA')}
+## تقرير شهري - ${new Date().toLocaleDateString('ar-SA')}
 
-إجمالي المرشحين: ${candidates.length}
-المرشحين المؤهلين: ${candidates.filter(c => c.score >= 70).length}
-المقابلات المكتملة: ${candidates.filter(c => c.interviewed).length}
-متوسط النقاط: ${candidates.length > 0 ? Math.round(candidates.reduce((sum, c) => sum + (c.score || 0), 0) / candidates.length) : 0}%
+- **إجمالي المرشحين**: ${totalCandidates}
+- **المرشحين المؤهلين**: ${qualifiedCandidates}
+- **المقابلات المكتملة**: ${interviewsCompleted}
+- **متوسط النقاط**: ${avgScore}%
 
-أفضل المرشحين:
-${candidates.sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 5).map(c => `- ${c.name}: ${c.score || 0}%`).join('\n')}
-            `;
+## أفضل المرشحين (أعلى 5 نقاط)
+${topCandidates.length > 0 ? topCandidates.map(c => `- ${c.name}: ${c.score}%`).join('\n') : '- لا يوجد مرشحون مقيمون بعد.'}
+            `; // Use Markdown formatting
 
-            document.getElementById('reportOutput').textContent = report;
+            document.getElementById('reportOutput').innerHTML = formatApiOutput(report); // Use innerHTML and formatApiOutput
             document.getElementById('reportOutput').style.display = 'block';
             showNotification('تم توليد التقرير الشهري');
         }
@@ -1790,65 +2093,67 @@ ${candidates.sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 5).map(c =
                 departments[dept].totalScore += c.score || 0;
             });
 
-            let report = 'تقرير حسب القسم\n\n';
+            let report = '## تقرير حسب القسم\n\n'; // Use Markdown heading
             Object.keys(departments).forEach(dept => {
                 const data = departments[dept];
                 const avgScore = data.count > 0 ? Math.round(data.totalScore / data.count) : 0;
-                report += `${dept}: ${data.count} مرشح، متوسط النقاط: ${avgScore}%\n`;
+                report += `- **${dept}**: ${data.count} مرشح، متوسط النقاط: ${avgScore}%\n`; // Use Markdown list and bold
             });
 
-            document.getElementById('reportOutput').textContent = report;
+            document.getElementById('reportOutput').innerHTML = formatApiOutput(report); // Use innerHTML and formatApiOutput
             document.getElementById('reportOutput').style.display = 'block';
             showNotification('تم توليد تقرير الأقسام');
         }
 
         function generateSkillsReport() {
+             // This report is based on static/example data in the original code.
+             // To make it dynamic, you would need to extract skills from candidate analysis.
+             // For now, keeping it based on the original structure but using Markdown.
             const report = `
-تقرير المهارات
+## تقرير المهارات
 
-المهارات الأكثر طلباً:
-- البرمجة: 45%
-- الإدارة: 30%
-- التواصل: 25%
+- **المهارات الأكثر طلباً (مثال)**:
+    - البرمجة: 45%
+    - الإدارة: 30%
+    - التواصل: 25%
 
-توزيع المرشحين حسب المهارات:
-- تقني: ${candidates.filter(c => c.qualification.includes('هندسة') || c.qualification.includes('حاسوب')).length}
-- إداري: ${candidates.filter(c => c.qualification.includes('إدارة') || c.qualification.includes('أعمال')).length}
-- أخرى: ${candidates.filter(c => !c.qualification.includes('هندسة') && !c.qualification.includes('حاسوب') && !c.qualification.includes('إدارة') && !c.qualification.includes('أعمال')).length}
-            `;
+- **توزيع المرشحين حسب المهارات (مثال بناءً على المؤهل)**:
+    - تقني: ${candidates.filter(c => (c.qualification || '').includes('هندسة') || (c.qualification || '').includes('حاسوب')).length}
+    - إداري: ${candidates.filter(c => (c.qualification || '').includes('إدارة') || (c.qualification || '').includes('أعمال')).length}
+    - أخرى: ${candidates.filter(c => !(c.qualification || '').includes('هندسة') && !(c.qualification || '').includes('حاسوب') && !(c.qualification || '').includes('إدارة') && !(c.qualification || '').includes('أعمال')).length}
+            `; // Use Markdown formatting
 
-            document.getElementById('reportOutput').textContent = report;
+            document.getElementById('reportOutput').innerHTML = formatApiOutput(report); // Use innerHTML and formatApiOutput
             document.getElementById('reportOutput').style.display = 'block';
             showNotification('تم توليد تقرير المهارات');
         }
 
         function exportAllReports() {
-            const reports = {
-                monthly: 'التقرير الشهري...',
-                departments: 'تقرير الأقسام...',
-                skills: 'تقرير المهارات...',
-                candidates: candidates
-            };
+             // Generate reports as text/markdown first
+             const monthlyReportText = document.getElementById('reportOutput').textContent; // Get current report text
+             // You might want to generate all reports here if they aren't already displayed
+             // For simplicity, let's just export the current candidates data as JSON as before.
+             // A more robust solution would generate all reports into a single document or multiple files.
 
-            const dataStr = JSON.stringify(reports, null, 2);
+            const dataStr = JSON.stringify(candidates, null, 2); // Export candidates data
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'all_reports.json';
+            link.download = 'all_data_and_reports.json'; // Changed filename
             link.click();
-            showNotification('تم تصدير جميع التقارير');
+            showNotification('تم تصدير بيانات المرشحين (كمثال للتقارير)'); // Updated notification
         }
 
         // Final Recommendation
         function updateCandidateSelect() {
             const select = document.getElementById('candidateSelect');
             select.innerHTML = '<option value="">اختر مرشحاً</option>';
-            
+
             candidates.forEach(candidate => {
                 const option = document.createElement('option');
                 option.value = candidate.id;
-                option.textContent = candidate.name;
+                option.textContent = candidate.name + (candidate.score !== null ? ` (${candidate.score}%)` : ''); // Add score to option text
                 select.appendChild(option);
             });
         }
@@ -1867,11 +2172,23 @@ ${candidates.sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 5).map(c =
             }
 
             document.getElementById('recommendationLoading').classList.add('show');
-            document.getElementById('recommendationOutput').innerHTML = '';
+            document.getElementById('recommendationOutput').innerHTML = ''; // Use innerHTML
 
             try {
+                // Pass comprehensive data to the API
+                const candidateDataForAPI = {
+                    name: candidate.name,
+                    qualification: candidate.qualification,
+                    experience: candidate.experience,
+                    score: candidate.score,
+                    status: candidate.status,
+                    fullAnalysis: candidate.fullAnalysis,
+                    evaluation: candidate.evaluation,
+                    // Add other relevant data like test scores, interview notes if available
+                };
+
                 const recommendation = await callGeminiAPI(
-                    `بيانات المرشح الكاملة: ${JSON.stringify(candidate)}`,
+                    `بيانات المرشح الكاملة: ${JSON.stringify(candidateDataForAPI)}`,
                     SYSTEM_PROMPTS.finalRecommendation
                 );
 
@@ -1879,43 +2196,156 @@ ${candidates.sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 5).map(c =
                 document.getElementById('recommendationOutput').innerHTML = `
                     <div class="output-card">
                         <h4 style="color:#27ae60; margin-bottom:8px;">التوصية النهائية للمرشح</h4>
-                        <div style="white-space:pre-line; line-height:2;">${formatApiOutput(recommendation)}</div>
+                        ${formatApiOutput(recommendation)}
                     </div>
-                `;
+                `; // Use formatApiOutput
                 showNotification('تم توليد التوصية النهائية');
 
             } catch (error) {
                 document.getElementById('recommendationLoading').classList.remove('show');
-                document.getElementById('recommendationOutput').textContent = 'حدث خطأ في توليد التوصية';
-                showNotification('حدث خطأ في توليد التوصية', 'error');
+                 // Notification handled by callGeminiAPI
+                // document.getElementById('recommendationOutput').textContent = 'حدث خطأ في توليد التوصية';
+                // showNotification('حدث خطأ في توليد التوصية', 'error');
             }
         }
 
-        // دالة تنسيق مخرجات الـ API
-        function formatApiOutput(text, isChat = false) {
-            // تحويل القوائم إلى عناصر HTML
-            let formatted = text
-                .replace(/^- /gm, '<li style="margin-bottom:6px;">')
-                .replace(/\n- /g, '</li><li style="margin-bottom:6px;">')
-                .replace(/\n/g, '<br>')
-                .replace(/<li/g, '<ul style="padding-right:20px; margin:10px 0;"><li')
-                .replace(/<\/li>/g, '</li></ul>');
-            // إبراز العناوين
-            formatted = formatted.replace(/([^\n:]+):/g, '<span style="color:#764ba2;font-weight:bold;">$1:</span>');
-            // للمساعد الذكي فقط: تغليف الرد في card
-            if (isChat) {
-                formatted = `<div class="output-card" style="background:#f8f9fa; border:1px solid #e0e0e0; border-radius:8px; padding:12px; margin-bottom:8px;">${formatted}</div>`;
+        // دالة تنسيق مخرجات الـ API (Markdown to HTML)
+        function formatApiOutput(text) {
+            if (!text) return '';
+
+            let html = text;
+
+            // Convert Markdown bold **text** to <strong>text</strong>
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+            // Convert Markdown headings ## Heading to <h2>Heading</h2>
+            html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
+
+            // Handle lists and paragraphs by splitting into blocks
+            const blocks = html.split('\n\n'); // Split by double newline for paragraphs/blocks
+            let formattedBlocks = blocks.map(block => {
+                if (block.trim() === '') return ''; // Handle empty blocks
+
+                // Check for lists
+                if (block.startsWith('- ')) {
+                    const items = block.split('\n').map(item => `<li>${item.substring(2).trim()}</li>`).join('');
+                    return `<ul style="padding-right: 20px; margin: 10px 0;">${items}</ul>`;
+                } else if (block.match(/^\d+\. /)) {
+                    const items = block.split('\n').map(item => `<li>${item.substring(item.indexOf('.') + 1).trim()}</li>`).join('');
+                    return `<ol style="padding-right: 20px; margin: 10px 0;">${items}</ol>`;
+                } else if (block.startsWith('<h2>')) {
+                     // Headings are already converted by the global replace, just return the block
+                     return block;
+                }
+                else {
+                    // Treat as a paragraph, replace single newlines within the block with <br>
+                    return `<p>${block.replace(/\n/g, '<br>')}</p>`;
+                }
+            });
+
+            // Join blocks back together
+            html = formattedBlocks.join('\n');
+
+            return html;
+        }
+
+
+        // Notification Functions
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification show'; // Reset classes and add show
+            if (type === 'error') {
+                notification.classList.add('error');
             }
-            return formatted;
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // Modal Functions
+        function openModal(contentHtml) {
+             document.getElementById('modalContent').innerHTML = contentHtml;
+             document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+             document.getElementById('modalContent').innerHTML = ''; // Clear content on close
         }
 
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('modal');
             if (event.target === modal) {
-                modal.style.display = 'none';
+                closeModal();
             }
         }
+
+         // Settings Functions
+         function saveSettings() {
+             const settings = {
+                 questionsCount: parseInt(document.getElementById('questionsCount').value) || 10,
+                 minScore: parseInt(document.getElementById('minScore').value) || 70,
+                 // systemLanguage: document.getElementById('systemLanguage').value // Language not fully implemented
+             };
+             localStorage.setItem('settings', JSON.stringify(settings));
+             showNotification('تم حفظ الإعدادات بنجاح');
+             updateDashboard(); // Update dashboard based on new min score
+         }
+
+         function exportSettings() {
+             const settings = localStorage.getItem('settings') || '{}';
+             const dataBlob = new Blob([settings], {type: 'application/json'});
+             const url = URL.createObjectURL(dataBlob);
+             const link = document.createElement('a');
+             link.href = url;
+             link.download = 'ai_recruitment_settings.json';
+             link.click();
+             showNotification('تم تصدير الإعدادات');
+         }
+
+         function importSettings() {
+             const fileInput = document.createElement('input');
+             fileInput.type = 'file';
+             fileInput.accept = '.json';
+             fileInput.onchange = async (e) => {
+                 const file = e.target.files[0];
+                 if (file) {
+                     try {
+                         const reader = new FileReader();
+                         reader.onload = (event) => {
+                             try {
+                                 const importedSettings = JSON.parse(event.target.result);
+                                 localStorage.setItem('settings', JSON.stringify(importedSettings));
+                                 initializeApp(); // Re-initialize app with new settings
+                                 showNotification('تم استيراد الإعدادات بنجاح');
+                             } catch (parseError) {
+                                 showNotification('خطأ في قراءة ملف الإعدادات.', 'error');
+                             }
+                         };
+                         reader.readAsText(file);
+                     } catch (readError) {
+                         showNotification('خطأ في قراءة الملف.', 'error');
+                     }
+                 }
+             };
+             fileInput.click();
+         }
+
+         function clearAllData() {
+             if (confirm('هل أنت متأكد من مسح جميع بيانات المرشحين والإعدادات؟ لا يمكن التراجع عن هذا الإجراء.')) {
+                 localStorage.removeItem('candidates');
+                 localStorage.removeItem('settings');
+                 candidates = []; // Clear in-memory array
+                 updateDashboard();
+                 loadCandidatesTable();
+                 updateCandidateSelect();
+                 initializeApp(); // Reset settings inputs
+                 showNotification('تم مسح جميع البيانات بنجاح');
+             }
+         }
     </script>
 </body>
 </html>
