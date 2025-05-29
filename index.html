@@ -1,341 +1,97 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نظام الذكاء الاصطناعي لاستقطاب المواهب - مقدم من مشرقة AI</title>
-
-  <!-- ============  CSS  ============ -->
-  <style>
-    :root {
-      --primary: #0047ab;       /* أزرق حكومي */
-      --secondary: #ffb703;     /* برتقالي مشرِق */
-      --light: #f5f6fa;
-      --dark: #1e1e1e;
-      --radius: 10px;
-    }
-
-    * {box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,sans-serif;}
-
-    body{
-      background:var(--light);
-      color:var(--dark);
-      line-height:1.7;
-    }
-
-    header{
-      background:var(--primary);
-      color:#fff;
-      padding:2rem 1rem;
-      text-align:center;
-    }
-    header h1{font-size:clamp(1.5rem,3vw,2.5rem);margin-bottom:.5rem}
-    header p{opacity:.9}
-
-    section{
-      background:#fff;
-      margin:1.5rem auto;
-      padding:2rem 1.5rem;
-      border-radius:var(--radius);
-      width:min(100% - 2rem, 1000px);
-      box-shadow:0 4px 8px rgba(0,0,0,.05);
-      display:flex;
-      flex-direction:column;
-      gap:1rem;
-    }
-    h2{
-      color:var(--primary);
-      font-size:1.4rem;
-      border-right:4px solid var(--secondary);
-      padding-right:.5rem;
-      margin-bottom:.5rem;
-    }
-
-    /* عناصر الإدخال والأزرار */
-    input[type="file"],
-    textarea,
-    input[type="text"]{
-      width:100%;
-      padding:.7rem;
-      border:1px solid #ccc;
-      border-radius:var(--radius);
-      background:#fafafa;
-      resize:vertical;
-    }
-    button{
-      background:var(--secondary);
-      border:none;
-      padding:.7rem 1.5rem;
-      color:#000;
-      font-weight:600;
-      border-radius:var(--radius);
-      cursor:pointer;
-      transition:.3s;
-      align-self:flex-start;
-    }
-    button:hover{background:#ffd272}
-
-    .output,
-    .card,
-    .chat-window{
-      background:var(--light);
-      border:1px dashed #c3c3c3;
-      padding:1rem;
-      border-radius:var(--radius);
-      min-height:60px;
-    }
-
-    /* بطاقة المرشح */
-    .card{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-      gap:1rem;
-    }
-    .card div{display:flex;flex-direction:column}
-    .score{font-size:2rem;color:var(--primary);font-weight:700}
-
-    /* الرسائل */
-    .chat-window{
-      max-height:230px;
-      overflow:auto;
-      display:flex;
-      flex-direction:column;
-      gap:.5rem;
-    }
-    .msg{
-      background:#fff;
-      padding:.5rem 1rem;
-      border-radius:var(--radius);
-      max-width:80%;
-    }
-    .user{align-self:flex-end;background:var(--secondary)}
-    .bot{align-self:flex-start;background:#e1ecff}
-
-    /* Responsive tweaks */
-    @media(max-width:600px){
-      section{padding:1.5rem 1rem}
-      .card{grid-template-columns:1fr 1fr}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>النماذج المبدئية لنظام استقطاب المواهب - مشرقة AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        .models-grid {
+            display: grid;
+            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        .model-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease;
+        }
+        .model-card:hover {
+            transform: translateY(-5px);
+        }
+        .model-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .model-desc {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+    </style>
 </head>
 <body>
-
-  <!-- ============  HEADER  ============ -->
-  <header>
-    <h1>نظام الذكاء الاصطناعي لاستقطاب المواهب</h1>
-    <p>مقدَّم من شركة <b>مشرقة AI</b></p>
-  </header>
-
-  <!-- ============  1. تعريف النظام  ============ -->
-  <section id="intro">
-    <h2>تعريف النظام</h2>
-    <p>
-      نظام الذكاء الاصطناعي الخاص بنا هو حل تقني متقدم مصمم لتحويل عمليات استقطاب المواهب
-      في الجهات الحكومية إلى عمليات ذكية، مؤتمتة، وسريعة. يعتمد النظام على قدرات متقدمة
-      في تحليل البيانات، التنبؤ، وتوليد المحتوى لمساعدة فرق الموارد البشرية على اتخاذ
-      قرارات دقيقة بكفاءة أعلى.
-    </p>
-  </section>
-
-  <!-- ============  2. استقبال السير الذاتية  ============ -->
-  <section id="upload">
-    <h2>استقبال السير الذاتية من المتقدمين</h2>
-
-    <input id="cvInput" type="file" accept=".pdf,.doc,.docx" />
-    <button id="analyzeCv">تحليل السيرة الذاتية</button>
-
-    <div id="cvOutput" class="output"></div>
-
-    <!--
-      // INPUT: ملف السيرة الذاتية (PDF / Word) من المستخدم.
-      // PROCESS: upload → extract text → send to Gemini API → get summarized profile.
-      // OUTPUT: ملخص ذكي (المؤهلات – الخبرة – نقاط القوة).
-      // TODO: أضف مفتاح الـ API هنا لاحقًا.
-    -->
-  </section>
-
-  <!-- ============  3. تقييم المرشحين  ============ -->
-  <section id="evaluate">
-    <h2>تقييم المرشحين</h2>
-
-    <div class="card" id="candidateCard">
-      <div><label>الاسم</label><input id="cName" type="text" placeholder="أحمد محمد"></div>
-      <div><label>العمر</label><input id="cAge" type="text" placeholder="30"></div>
-      <div><label>المؤهل</label><input id="cDegree" type="text" placeholder="بكالوريوس حاسبات"></div>
-      <div><label>الخبرة (سنة)</label><input id="cExp" type="text" placeholder="5"></div>
+    <div class="container">
+        <h1>نماذج مبدئية لنظام استقطاب المواهب</h1>
+        <div class="models-grid">
+            <div class="model-card">
+                <div class="model-title">🔹 النموذج الأول – نموذج إداري شامل</div>
+                <div class="model-desc">
+                    يحتوي على لوحة تحكم مركزية وأدوات تحليل السير الذاتية والمقابلات واختبارات المهارات.
+                    مناسب للجهات الحكومية التي ترغب بإدارة متكاملة لجميع مراحل التوظيف.
+                </div>
+                <a href="projects/1.html" class="btn" target="_blank">عرض النموذج</a>
+            </div>
+            <div class="model-card">
+                <div class="model-title">🔸 النموذج الثاني – تجربة استخدام مرئية</div>
+                <div class="model-desc">
+                    تصميم عصري باستخدام Bootstrap يعرض المزايا والفوائد بشكل بصري جذاب. موجه لعرض قدرات النظام على أصحاب القرار.
+                </div>
+                <a href="projects/2done.html" class="btn" target="_blank">عرض النموذج</a>
+            </div>
+            <div class="model-card">
+                <div class="model-title">🔷 النموذج الثالث – واجهة احترافية متقدمة</div>
+                <div class="model-desc">
+                    واجهة حديثة برسوميات متقدمة وتفاصيل دقيقة، مناسبة للعرض الترويجي التقني ولعقد شراكات استراتيجية.
+                </div>
+                <a href="projects/3done.html" class="btn" target="_blank">عرض النموذج</a>
+            </div>
+        </div>
     </div>
-
-    <button id="analyzeCandidate">تحليل الذكاء الاصطناعي</button>
-
-    <div id="candidateResult" class="output"></div>
-
-    <!--
-      // INPUT: البيانات الأساسية للمرشح + الملخص المستخرج من CV.
-      // PROCESS: prepare profile → send to Gemini API → receive compatibility score & comment.
-      // OUTPUT: نسبة التوافق مع الوظيفة + تعليق.
-    -->
-  </section>
-
-  <!-- ============  4. توليد أسئلة المقابلات  ============ -->
-  <section id="questions">
-    <h2>توليد أسئلة المقابلات</h2>
-
-    <textarea id="jobDesc" rows="4" placeholder="أدخل وصف الوظيفة أو متطلباتها"></textarea>
-    <button id="genQuestions">توليد الأسئلة</button>
-
-    <ul id="questionsList" class="output"></ul>
-
-    <!--
-      // INPUT: وصف الوظيفة + بيانات المرشح.
-      // PROCESS: send job description + candidate data → Gemini API → get interview questions.
-      // OUTPUT: قائمة أسئلة مقابلة مخصّصة.
-    -->
-  </section>
-
-  <!-- ============  5. المساعد الذكي التفاعلي  ============ -->
-  <section id="chatbot">
-    <h2>المساعد الذكي التفاعلي</h2>
-
-    <textarea id="chatInput" rows="2" placeholder="اكتب استفسارك هنا..."></textarea>
-    <button id="sendChat">إرسال</button>
-
-    <div id="chatWindow" class="chat-window"></div>
-
-    <!--
-      // INPUT: رسالة المستخدم النصية.
-      // PROCESS: send chat message to Gemini API → stream / return response.
-      // OUTPUT: رسالة الرد من الذكاء الاصطناعي تظهر في نافذة المحادثة.
-    -->
-  </section>
-
-  <!-- ============  6. تلخيص المرشح والتوصية النهائية  ============ -->
-  <section id="summary">
-    <h2>تلخيص المرشح والتوصية النهائية</h2>
-
-    <button id="genSummary">توليد التوصية</button>
-    <div id="summaryOutput" class="output"></div>
-
-    <!--
-      // INPUT: الملف الكامل لبيانات المرشح + نتائج التقييم.
-      // PROCESS: send full candidate profile to Gemini API → get summary & recommendation.
-      // OUTPUT: ملخص تنفيذي + توصية نهائية (مؤهل / بحاجة لمراجعة).
-    -->
-  </section>
-
-  <!-- ============  7. القيمة المضافة للنظام  ============ -->
-  <section id="value">
-    <h2>القيمة المضافة للنظام</h2>
-    <ul style="list-style:inside square;">
-      <li>تسريع عملية التوظيف بشكل كبير.</li>
-      <li>تقليل التكاليف وتحسين الجودة.</li>
-      <li>اعتماد توصيات محايدة وموضوعية.</li>
-      <li>تقارير ذكية جاهزة لصاحب القرار.</li>
-      <li>تحسين تجربة المتقدمين.</li>
-    </ul>
-  </section>
-
-  <!-- ============  8. تجربة النظام (اختياري)  ============ -->
-  <section id="demo">
-    <h2>تجربة النظام (اختياري)</h2>
-
-    <input id="demoFile" type="file" accept=".pdf,.doc,.docx" />
-    <button id="runDemo">جرِّب الآن</button>
-
-    <div id="demoOutput" class="output"></div>
-    <!--
-      هذا القسم يستخدم نتائج وهمية (Mock Output) لتوضيح كيفية عمل النظام
-      دون الحاجة إلى الربط الفعلي مع Gemini حتى الآن.
-    -->
-  </section>
-
-  <!-- ============  JavaScript  ============ -->
-  <script>
-    /* 2. تحليل السيرة الذاتية (Mock) */
-    document.getElementById("analyzeCv").addEventListener("click", () => {
-      const file = document.getElementById("cvInput").files[0];
-      if (!file) { alert("يرجى اختيار ملف"); return; }
-
-      // TODO: استخراج النص من السيرة الذاتية ثم:
-      // fetch("https://generativeai.googleapis.com/v1beta/models/gemini-pro:generateText?key=YOUR_API_KEY", { ... })
-
-      // Mock output:
-      const mockSummary = `
-        <b>المؤهلات:</b> بكالوريوس هندسة برمجيات<br>
-        <b>الخبرة:</b> 5 سنوات في تطوير الويب<br>
-        <b>نقاط القوة:</b> جافاسكربت، قيادة فرق العمل، التفكير التحليلي
-      `;
-      document.getElementById("cvOutput").innerHTML = mockSummary;
-    });
-
-    /* 3. تحليل المرشح (Mock) */
-    document.getElementById("analyzeCandidate").addEventListener("click", () => {
-      const name = document.getElementById("cName").value || "غير محدد";
-
-      // INPUT يُجمّع هنا ثم يُرسل لـ Gemini → النتيجة عبارة عن نسبة توافق وتعليق
-      const mockScore = Math.floor(Math.random()*40)+60; // 60-100%
-      document.getElementById("candidateResult").innerHTML = `
-        <span class="score">${mockScore}%</span> نسبة التوافق<br>
-        تعليق: المرشح ${name} يمتلك خبرة مناسبة جداً للمنصب المقترح.
-      `;
-    });
-
-    /* 4. توليد الأسئلة (Mock) */
-    document.getElementById("genQuestions").addEventListener("click", () => {
-      const desc = document.getElementById("jobDesc").value.trim();
-      if(!desc){alert("أدخل وصف الوظيفة أولاً");return;}
-
-      // send desc + candidate → Gemini → receive questions
-      const mockQs = [
-        "حدثنا عن مشروع واجهت فيه تحديًا كبيرًا وكيف تجاوزته؟",
-        "كيف تواكب أحدث تقنيات الذكاء الاصطناعي في عملك؟",
-        "ما هي معاييرك في تقييم نجاح فريقك؟"
-      ];
-      const ul = document.getElementById("questionsList");
-      ul.innerHTML = "";
-      mockQs.forEach(q=>{
-        const li=document.createElement("li");
-        li.textContent=q;
-        ul.appendChild(li);
-      });
-    });
-
-    /* 5. دردشة المساعد الذكي (Mock) */
-    document.getElementById("sendChat").addEventListener("click", () => {
-      const text = document.getElementById("chatInput").value.trim();
-      if(!text) return;
-      const chat = document.getElementById("chatWindow");
-
-      const userMsg = document.createElement("div");
-      userMsg.className="msg user";
-      userMsg.textContent=text;
-      chat.appendChild(userMsg);
-
-      // send text → Gemini → get reply (stream)
-      setTimeout(()=>{
-        const botMsg = document.createElement("div");
-        botMsg.className="msg bot";
-        botMsg.textContent="شكرًا لسؤالك، سيتم الرد عليك خلال دقائق.";
-        chat.appendChild(botMsg);
-        chat.scrollTop = chat.scrollHeight;
-      },600);
-      document.getElementById("chatInput").value="";
-    });
-
-    /* 6. التوصية النهائية (Mock) */
-    document.getElementById("genSummary").addEventListener("click",()=>{
-      // send full profile → Gemini → summary & recommendation
-      document.getElementById("summaryOutput").innerHTML=`
-        <b>ملخص:</b> يمتلك المرشح خبرة قوية في مجال التحول الرقمي.<br>
-        <b>التوصية:</b> مؤهل للمقابلة النهائية.
-      `;
-    });
-
-    /* 8. ديمو وهمي */
-    document.getElementById("runDemo").addEventListener("click",()=>{
-      const demo = document.getElementById("demoFile").files[0];
-      if(!demo){alert("اختر ملفًا لتجربة الديمو");return;}
-      document.getElementById("demoOutput").innerHTML="تمت المعالجة بنجاح! (نتيجة وهمية)";
-    });
-  </script>
 </body>
 </html>
