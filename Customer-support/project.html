@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام خدمة العملاء الذكي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: #4299e1;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Customer Interface */
+        .customer-interface {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        /* Service Selection */
+        .service-selection {
+            text-align: center;
+        }
+
+        .service-selection h2 {
+            color: #4a5568;
+            margin-bottom: 2rem;
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .service-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Service Headers */
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .back-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #cbd5e0;
+        }
+
+        .service-header h3 {
+            color: #4a5568;
+            margin: 0;
+        }
+
+        /* Chat Interface */
+        .chat-interface {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Voice Interface */
+        .voice-interface {
+            animation: slideIn 0.3s ease;
+        }
+
+        .voice-chat-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .voice-status {
+            margin-bottom: 2rem;
+        }
+
+        .voice-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .voice-circle {
+            width: 12px;
+            height: 12px;
+            background: #4299e1;
+            border-radius: 50%;
+            animation: voicePulse 1.5s ease-in-out infinite;
+        }
+
+        .voice-circle:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .voice-circle:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes voicePulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.5); opacity: 1; }
+        }
+
+        .voice-controls {
+            margin: 2rem 0;
+        }
+
+        .voice-btn-large {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.3);
+        }
+
+        .voice-btn-large:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(237, 137, 54, 0.4);
+        }
+
+        .voice-btn-large.recording {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            animation: recordingPulse 1s infinite;
+        }
+
+        @keyframes recordingPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .voice-icon {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .voice-text {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .voice-transcript, .voice-response {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: right;
+        }
+
+        .voice-transcript h4, .voice-response h4 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .replay-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .replay-btn:hover {
+            background: #3182ce;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .chat-container {
+            height: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            background: #f7fafc;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+
+        .message.user .message-bubble {
+            background: #4299e1;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.bot .message-bubble {
+            background: #e2e8f0;
+            color: #2d3748;
+            border-bottom-left-radius: 5px;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .message-input:focus {
+            border-color: #4299e1;
+        }
+
+        .btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .send-btn {
+            background: #48bb78;
+            color: white;
+        }
+
+        .voice-btn {
+            background: #ed8936;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .dashboard-card h3 {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .conversation-item {
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .conversation-item:hover {
+            background: #f7fafc;
+            border-color: #4299e1;
+        }
+
+        .user-data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .analysis-result {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .lead-item {
+            background: #fff5f5;
+            border: 1px solid #feb2b2;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .probability-high {
+            background: #f0fff4;
+            border-color: #9ae6b4;
+        }
+
+        .probability-medium {
+            background: #fffbf0;
+            border-color: #fbd38d;
+        }
+
+        .probability-low {
+            background: #fff5f5;
+            border-color: #feb2b2;
+        }
+
+        /* Enhanced User Management */
+        .user-management-tools {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .tool-section {
+            margin-bottom: 1rem;
+        }
+
+        .tool-section h4 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .retargeting-options, .analysis-settings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tool-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .tool-btn.primary {
+            background: #4299e1;
+            color: white;
+        }
+
+        .tool-btn.secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .tool-btn.success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .tool-btn.warning {
+            background: #ed8936;
+            color: white;
+        }
+
+        .tool-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Toggle Switches */
+        .toggle-switch {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            background-color: #ccc;
+            border-radius: 20px;
+            margin-left: 0.5rem;
+            transition: 0.3s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            right: 2px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        input:checked + .slider {
+            background-color: #4299e1;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(-20px);
+        }
+
+        /* Enhanced User List */
+        .user-data-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #edf2f7;
+            border-radius: 6px;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-options select {
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .refresh-btn {
+            padding: 0.25rem 0.5rem;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .enhanced-user-list .user-data-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .enhanced-user-list .user-data-item:hover {
+            border-color: #4299e1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* User Stats */
+        .user-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4299e1;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #718096;
+        }
+
+        /* Enhanced Conversation Management */
+        .conversation-management {
+            grid-column: span 2;
+        }
+
+        .conversation-tools {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .tool-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .conversation-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .conversation-filters select {
+            padding: 0.5rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+
+        /* Conversation Stats */
+        .conversation-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+        }
+
+        .stat-info .stat-number {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .stat-info .stat-label {
+            font-size: 0.7rem;
+            color: #718096;
+        }
+
+        /* Enhanced Conversations List */
+        .enhanced-conversations-list .conversation-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .enhanced-conversations-list .conversation-item:hover {
+            border-color: #4299e1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .enhanced-conversations-list .conversation-item.selected {
+            border-color: #4299e1;
+            background: #ebf8ff;
+        }
+
+        /* Conversation Details */
+        .conversation-details {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .conversation-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn.resolve {
+            background: #48bb78;
+            color: white;
+        }
+
+        .action-btn.important {
+            background: #ed8936;
+            color: white;
+        }
+
+        .action-btn.follow {
+            background: #4299e1;
+            color: white;
+        }
+
+        .action-btn.note {
+            background: #718096;
+            color: white;
+        }
+
+        /* Additional Styles for Enhanced Features */
+        .status.active {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .status.inactive {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .mini-btn {
+            padding: 0.25rem 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            margin: 0 0.1rem;
+            background: #e2e8f0;
+            color: #4a5568;
+            transition: all 0.2s;
+        }
+
+        .mini-btn:hover {
+            background: #cbd5e0;
+            transform: translateY(-1px);
+        }
+
+        .conversation-detail-header {
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .conversation-tags {
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background: #4299e1;
+            color: white;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            margin-left: 0.25rem;
+        }
+
+        .conversation-messages {
+            margin: 1rem 0;
+        }
+
+        .message-detail {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+        }
+
+        .user-message {
+            background: #ebf8ff;
+            border-right: 3px solid #4299e1;
+        }
+
+        .bot-message {
+            background: #f0fff4;
+            border-right: 3px solid #48bb78;
+        }
+
+        .conversation-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.7rem;
+            color: #718096;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-value {
+            display: block;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .notification {
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Enhanced Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .conversation-management {
+                grid-column: span 1;
+            }
+            
+            .conversation-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-row {
+                flex-direction: column;
+            }
+            
+            .retargeting-options, .analysis-settings {
+                flex-direction: column;
+            }
+            
+            .conversation-filters {
+                flex-direction: column;
+            }
+            
+            .conversation-actions {
+                flex-direction: column;
+            }
+            
+            .conversation-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Status indicators */
+        .status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .status.important {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .status.repeat {
+            background: #feebc8;
+            color: #dd6b20;
+        }
+
+        .status.closed {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4299e1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-tabs {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .service-options {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+            
+            .service-icon {
+                font-size: 2.5rem;
+            }
+            
+            .voice-btn-large {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .voice-icon {
+                font-size: 1.5rem;
+            }
+            
+            .voice-text {
+                font-size: 0.7rem;
+            }
+            
+            .customer-interface {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 0 0.5rem;
+            }
+        }
+
+        /* RTL Support */
+        .rtl {
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Voice Recording Animation */
+        .recording {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">🤖 نظام خدمة العملاء الذكي</div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('customer')">واجهة العميل</button>
+            <button class="tab-btn" onclick="showTab('dashboard')">لوحة التحكم</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Customer Interface -->
+        <div id="customer-tab" class="customer-interface">
+            <!-- Service Type Selection -->
+            <div class="service-selection">
+                <h2>اختر نوع الخدمة 🎯</h2>
+                <div class="service-options">
+                    <div class="service-card" onclick="selectService('chat')">
+                        <div class="service-icon">💬</div>
+                        <h3>خدمة الدردشة</h3>
+                        <p>تحدث معنا عبر الكتابة</p>
+                    </div>
+                    <div class="service-card" onclick="selectService('voice')">
+                        <div class="service-icon">🎤</div>
+                        <h3>خدمة صوتية</h3>
+                        <p>تحدث معنا بصوتك مباشرة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div id="chat-interface" class="chat-interface" style="display: none;">
+                <div class="service-header">
+                    <button class="back-btn" onclick="backToSelection()">← العودة</button>
+                    <h3>💬 خدمة الدردشة النصية</h3>
+                </div>
+                
+                <div class="chat-container" id="chatContainer">
+                    <!-- الرسائل ستظهر هنا -->
+                </div>
+                
+                <div class="input-container">
+                    <input type="text" class="message-input" id="messageInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
+                    <button class="btn send-btn" onclick="sendMessage()" title="إرسال">📤</button>
+                </div>
+            </div>
+
+            <!-- Voice Interface -->
+            <div id="voice-interface" class="voice-interface" style="display: none;">
+                <div class="service-header">
+                    <button class="back-btn" onclick="backToSelection()">← العودة</button>
+                    <h3>🎤 خدمة العملاء الصوتية</h3>
+                </div>
+                
+                <div class="voice-chat-container">
+                    <div class="voice-status" id="voiceStatus">
+                        <div class="voice-animation">
+                            <div class="voice-circle"></div>
+                            <div class="voice-circle"></div>
+                            <div class="voice-circle"></div>
+                        </div>
+                        <p>اضغط على المايكروفون وابدأ التحدث</p>
+                    </div>
+                    
+                    <div class="voice-controls">
+                        <button class="voice-btn-large" id="voiceBtnLarge" onclick="toggleVoiceRecording()">
+                            <span class="voice-icon">🎤</span>
+                            <span class="voice-text">ابدأ التحدث</span>
+                        </button>
+                    </div>
+                    
+                    <div class="voice-transcript" id="voiceTranscript" style="display: none;">
+                        <h4>ما قلته:</h4>
+                        <p id="transcriptText"></p>
+                    </div>
+                    
+                    <div class="voice-response" id="voiceResponse" style="display: none;">
+                        <h4>الرد:</h4>
+                        <p id="responseText"></p>
+                        <button class="btn replay-btn" onclick="replayResponse()">🔊 إعادة تشغيل</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard-tab" class="dashboard">
+            <!-- إدارة المحادثات -->
+            <div class="dashboard-card conversation-management">
+                <h3>📋 إدارة المحادثات المتقدمة</h3>
+                
+                <!-- تخصيص نظام المحادثة -->
+                <div class="conversation-tools">
+                    <div class="tool-row" style="flex-direction: column; align-items: flex-start;">
+                        <h4>⚙️ تخصيص نظام المحادثة (لصاحب المتجر)</h4>
+                        <label style="margin-bottom: 0.5rem;">
+                            أسلوب البوت:
+                            <input type="text" id="botStyle" placeholder="مثال: رسمي، ودي، فكاهي..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
+                        </label>
+                        <label style="margin-bottom: 0.5rem;">
+                            مهام البوت:
+                            <input type="text" id="botTasks" placeholder="مثال: الرد على الأسئلة، استقبال الطلبات..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
+                        </label>
+                        <label style="margin-bottom: 0.5rem;">
+                            متطلبات خاصة:
+                            <input type="text" id="botRequirements" placeholder="مثال: طلب رقم الطلب، التحقق من الهوية..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
+                        </label>
+                        <label style="margin-bottom: 0.5rem;">
+                            رقم الهاتف للإشعارات عند الحالات المعقدة:
+                            <input type="text" id="alertPhone" placeholder="05xxxxxxxx" style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
+                        </label>
+                        <button class="tool-btn primary" onclick="saveBotSettings()">💾 حفظ الإعدادات</button>
+                    </div>
+                    <div class="tool-row">
+                        <button class="tool-btn secondary" onclick="exportConversations()">
+                            📊 تصدير المحادثات
+                        </button>
+                        <button class="tool-btn warning" onclick="analyzeAllConversations()">
+                            📈 تحليل شامل
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- إحصائيات المحادثات -->
+                <div class="conversation-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">💬</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="totalConversations">0</span>
+                            <span class="stat-label">إجمالي المحادثات</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="avgResponseTime">0</span>
+                            <span class="stat-label">متوسط وقت الرد (ثانية)</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">😊</div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="satisfactionRate">0%</span>
+                            <span class="stat-label">معدل الرضا</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- قائمة المحادثات المحسنة -->
+                <div id="conversationsList" class="enhanced-conversations-list">
+                    <!-- قائمة المحادثات ستظهر هنا -->
+                </div>
+                
+                <!-- تفاصيل المحادثة المحددة -->
+                <div id="conversationDetails" class="conversation-details" style="display: none;">
+                    <h4>تفاصيل المحادثة</h4>
+                    <div id="conversationContent"></div>
+                    <div class="conversation-actions">
+                        <button class="action-btn resolve" onclick="markAsResolved()">✅ تم الحل</button>
+                        <button class="action-btn important" onclick="markAsImportant()">⭐ مهم</button>
+                        <button class="action-btn follow" onclick="scheduleFollowUp()">📅 متابعة لاحقاً</button>
+                        <button class="action-btn note" onclick="addNote()">📝 إضافة ملاحظة</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بيانات المستخدمين -->
+            <div class="dashboard-card">
+                <h3>👥 بيانات المستخدمين</h3>
+                
+                <!-- أدوات إدارة العملاء -->
+                <div class="user-management-tools">
+                    <div class="tool-section">
+                        <h4>🎯 إعادة الاستهداف</h4>
+                        <div class="retargeting-options">
+                            <button class="tool-btn primary" onclick="retargetInactiveUsers()">
+                                📧 استهداف العملاء غير النشطين
+                            </button>
+                            <button class="tool-btn secondary" onclick="retargetInterestedUsers()">
+                                💡 استهداف العملاء المهتمين
+                            </button>
+                            <button class="tool-btn success" onclick="sendPromotionalEmails()">
+                                🎁 إرسال عروض ترويجية
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-section">
+                        <h4>⚙️ إعدادات التحليل</h4>
+                        <div class="analysis-settings">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="behaviorAnalysisToggle" checked onchange="toggleBehaviorAnalysis()">
+                                <span class="slider"></span>
+                                تفعيل تحليل سلوك العملاء
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="autoEmailToggle" onchange="toggleAutoEmails()">
+                                <span class="slider"></span>
+                                إرسال رسائل تلقائية
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="realTimeNotifications" onchange="toggleNotifications()">
+                                <span class="slider"></span>
+                                إشعارات فورية
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- قائمة المستخدمين المحسنة -->
+                <div class="user-data-header">
+                    <div class="filter-options">
+                        <select id="userFilter" onchange="filterUsers()">
+                            <option value="all">جميع العملاء</option>
+                            <option value="active">نشطين</option>
+                            <option value="inactive">غير نشطين</option>
+                            <option value="interested">مهتمين</option>
+                            <option value="potential">محتملين</option>
+                        </select>
+                        <button class="refresh-btn" onclick="refreshUserData()">🔄 تحديث</button>
+                    </div>
+                </div>
+                
+                <div id="userDataList" class="enhanced-user-list">
+                    <!-- بيانات المستخدمين ستظهر هنا -->
+                </div>
+                
+                <!-- إحصائيات سريعة -->
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalUsers">0</span>
+                        <span class="stat-label">إجمالي العملاء</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="activeUsers">0</span>
+                        <span class="stat-label">نشطين اليوم</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="potentialLeads">0</span>
+                        <span class="stat-label">عملاء محتملين</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تحليل سلوك المستخدم -->
+            <div class="dashboard-card">
+                <h3>📊 تحليل سلوك المستخدم</h3>
+                <div id="behaviorAnalysis">
+                    <!-- نتائج التحليل ستظهر هنا -->
+                </div>
+            </div>
+
+            <!-- تأهيل العملاء المحتملين -->
+            <div class="dashboard-card">
+                <h3>🎯 تأهيل العملاء المحتملين</h3>
+                <div id="leadQualification">
+                    <!-- قائمة العملاء المحتملين ستظهر هنا -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغيرات عامة
+        let conversationHistory = [];
+        let isRecording = false;
+        let recognition = null;
+        let currentConversationId = Date.now();
+        let currentService = null;
+        let lastResponse = '';
+        
+        // مفتاح Gemini API
+        const GEMINI_API_KEY = 'AIzaSyAquNVYw6VOmAKTtKtTPU7Tl3PVIG0sKhg';
+        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+        // تهيئة النظام عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSpeechRecognition();
+            loadStoredData();
+            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            if (settings) {
+                if (settings.style) document.getElementById('botStyle').value = settings.style;
+                if (settings.tasks) document.getElementById('botTasks').value = settings.tasks;
+                if (settings.reqs) document.getElementById('botRequirements').value = settings.reqs;
+                if (settings.phone) document.getElementById('alertPhone').value = settings.phone;
+            }
+        });
+
+        // اختيار نوع الخدمة
+        function selectService(serviceType) {
+            currentService = serviceType;
+            
+            // إخفاء شاشة الاختيار
+            document.querySelector('.service-selection').style.display = 'none';
+            
+            if (serviceType === 'chat') {
+                // إظهار واجهة الدردشة
+                document.getElementById('chat-interface').style.display = 'block';
+                addWelcomeMessage();
+            } else if (serviceType === 'voice') {
+                // إظهار واجهة الصوت
+                document.getElementById('voice-interface').style.display = 'block';
+                updateVoiceStatus('اضغط على المايكروفون وابدأ التحدث');
+            }
+        }
+
+        // العودة لشاشة الاختيار
+        function backToSelection() {
+            // إخفاء جميع الواجهات
+            document.getElementById('chat-interface').style.display = 'none';
+            document.getElementById('voice-interface').style.display = 'none';
+            
+            // إظهار شاشة الاختيار
+            document.querySelector('.service-selection').style.display = 'block';
+            
+            // إعادة تعيين المتغيرات
+            currentService = null;
+            
+            // مسح محتوى الدردشة
+            document.getElementById('chatContainer').innerHTML = '';
+            
+            // إعادة تعيين واجهة الصوت
+            resetVoiceInterface();
+        }
+
+        // تحديث حالة الصوت
+        function updateVoiceStatus(message) {
+            const statusElement = document.querySelector('.voice-status p');
+            if (statusElement) {
+                statusElement.textContent = message;
+            }
+        }
+
+        // إعادة تعيين واجهة الصوت
+        function resetVoiceInterface() {
+            document.getElementById('voiceTranscript').style.display = 'none';
+            document.getElementById('voiceResponse').style.display = 'none';
+            updateVoiceStatus('اضغط على المايكروفون وابدأ التحدث');
+            
+            const voiceBtn = document.getElementById('voiceBtnLarge');
+            voiceBtn.classList.remove('recording');
+            voiceBtn.querySelector('.voice-text').textContent = 'ابدأ التحدث';
+        }
+
+        // إعادة تشغيل الرد
+        function replayResponse() {
+            if (lastResponse) {
+                speakText(lastResponse);
+            }
+        }
+
+        // إضافة رسالة ترحيب
+        function addWelcomeMessage() {
+            addMessage('أهلاً وسهلاً! أنا مساعدك الذكي. كيف ممكن أساعدك اليوم؟ 😊', 'bot');
+        }
+
+        // تهيئة تحويل الصوت إلى نص
+        function initializeSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'ar-SA'; // اللهجة السعودية
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    
+                    if (currentService === 'voice') {
+                        // واجهة الصوت - عرض النص المُحول وإرسال الرسالة
+                        document.getElementById('transcriptText').textContent = transcript;
+                        document.getElementById('voiceTranscript').style.display = 'block';
+                        sendVoiceMessage(transcript);
+                    } else {
+                        // واجهة الدردشة - وضع النص في حقل الإدخال وإرسال
+                        const messageInput = document.getElementById('messageInput');
+                        if (messageInput) {
+                            messageInput.value = transcript;
+                            sendMessage();
+                        }
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('خطأ في التعرف على الصوت:', event.error);
+                    if (currentService === 'voice') {
+                        updateVoiceStatus('❌ حدث خطأ في التعرف على الصوت. حاول مرة أخرى');
+                    }
+                    stopRecording();
+                };
+
+                recognition.onend = function() {
+                    stopRecording();
+                };
+            }
+        }
+
+        // إرسال رسالة صوتية
+        async function sendVoiceMessage(message) {
+            updateVoiceStatus('🤖 جاري توليد الرد...');
+            
+            try {
+                // إرسال إلى Gemini API
+                const response = await sendToGemini(message);
+                
+                // عرض الرد
+                document.getElementById('responseText').textContent = response;
+                document.getElementById('voiceResponse').style.display = 'block';
+                
+                // حفظ الرد للإعادة تشغيل
+                lastResponse = response;
+                
+                // تشغيل الرد صوتياً
+                speakText(response);
+                
+                // حفظ المحادثة
+                saveConversation(message, response);
+                
+                // تحليل سلوك المستخدم
+                analyzeUserBehavior(message, response);
+                
+                updateVoiceStatus('✅ تم! يمكنك التحدث مرة أخرى');
+                
+                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
+                    notifyComplexCase(message);
+                }
+                
+            } catch (error) {
+                updateVoiceStatus('❌ حدث خطأ في الاتصال. حاول مرة أخرى');
+                console.error('خطأ في إرسال الرسالة الصوتية:', error);
+            }
+        }
+
+        // تبديل تسجيل الصوت
+        function toggleVoiceRecording() {
+            if (!recognition) {
+                alert('المتصفح لا يدعم التعرف على الصوت');
+                return;
+            }
+
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                recognition.start();
+                startRecording();
+            }
+        }
+
+        // بدء التسجيل
+        function startRecording() {
+            isRecording = true;
+            
+            if (currentService === 'voice') {
+                // واجهة الصوت
+                const voiceBtn = document.getElementById('voiceBtnLarge');
+                voiceBtn.classList.add('recording');
+                voiceBtn.querySelector('.voice-text').textContent = 'جاري التسجيل...';
+                updateVoiceStatus('🎤 جاري الاستماع... تحدث الآن');
+            } else {
+                // واجهة الدردشة (إذا كانت موجودة)
+                const voiceBtn = document.getElementById('voiceBtn');
+                if (voiceBtn) {
+                    voiceBtn.classList.add('recording');
+                    voiceBtn.innerHTML = '🔴';
+                    voiceBtn.title = 'إيقاف التسجيل';
+                }
+            }
+        }
+
+        // إيقاف التسجيل
+        function stopRecording() {
+            isRecording = false;
+            
+            if (currentService === 'voice') {
+                // واجهة الصوت
+                const voiceBtn = document.getElementById('voiceBtnLarge');
+                voiceBtn.classList.remove('recording');
+                voiceBtn.querySelector('.voice-text').textContent = 'ابدأ التحدث';
+                updateVoiceStatus('⏳ جاري معالجة ما قلته...');
+            } else {
+                // واجهة الدردشة
+                const voiceBtn = document.getElementById('voiceBtn');
+                if (voiceBtn) {
+                    voiceBtn.classList.remove('recording');
+                    voiceBtn.innerHTML = '🎤';
+                    voiceBtn.title = 'تسجيل صوتي';
+                }
+            }
+        }
+
+        // التعامل مع الضغط على Enter
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // إرسال رسالة
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // إضافة رسالة المستخدم
+            addMessage(message, 'user');
+            input.value = '';
+
+            // إضافة مؤشر التحميل
+            const loadingId = addLoadingMessage();
+
+            try {
+                // إرسال إلى Gemini API
+                const response = await sendToGemini(message);
+                
+                // إزالة مؤشر التحميل
+                removeLoadingMessage(loadingId);
+                
+                // إضافة رد البوت
+                addMessage(response, 'bot');
+                
+                // تشغيل الرد صوتياً
+                speakText(response);
+                
+                // حفظ المحادثة
+                saveConversation(message, response);
+                
+                // تحليل سلوك المستخدم
+                analyzeUserBehavior(message, response);
+                
+                // إذا اكتشفنا كلمة "معقد" أو "لا أستطيع" في الرد، أرسل إشعار
+                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
+                    notifyComplexCase(message);
+                }
+                
+            } catch (error) {
+                removeLoadingMessage(loadingId);
+                addMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'bot');
+                console.error('خطأ في إرسال الرسالة:', error);
+            }
+        }
+
+        // إرسال الرسالة إلى Gemini API
+        async function sendToGemini(message) {
+            // إعداد السياق والتاريخ
+            const botSettings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            const context = `أنت مساعد خدمة عملاء ذكي تتحدث باللهجة السعودية.
+            ${
+                botSettings.style ? `الأسلوب المطلوب: ${botSettings.style}.` : ''
+            }
+            ${
+                botSettings.tasks ? `مهامك: ${botSettings.tasks}.` : ''
+            }
+            ${
+                botSettings.reqs ? `المتطلبات الخاصة: ${botSettings.reqs}.` : ''
+            }
+            كن ودوداً ومفيداً واستخدم تعبيرات مثل "أهلاً وسهلاً"، "وش تبي تعرف"، "أكيد"، "تبيه؟".
+            إذا سأل العميل عن خصومات أو عروض، اعرض عليه خصم 10%.
+            
+            المحادثات السابقة:
+            ${conversationHistory.slice(-5).map(conv => `العميل: ${conv.user}\nالمساعد: ${conv.bot}`).join('\n')}`;
+
+            const requestBody = {
+                contents: [{
+                    parts: [{
+                        text: `${context}\n\nالرسالة الحالية: ${message}`
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1024,
+                }
+            };
+
+            const response = await fetch(GEMINI_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        }
+
+        // إضافة رسالة إلى الدردشة
+        function addMessage(text, sender) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatContainer.appendChild(messageDiv);
+            
+            // التمرير إلى أسفل
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            return messageDiv;
+        }
+
+        // إضافة مؤشر التحميل
+        function addLoadingMessage() {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+            messageDiv.id = 'loading-' + Date.now();
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = '<div class="loading"></div> جاري الكتابة...';
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            return messageDiv.id;
+        }
+
+        // إزالة مؤشر التحميل
+        function removeLoadingMessage(loadingId) {
+            const loadingElement = document.getElementById(loadingId);
+            if (loadingElement) {
+                loadingElement.remove();
+            }
+        }
+
+        // تشغيل النص صوتياً
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        // حفظ المحادثة
+        function saveConversation(userMessage, botResponse) {
+            const conversation = {
+                id: currentConversationId,
+                user: userMessage,
+                bot: botResponse,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                status: 'جديد'
+            };
+            
+            conversationHistory.push(conversation);
+            
+            // حفظ في localStorage
+            localStorage.setItem('conversations', JSON.stringify(conversationHistory));
+            
+            // تحديث لوحة التحكم
+            updateDashboard();
+        }
+
+        // تحليل سلوك المستخدم
+        async function analyzeUserBehavior(userMessage, botResponse) {
+            try {
+                const analysisPrompt = `حلل سلوك هذا العميل بناءً على رسالته:
+                "${userMessage}"
+                
+                حدد:
+                1. نوايا الشراء (عالية/متوسطة/منخفضة)
+                2. التردد في القرار (نعم/لا)
+                3. الاهتمام بالعروض (نعم/لا)
+                4. توصية للمتابعة
+                
+                أجب بتنسيق JSON مثل:
+                {
+                    "purchaseIntent": "عالية",
+                    "hesitation": "لا",
+                    "interestInOffers": "نعم",
+                    "recommendation": "العميل مهتم بالشراء، أرسل له عرض خاص"
+                }`;
+
+                const response = await sendToGemini(analysisPrompt);
+                
+                // عرض نتائج التحليل
+                alert(`تقرير التحليل الشامل:\n\n${analysis}`);
+                
+                try {
+                    const analysis = JSON.parse(response);
+                    saveUserAnalysis(analysis);
+                } catch (e) {
+                    // إذا لم يكن JSON صحيح، احفظ النص كما هو
+                    saveUserAnalysis({ recommendation: response });
+                }
+            } catch (error) {
+                console.error('خطأ في تحليل سلوك المستخدم:', error);
+            }
+        }
+
+        // حفظ تحليل المستخدم
+        function saveUserAnalysis(analysis) {
+            let analyses = JSON.parse(localStorage.getItem('userAnalyses') || '[]');
+            analyses.push({
+                ...analysis,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                conversationId: currentConversationId
+            });
+            localStorage.setItem('userAnalyses', JSON.stringify(analyses));
+            updateDashboard();
+        }
+
+        // تبديل التبويبات
+        function showTab(tabName) {
+            // إخفاء جميع التبويبات
+            document.getElementById('customer-tab').style.display = tabName === 'customer' ? 'block' : 'none';
+            document.getElementById('dashboard-tab').style.display = tabName === 'dashboard' ? 'grid' : 'none';
+            
+            // تحديث أزرار التبويبات
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        // تحديث لوحة التحكم
+        function updateDashboard() {
+            updateConversationsList();
+            updateUserDataList();
+            updateBehaviorAnalysis();
+            updateLeadQualification();
+        }
+
+        // تحديث قائمة المحادثات المحسنة
+        function updateConversationsList() {
+            const container = document.getElementById('conversationsList');
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            
+            container.innerHTML = '';
+            
+            // إضافة بيانات وهمية محسنة للمحادثات
+            const enhancedConversations = conversations.length > 0 ? conversations : [
+                {
+                    id: 1,
+                    user: 'مرحباً، أريد معرفة المزيد عن منتجاتكم',
+                    bot: 'أهلاً وسهلاً! سعداء بخدمتك. ما نوع المنتج اللي تبي تعرف عنه؟',
+                    timestamp: new Date().toLocaleString('ar-SA'),
+                    status: 'جديد',
+                    priority: 'متوسط',
+                    customerName: 'أحمد محمد',
+                    responseTime: 2.5,
+                    satisfaction: 'غير محدد',
+                    tags: ['استفسار', 'منتجات']
+                },
+                {
+                    id: 2,
+                    user: 'عندكم خصومات؟',
+                    bot: 'أكيد! عندنا خصم خاص لك اليوم 10%. تبيه؟',
+                    timestamp: new Date(Date.now() - 3600000).toLocaleString('ar-SA'),
+                    status: 'مهم',
+                    priority: 'عالي',
+                    customerName: 'فاطمة أحمد',
+                    responseTime: 1.8,
+                    satisfaction: 'راضي',
+                    tags: ['خصم', 'عرض']
+                },
+                {
+                    id: 3,
+                    user: 'كيف أقدر أطلب؟',
+                    bot: 'سهل جداً! تقدر تطلب من خلال الموقع أو تتصل علينا مباشرة',
+                    timestamp: new Date(Date.now() - 7200000).toLocaleString('ar-SA'),
+                    status: 'مغلق',
+                    priority: 'منخفض',
+                    customerName: 'خالد سعد',
+                    responseTime: 3.2,
+                    satisfaction: 'راضي جداً',
+                    tags: ['طلب', 'إرشاد']
+                }
+            ];
+            
+            enhancedConversations.slice(-10).reverse().forEach(conv => {
+                const item = document.createElement('div');
+                item.className = 'conversation-item';
+                item.onclick = () => selectConversation(conv);
+                
+                const priorityColor = conv.priority === 'عالي' ? '#e53e3e' : 
+                                    conv.priority === 'متوسط' ? '#dd6b20' : '#38a169';
+                
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                                <strong>${conv.customerName || 'عميل'}</strong>
+                                <span style="background: ${priorityColor}; color: white; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.7rem;">
+                                    ${conv.priority}
+                                </span>
+                            </div>
+                            <div style="color: #4a5568; margin-bottom: 0.25rem;">
+                                <strong>العميل:</strong> ${conv.user.substring(0, 40)}...
+                            </div>
+                            <div style="color: #718096; font-size: 0.8rem; margin-bottom: 0.25rem;">
+                                <strong>الرد:</strong> ${conv.bot.substring(0, 40)}...
+                            </div>
+                            <div style="display: flex; gap: 1rem; font-size: 0.7rem; color: #a0aec0;">
+                                <span>⏱️ ${conv.responseTime}ث</span>
+                                <span>😊 ${conv.satisfaction}</span>
+                                <span>🏷️ ${conv.tags ? conv.tags.join(', ') : ''}</span>
+                            </div>
+                            <small style="color: #a0aec0;">${conv.timestamp}</small>
+                        </div>
+                        <div style="text-align: left;">
+                            <span class="status ${getStatusClass(conv.status)}">${conv.status}</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            // تحديث إحصائيات المحادثات
+            updateConversationStats(enhancedConversations);
+        }
+
+        // تحديث إحصائيات المحادثات
+        function updateConversationStats(conversations) {
+            document.getElementById('totalConversations').textContent = conversations.length;
+            
+            const avgResponseTime = conversations.reduce((sum, conv) => sum + (conv.responseTime || 0), 0) / conversations.length;
+            document.getElementById('avgResponseTime').textContent = avgResponseTime.toFixed(1);
+            
+            const satisfiedCount = conversations.filter(conv => 
+                conv.satisfaction && (conv.satisfaction.includes('راضي') || conv.satisfaction.includes('ممتاز'))
+            ).length;
+            const satisfactionRate = conversations.length > 0 ? (satisfiedCount / conversations.length * 100).toFixed(0) : 0;
+            document.getElementById('satisfactionRate').textContent = satisfactionRate + '%';
+        }
+
+        // اختيار محادثة لعرض التفاصيل
+        function selectConversation(conversation) {
+            // إزالة التحديد من المحادثات الأخرى
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // تحديد المحادثة الحالية
+            event.currentTarget.classList.add('selected');
+            
+            // عرض تفاصيل المحادثة
+            const detailsContainer = document.getElementById('conversationDetails');
+            const contentContainer = document.getElementById('conversationContent');
+            
+            contentContainer.innerHTML = `
+                <div class="conversation-detail-header">
+                    <h5>${conversation.customerName || 'عميل'} - ${conversation.timestamp}</h5>
+                    <div class="conversation-tags">
+                        ${conversation.tags ? conversation.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : ''}
+                    </div>
+                </div>
+                <div class="conversation-messages">
+                    <div class="message-detail user-message">
+                        <strong>العميل:</strong> ${conversation.user}
+                    </div>
+                    <div class="message-detail bot-message">
+                        <strong>المساعد:</strong> ${conversation.bot}
+                    </div>
+                </div>
+                <div class="conversation-metrics">
+                    <div class="metric">
+                        <span class="metric-label">وقت الرد:</span>
+                        <span class="metric-value">${conversation.responseTime || 0} ثانية</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">مستوى الرضا:</span>
+                        <span class="metric-value">${conversation.satisfaction || 'غير محدد'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">الأولوية:</span>
+                        <span class="metric-value">${conversation.priority || 'متوسط'}</span>
+                    </div>
+                </div>
+            `;
+            
+            detailsContainer.style.display = 'block';
+            
+            // حفظ المحادثة المحددة
+            window.selectedConversation = conversation;
+        }
+
+        // تصدير المحادثات
+        function exportConversations() {
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            const dataStr = JSON.stringify(conversations, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = 'conversations_' + new Date().toISOString().split('T')[0] + '.json';
+            link.click();
+            
+            showNotification('تم تصدير المحادثات بنجاح', 'success');
+        }
+
+        // تحليل شامل للمحادثات
+        async function analyzeAllConversations() {
+            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
+            
+            if (conversations.length === 0) {
+                showNotification('لا توجد محادثات للتحليل', 'warning');
+                return;
+            }
+            
+            showNotification('جاري إجراء التحليل الشامل...', 'info');
+            
+            try {
+                const analysisPrompt = `حلل هذه المحادثات وقدم تقرير شامل:
+                ${conversations.slice(-10).map(conv => `العميل: ${conv.user}\nالمساعد: ${conv.bot}`).join('\n---\n')}
+                
+                قدم تحليل يشمل:
+                1. أكثر المواضيع المطلوبة
+                2. مستوى رضا العملاء
+                3. نقاط التحسين
+                4. توصيات للتطوير`;
+                
+                const analysis = await sendToGemini(analysisPrompt);
+                
+                // عرض نتائج التحليل
+                alert(`تقرير التحليل الشامل:\n\n${analysis}`);
+                
+            } catch (error) {
+                showNotification('حدث خطأ في التحليل الشامل', 'error');
+                console.error(error);
+            }
+        }
+
+        // تصفية المحادثات
+        function filterConversations() {
+            const filter = document.getElementById('conversationFilter').value;
+            updateConversationsList();
+            showNotification(`تم تطبيق تصفية: ${filter}`, 'info');
+        }
+
+        // ترتيب المحادثات
+        function sortConversations() {
+            const sort = document.getElementById('conversationSort').value;
+            updateConversationsList();
+            showNotification(`تم ترتيب المحادثات حسب: ${sort}`, 'info');
+        }
+
+        // وضع علامة كمحلول
+        function markAsResolved() {
+            if (window.selectedConversation) {
+                showNotification(`تم وضع علامة "محلول" للمحادثة`, 'success');
+            }
+        }
+
+        // وضع علامة كمهم
+        function markAsImportant() {
+            if (window.selectedConversation) {
+                showNotification(`تم وضع علامة "مهم" للمحادثة`, 'warning');
+            }
+        }
+
+        // إضافة ملاحظة
+        function addNote() {
+            if (window.selectedConversation) {
+                const note = prompt('أضف ملاحظة:');
+                if (note) {
+                    showNotification(`تم إضافة الملاحظة: ${note}`, 'info');
+                }
+            }
+        }
+
+        // عرض الإشعارات
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem;
+                border-radius: 8px;
+                color: white;
+                font-weight: bold;
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            switch(type) {
+                case 'success': notification.style.background = '#48bb78'; break;
+                case 'error': notification.style.background = '#e53e3e'; break;
+                case 'warning': notification.style.background = '#ed8936'; break;
+                default: notification.style.background = '#4299e1';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // تحديث قائمة بيانات المستخدمين المحسنة
+        function updateUserDataList() {
+            const container = document.getElementById('userDataList');
+            const userData = JSON.parse(localStorage.getItem('userData') || '[]');
+            
+            container.innerHTML = '';
+            
+            // بيانات وهمية محسنة للعرض
+            const sampleData = [
+                { 
+                    id: 1,
+                    name: 'أحمد محمد',
+                    email: 'ahmed@example.com', 
+                    phone: '0501234567', 
+                    lastVisit: new Date().toLocaleString('ar-SA'),
+                    status: 'نشط',
+                    interactions: 15,
+                    purchaseProbability: 85,
+                    category: 'مهتم'
+                },
+                { 
+                    id: 2,
+                    name: 'فاطمة أحمد',
+                    email: 'fatima@example.com', 
+                    phone: '0507654321', 
+                    lastVisit: new Date(Date.now() - 86400000).toLocaleString('ar-SA'),
+                    status: 'غير نشط',
+                    interactions: 8,
+                    purchaseProbability: 45,
+                    category: 'محتمل'
+                },
+                { 
+                    id: 3,
+                    name: 'خالد سعد',
+                    email: 'khalid@example.com', 
+                    phone: '0509876543', 
+                    lastVisit: new Date(Date.now() - 172800000).toLocaleString('ar-SA'),
+                    status: 'غير نشط',
+                    interactions: 3,
+                    purchaseProbability: 20,
+                    category: 'عادي'
+                }
+            ];
+            
+            sampleData.forEach(user => {
+                const item = document.createElement('div');
+                item.className = 'user-data-item';
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div><strong>${user.name}</strong></div>
+                            <div><small>📧 ${user.email}</small></div>
+                            <div><small>📱 ${user.phone}</small></div>
+                            <div><small>💬 ${user.interactions} تفاعل</small></div>
+                        </div>
+                        <div style="text-align: left;">
+                            <div class="status ${user.status === 'نشط' ? 'active' : 'inactive'}">${user.status}</div>
+                            <div><small>احتمالية الشراء: ${user.purchaseProbability}%</small></div>
+                            <div><small>آخر زيارة: ${user.lastVisit}</small></div>
+                            <div class="user-actions" style="margin-top: 0.5rem;">
+                                <button class="mini-btn" onclick="sendTargetedEmail(${user.id})">📧</button>
+                                <button class="mini-btn" onclick="viewUserProfile(${user.id})">👁️</button>
+                                <button class="mini-btn" onclick="scheduleFollowUp(${user.id})">📅</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            // تحديث الإحصائيات
+            updateUserStats(sampleData);
+        }
+
+        // تحديث إحصائيات المستخدمين
+        function updateUserStats(userData) {
+            document.getElementById('totalUsers').textContent = userData.length;
+            document.getElementById('activeUsers').textContent = userData.filter(u => u.status === 'نشط').length;
+            document.getElementById('potentialLeads').textContent = userData.filter(u => u.purchaseProbability > 60).length;
+        }
+
+        // إعادة استهداف العملاء غير النشطين
+        function retargetInactiveUsers() {
+            const inactiveUsers = ['fatima@example.com', 'khalid@example.com'];
+            
+            inactiveUsers.forEach(email => {
+                sendAutomatedEmail(email, 'إعادة الاستهداف', 
+                    'مرحباً! لاحظنا أنك لم تزر موقعنا مؤخراً. لدينا عروض خاصة لك! 🎁');
+            });
+            
+            showNotification('تم إرسال رسائل إعادة الاستهداف لـ ' + inactiveUsers.length + ' عميل', 'success');
+        }
+
+        // استهداف العملاء المهتمين
+        function retargetInterestedUsers() {
+            const interestedUsers = ['ahmed@example.com'];
+            
+            interestedUsers.forEach(email => {
+                sendAutomatedEmail(email, 'عرض خاص', 
+                    'بناءً على اهتمامك، لدينا عرض خاص لك بخصم 15%! 💰');
+            });
+            
+            showNotification('تم إرسال عروض خاصة لـ ' + interestedUsers.length + ' عميل مهتم', 'success');
+        }
+
+        // إرسال عروض ترويجية
+        function sendPromotionalEmails() {
+            const allUsers = ['ahmed@example.com', 'fatima@example.com', 'khalid@example.com'];
+            
+            allUsers.forEach(email => {
+                sendAutomatedEmail(email, 'عروض الأسبوع', 
+                    'لا تفوت عروض هذا الأسبوع! خصومات تصل إلى 50% 🔥');
+            });
+            
+            showNotification('تم إرسال العروض الترويجية لجميع العملاء', 'success');
+        }
+
+        // إرسال رسالة إلكترونية تلقائية
+        function sendAutomatedEmail(email, subject, message) {
+            // محاكاة إرسال الإيميل
+            console.log(`إرسال إيميل إلى: ${email}`);
+            console.log(`الموضوع: ${subject}`);
+            console.log(`الرسالة: ${message}`);
+            
+            // حفظ سجل الإرسال
+            const emailLog = JSON.parse(localStorage.getItem('emailLog') || '[]');
+            emailLog.push({
+                email,
+                subject,
+                message,
+                timestamp: new Date().toLocaleString('ar-SA'),
+                status: 'تم الإرسال'
+            });
+            localStorage.setItem('emailLog', JSON.stringify(emailLog));
+        }
+
+        // تفعيل/إلغاء تحليل السلوك
+        function toggleBehaviorAnalysis() {
+            const isEnabled = document.getElementById('behaviorAnalysisToggle').checked;
+            localStorage.setItem('behaviorAnalysisEnabled', isEnabled);
+            showNotification(isEnabled ? 'تم تفعيل تحليل السلوك' : 'تم إلغاء تحليل السلوك', 'info');
+        }
+
+        // تفعيل/إلغاء الرسائل التلقائية
+        function toggleAutoEmails() {
+            const isEnabled = document.getElementById('autoEmailToggle').checked;
+            localStorage.setItem('autoEmailsEnabled', isEnabled);
+            showNotification(isEnabled ? 'تم تفعيل الرسائل التلقائية' : 'تم إلغاء الرسائل التلقائية', 'info');
+        }
+
+        // تفعيل/إلغاء الإشعارات
+        function toggleNotifications() {
+            const isEnabled = document.getElementById('realTimeNotifications').checked;
+            localStorage.setItem('notificationsEnabled', isEnabled);
+            showNotification(isEnabled ? 'تم تفعيل الإشعارات الفورية' : 'تم إلغاء الإشعارات الفورية', 'info');
+        }
+
+        // تصفية المستخدمين
+        function filterUsers() {
+            const filter = document.getElementById('userFilter').value;
+            // تطبيق التصفية (يمكن تطويرها أكثر)
+            updateUserDataList();
+            showNotification(`تم تطبيق تصفية: ${filter}`, 'info');
+        }
+
+        // تحديث بيانات المستخدمين
+        function refreshUserData() {
+            updateUserDataList();
+            showNotification('تم تحديث بيانات المستخدمين', 'success');
+        }
+
+        // إرسال رسالة مستهدفة
+        function sendTargetedEmail(userId) {
+            showNotification(`تم إرسال رسالة مستهدفة للمستخدم ${userId}`, 'success');
+        }
+
+        // عرض ملف المستخدم
+        function viewUserProfile(userId) {
+            showNotification(`عرض ملف المستخدم ${userId}`, 'info');
+        }
+
+        // جدولة متابعة
+        function scheduleFollowUp(userId) {
+            showNotification(`تم جدولة متابعة للمستخدم ${userId}`, 'info');
+        }
+
+        // تحديث تحليل السلوك
+        function updateBehaviorAnalysis() {
+            const container = document.getElementById('behaviorAnalysis');
+            const analyses = JSON.parse(localStorage.getItem('userAnalyses') || '[]');
+            
+            container.innerHTML = '';
+            
+            analyses.slice(-5).reverse().forEach(analysis => {
+                const item = document.createElement('div');
+                item.className = 'analysis-result';
+                item.innerHTML = `
+                    <div><strong>التوصية:</strong> ${analysis.recommendation}</div>
+                    <small>${analysis.timestamp}</small>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // تحديث تأهيل العملاء المحتملين
+        function updateLeadQualification() {
+            const container = document.getElementById('leadQualification');
+            
+            // بيانات وهمية للعملاء المحتملين
+            const leads = [
+                { name: 'أحمد محمد', probability: 85, status: 'مؤهل - أرسل عرض', type: 'high' },
+                { name: 'فاطمة أحمد', probability: 60, status: 'متوسط - تابع لاحقاً', type: 'medium' },
+                { name: 'خالد سعد', probability: 30, status: 'غير مؤهل - تابع لاحقاً', type: 'low' }
+            ];
+            
+            container.innerHTML = '';
+            
+            leads.forEach(lead => {
+                const item = document.createElement('div');
+                item.className = `lead-item probability-${lead.type}`;
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>${lead.name}</strong>
+                            <br><small>احتمالية الشراء: ${lead.probability}%</small>
+                        </div>
+                        <div style="text-align: left;">
+                            <div style="font-weight: bold; color: #2d3748;">${lead.status}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // الحصول على فئة الحالة
+        function getStatusClass(status) {
+            switch(status) {
+                case 'مهم': return 'important';
+                case 'مكرر': return 'repeat';
+                case 'مغلق': return 'closed';
+                default: return '';
+            }
+        }
+
+        // توليد رد بديل
+        async function generateAlternativeResponse() {
+            if (conversationHistory.length === 0) {
+                alert('لا توجد محادثات لتوليد رد بديل لها');
+                return;
+            }
+            
+            const lastConversation = conversationHistory[conversationHistory.length - 1];
+            
+            try {
+                const alternativePrompt = `اقترح رد بديل أفضل لهذه الرسالة من العميل:
+                "${lastConversation.user}"
+                
+                الرد الحالي كان:
+                "${lastConversation.bot}"
+                
+                اقترح رد أفضل باللهجة السعودية:`;
+                
+                const alternative = await sendToGemini(alternativePrompt);
+                alert(`الرد البديل المقترح:\n\n${alternative}`);
+                
+            } catch (error) {
+                alert('حدث خطأ في توليد الرد البديل');
+                console.error(error);
+            }
+        }
+
+        // حفظ إعدادات تخصيص البوت
+        function saveBotSettings() {
+            const style = document.getElementById('botStyle').value.trim();
+            const tasks = document.getElementById('botTasks').value.trim();
+            const reqs = document.getElementById('botRequirements').value.trim();
+            const phone = document.getElementById('alertPhone').value.trim();
+            const settings = { style, tasks, reqs, phone };
+            localStorage.setItem('botSettings', JSON.stringify(settings));
+            showNotification('تم حفظ إعدادات البوت بنجاح', 'success');
+        }
+
+        // إشعار عند الحالات المعقدة (محاكاة)
+        function notifyComplexCase(userMessage) {
+            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            if (settings.phone) {
+                // محاكاة إرسال SMS
+                console.log(`🔔 إرسال إشعار إلى ${settings.phone}: حالة معقدة - "${userMessage}"`);
+                showNotification('تم إرسال إشعار للمساعد بسبب حالة معقدة', 'warning');
+            }
+        }
+
+        // مثال: استدعاء الإشعار عند اكتشاف حالة معقدة في الرد من البوت
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message) return;
+            addMessage(message, 'user');
+            input.value = '';
+            const loadingId = addLoadingMessage();
+            try {
+                const response = await sendToGemini(message);
+                removeLoadingMessage(loadingId);
+                addMessage(response, 'bot');
+                speakText(response);
+                saveConversation(message, response);
+                analyzeUserBehavior(message, response);
+                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
+                    notifyComplexCase(message);
+                }
+            } catch (error) {
+                removeLoadingMessage(loadingId);
+                addMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'bot');
+                console.error('خطأ في إرسال الرسالة:', error);
+            }
+        }
+
+        // نفس المنطق لرسائل الصوت
+        async function sendVoiceMessage(message) {
+            updateVoiceStatus('🤖 جاري توليد الرد...');
+            try {
+                const response = await sendToGemini(message);
+                document.getElementById('responseText').textContent = response;
+                document.getElementById('voiceResponse').style.display = 'block';
+                lastResponse = response;
+                speakText(response);
+                saveConversation(message, response);
+                analyzeUserBehavior(message, response);
+                updateVoiceStatus('✅ تم! يمكنك التحدث مرة أخرى');
+                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
+                    notifyComplexCase(message);
+                }
+            } catch (error) {
+                updateVoiceStatus('❌ حدث خطأ في الاتصال. حاول مرة أخرى');
+                console.error('خطأ في إرسال الرسالة الصوتية:', error);
+            }
+        }
+    </script>
+</body>
+</html>
