@@ -5,6 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام خدمة العملاء الذكي</title>
     <style>
+        :root {
+            --primary-color: #4299e1;
+            --primary-dark-color: #3182ce;
+            --secondary-color: #ed8936;
+            --secondary-dark-color: #dd6b20;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+            --danger-color: #e53e3e;
+            --light-gray-color: #f7fafc;
+            --medium-gray-color: #e2e8f0;
+            --dark-gray-color: #4a5568;
+            --text-color: #2d3748;
+            --white-color: #ffffff;
+            --border-radius-sm: 5px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 15px;
+            --shadow-sm: 0 2px 5px rgba(0,0,0,0.05);
+            --shadow-md: 0 5px 15px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,22 +37,27 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
         /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: bold;
-            color: #4a5568;
+            color: var(--dark-gray-color);
         }
 
         .nav-tabs {
@@ -40,18 +66,20 @@
         }
 
         .tab-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            background: #4299e1;
-            color: white;
-            border-radius: 5px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            border-radius: var(--border-radius-sm);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .tab-btn:hover, .tab-btn.active {
-            background: #3182ce;
+            background: var(--primary-dark-color);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
 
         /* Main Container */
@@ -61,239 +89,138 @@
             padding: 0 1rem;
         }
 
-        /* Customer Interface */
-        .customer-interface {
-            background: white;
-            border-radius: 15px;
+        /* Customer Interface Structure */
+        .customer-interface-wrapper {
+            background: var(--white-color);
+            border-radius: var(--border-radius-lg);
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-lg);
             margin-bottom: 2rem;
         }
 
         /* Service Selection */
         .service-selection {
             text-align: center;
+            padding: 1rem 0;
         }
 
         .service-selection h2 {
-            color: #4a5568;
-            margin-bottom: 2rem;
+            color: var(--dark-gray-color);
+            margin-bottom: 2.5rem;
+            font-size: 2rem;
         }
 
         .service-options {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .service-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
+            color: var(--white-color);
+            padding: 2.5rem;
+            border-radius: var(--border-radius-lg);
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .service-card h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.25rem;
-        }
-
-        .service-card p {
-            opacity: 0.9;
-            font-size: 0.9rem;
-        }
-
-        /* Service Headers */
-        .service-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .back-btn {
-            background: #e2e8f0;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-left: 1rem;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #cbd5e0;
-        }
-
-        .service-header h3 {
-            color: #4a5568;
-            margin: 0;
-        }
-
-        /* Chat Interface */
-        .chat-interface {
-            animation: slideIn 0.3s ease;
-        }
-
-        /* Voice Interface */
-        .voice-interface {
-            animation: slideIn 0.3s ease;
-        }
-
-        .voice-chat-container {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .voice-status {
-            margin-bottom: 2rem;
-        }
-
-        .voice-animation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .voice-circle {
-            width: 12px;
-            height: 12px;
-            background: #4299e1;
-            border-radius: 50%;
-            animation: voicePulse 1.5s ease-in-out infinite;
-        }
-
-        .voice-circle:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .voice-circle:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes voicePulse {
-            0%, 100% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.5); opacity: 1; }
-        }
-
-        .voice-controls {
-            margin: 2rem 0;
-        }
-
-        .voice-btn-large {
-            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(237, 137, 54, 0.3);
         }
 
-        .voice-btn-large:hover {
-            transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(237, 137, 54, 0.4);
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.25);
         }
 
-        .voice-btn-large.recording {
-            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
-            animation: recordingPulse 1s infinite;
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        @keyframes recordingPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .service-card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
         }
 
-        .voice-icon {
-            font-size: 2rem;
-            margin-bottom: 0.25rem;
+        .service-card p {
+            opacity: 0.9;
+            font-size: 1rem;
         }
 
-        .voice-text {
-            font-size: 0.75rem;
-            font-weight: bold;
+        /* Service Headers (for Chat and Voice) */
+        .service-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--medium-gray-color);
         }
 
-        .voice-transcript, .voice-response {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            text-align: right;
-        }
-
-        .voice-transcript h4, .voice-response h4 {
-            color: #4a5568;
-            margin-bottom: 0.5rem;
-        }
-
-        .replay-btn {
-            background: #4299e1;
-            color: white;
+        .back-btn {
+            background: var(--medium-gray-color);
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-md);
             cursor: pointer;
-            margin-top: 1rem;
+            margin-left: 1.5rem; /* RTL: margin-right */
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        html[dir="rtl"] .back-btn { margin-left: 0; margin-right: 1.5rem; }
+
+
+        .back-btn:hover {
+            background: #cbd5e0;
+            transform: scale(1.05);
         }
 
-        .replay-btn:hover {
-            background: #3182ce;
+        .service-header h3 {
+            color: var(--dark-gray-color);
+            margin: 0;
+            font-size: 1.75rem;
         }
 
-        /* Animations */
-        @keyframes slideIn {
+        /* Generic Interface Animation */
+        .animated-interface {
+            animation: fadeInScaleUp 0.4s ease-out;
+        }
+
+        @keyframes fadeInScaleUp {
             from {
                 opacity: 0;
-                transform: translateX(20px);
+                transform: scale(0.95) translateY(10px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: scale(1) translateY(0);
             }
+        }
+        
+        /* Chat Interface */
+        .chat-interface {
+            /* Styles specific to chat if any, mostly inherited or general */
         }
 
         .chat-container {
-            height: 400px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 1rem;
+            height: 450px;
+            border: 1px solid var(--medium-gray-color);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
             overflow-y: auto;
-            margin-bottom: 1rem;
-            background: #f7fafc;
+            margin-bottom: 1.5rem;
+            background: var(--light-gray-color);
         }
 
         .message {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
             display: flex;
-            align-items: flex-start;
+            align-items: flex-end; /* For better bubble alignment */
         }
 
         .message.user {
@@ -305,204 +232,273 @@
         }
 
         .message-bubble {
-            max-width: 70%;
-            padding: 0.75rem 1rem;
-            border-radius: 15px;
+            max-width: 75%;
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--border-radius-lg);
             word-wrap: break-word;
+            box-shadow: var(--shadow-sm);
+            line-height: 1.5;
         }
 
         .message.user .message-bubble {
-            background: #4299e1;
-            color: white;
-            border-bottom-right-radius: 5px;
+            background: var(--primary-color);
+            color: var(--white-color);
+            border-bottom-right-radius: var(--border-radius-sm);
         }
+        html[dir="rtl"] .message.user .message-bubble { border-bottom-right-radius: var(--border-radius-lg); border-bottom-left-radius: var(--border-radius-sm); }
+
 
         .message.bot .message-bubble {
-            background: #e2e8f0;
-            color: #2d3748;
-            border-bottom-left-radius: 5px;
+            background: var(--medium-gray-color);
+            color: var(--text-color);
+            border-bottom-left-radius: var(--border-radius-sm);
         }
+        html[dir="rtl"] .message.bot .message-bubble { border-bottom-left-radius: var(--border-radius-lg); border-bottom-right-radius: var(--border-radius-sm); }
+
 
         .input-container {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             align-items: center;
         }
 
         .message-input {
             flex: 1;
-            padding: 0.75rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 25px;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid var(--medium-gray-color);
+            border-radius: 30px; /* Pill shape */
             outline: none;
             font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
         .message-input:focus {
-            border-color: #4299e1;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(var(--primary-color), 0.2);
         }
 
-        .btn {
-            padding: 0.75rem 1rem;
+        .btn-icon {
+            padding: 0.9rem;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-size: 1.2rem; /* Icon size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px; /* Fixed size */
+            height: 50px; /* Fixed size */
         }
 
         .send-btn {
-            background: #48bb78;
-            color: white;
+            background: var(--success-color);
+            color: var(--white-color);
         }
 
-        .voice-btn {
-            background: #ed8936;
-            color: white;
-        }
-
-        .btn:hover {
+        .btn-icon:hover {
             transform: scale(1.1);
+            box-shadow: var(--shadow-sm);
         }
 
-        .btn:disabled {
-            opacity: 0.5;
+        .btn-icon:disabled {
+            opacity: 0.6;
             cursor: not-allowed;
         }
+        
+        /* Voice Interface */
+        .voice-interface {
+            /* Styles specific to voice if any */
+        }
+
+        .voice-chat-container {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .voice-status {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            color: var(--dark-gray-color);
+            min-height: 50px; /* Prevent layout shift */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .voice-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem; /* Increased gap */
+            margin-bottom: 1rem;
+            height: 30px; /* Fixed height for animation */
+        }
+
+        .voice-circle {
+            width: 15px; /* Larger circles */
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: voicePulse 1.5s ease-in-out infinite;
+        }
+
+        .voice-circle:nth-child(2) { animation-delay: 0.25s; }
+        .voice-circle:nth-child(3) { animation-delay: 0.5s; }
+
+        @keyframes voicePulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.6; }
+            50% { transform: scale(1.3); opacity: 1; }
+        }
+
+        .voice-controls {
+            margin: 2.5rem 0;
+        }
+
+        .voice-btn-large {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark-color) 100%);
+            color: var(--white-color);
+            border: none;
+            border-radius: 50%;
+            width: 140px; /* Larger button */
+            height: 140px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 25px rgba(237, 137, 54, 0.35);
+            margin: 0 auto; /* Center the button */
+        }
+
+        .voice-btn-large:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 35px rgba(237, 137, 54, 0.45);
+        }
+
+        .voice-btn-large.recording {
+            background: linear-gradient(135deg, var(--danger-color) 0%, #c53030 100%);
+            animation: recordingPulse 1.2s infinite ease-in-out;
+        }
+
+        @keyframes recordingPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 25px rgba(229, 62, 62, 0.3); }
+            50% { transform: scale(1.12); box-shadow: 0 15px 35px rgba(229, 62, 62, 0.5); }
+        }
+
+        .voice-icon {
+            font-size: 2.5rem; /* Larger icon */
+            margin-bottom: 0.5rem;
+        }
+
+        .voice-text {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .voice-transcript, .voice-response {
+            background: var(--light-gray-color);
+            border: 1px solid var(--medium-gray-color);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: right;
+            box-shadow: var(--shadow-sm);
+        }
+        html[dir="rtl"] .voice-transcript, html[dir="rtl"] .voice-response { text-align: right; }
+
+        .voice-transcript h4, .voice-response h4 {
+            color: var(--dark-gray-color);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .voice-transcript p, .voice-response p {
+            font-size: 1rem;
+            min-height: 20px; /* Prevent collapse */
+        }
+
+        .replay-btn {
+            background: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .replay-btn:hover {
+            background: var(--primary-dark-color);
+        }
+        .replay-btn .btn-icon-inner { margin-right: 0.5rem; }
+        html[dir="rtl"] .replay-btn .btn-icon-inner { margin-right: 0; margin-left: 0.5rem; }
 
         /* Dashboard */
         .dashboard {
-            display: none;
+            display: none; /* Initially hidden */
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
         }
 
         .dashboard-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: var(--white-color);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem; /* Increased padding */
+            box-shadow: var(--shadow-md);
         }
 
         .dashboard-card h3 {
-            color: #4a5568;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 0.5rem;
-        }
-
-        .conversation-item {
-            padding: 0.75rem;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .conversation-item:hover {
-            background: #f7fafc;
-            border-color: #4299e1;
-        }
-
-        .user-data-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .analysis-result {
-            background: #f0fff4;
-            border: 1px solid #9ae6b4;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .lead-item {
-            background: #fff5f5;
-            border: 1px solid #feb2b2;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .probability-high {
-            background: #f0fff4;
-            border-color: #9ae6b4;
-        }
-
-        .probability-medium {
-            background: #fffbf0;
-            border-color: #fbd38d;
-        }
-
-        .probability-low {
-            background: #fff5f5;
-            border-color: #feb2b2;
-        }
-
-        /* Enhanced User Management */
-        .user-management-tools {
+            color: var(--dark-gray-color);
             margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--medium-gray-color);
+            padding-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+        
+        /* Styles for dashboard elements like conversation items, user data, etc. */
+        /* ... (Most dashboard styles from original are good, minor tweaks for consistency) ... */
+
+        .conversation-item, .enhanced-user-list .user-data-item, .lead-item, .analysis-result {
+            border: 1px solid var(--medium-gray-color);
+            border-radius: var(--border-radius-md);
             padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
+            margin-bottom: 1rem; /* Consistent margin */
+            transition: all 0.3s ease;
         }
 
-        .tool-section {
-            margin-bottom: 1rem;
+        .conversation-item:hover, .enhanced-user-list .user-data-item:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-sm);
         }
 
-        .tool-section h4 {
-            color: #4a5568;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .retargeting-options, .analysis-settings {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
+        /* Tool Buttons */
         .tool-btn {
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border: none;
-            border-radius: 6px;
+            border-radius: var(--border-radius-md);
             cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-            display: flex;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex; /* Align icon and text */
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.5rem;
+            font-weight: 500;
         }
 
-        .tool-btn.primary {
-            background: #4299e1;
-            color: white;
-        }
-
-        .tool-btn.secondary {
-            background: #718096;
-            color: white;
-        }
-
-        .tool-btn.success {
-            background: #48bb78;
-            color: white;
-        }
-
-        .tool-btn.warning {
-            background: #ed8936;
-            color: white;
-        }
+        .tool-btn.primary { background: var(--primary-color); color: var(--white-color); }
+        .tool-btn.secondary { background: var(--dark-gray-color); color: var(--white-color); }
+        .tool-btn.success { background: var(--success-color); color: var(--white-color); }
+        .tool-btn.warning { background: var(--warning-color); color: var(--white-color); }
 
         .tool-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
+        .tool-btn .btn-icon-inner { font-size: 1.1em; }
 
         /* Toggle Switches */
         .toggle-switch {
@@ -511,518 +507,265 @@
             align-items: center;
             margin-bottom: 0.5rem;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.9rem; /* Slightly larger */
+            color: var(--dark-gray-color);
         }
 
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
 
         .slider {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 20px;
+            width: 44px; /* Slightly wider */
+            height: 22px; /* Slightly taller */
             background-color: #ccc;
-            border-radius: 20px;
-            margin-left: 0.5rem;
+            border-radius: 22px;
+            margin-left: 0.75rem; /* RTL: margin-right */
             transition: 0.3s;
         }
+        html[dir="rtl"] .slider { margin-left: 0; margin-right: 0.75rem; }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 16px;
-            width: 16px;
-            right: 2px;
+            height: 18px;
+            width: 18px;
+            right: 2px; /* RTL: left */
             bottom: 2px;
             background-color: white;
             border-radius: 50%;
             transition: 0.3s;
         }
+        html[dir="rtl"] .slider:before { right: auto; left: 2px; }
 
-        input:checked + .slider {
-            background-color: #4299e1;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(-20px);
-        }
-
-        /* Enhanced User List */
-        .user-data-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            background: #edf2f7;
-            border-radius: 6px;
-        }
-
-        .filter-options {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .filter-options select {
-            padding: 0.25rem 0.5rem;
-            border: 1px solid #cbd5e0;
-            border-radius: 4px;
-            font-size: 0.8rem;
-        }
-
-        .refresh-btn {
-            padding: 0.25rem 0.5rem;
-            background: #4299e1;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .enhanced-user-list .user-data-item {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .enhanced-user-list .user-data-item:hover {
-            border-color: #4299e1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        /* User Stats */
-        .user-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 0.5rem;
-        }
-
-        .stat-number {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #4299e1;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: #718096;
-        }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(-22px); } /* RTL: translateX(22px) */
+        html[dir="rtl"] input:checked + .slider:before { transform: translateX(22px); }
 
         /* Enhanced Conversation Management */
-        .conversation-management {
-            grid-column: span 2;
-        }
+        .conversation-management { grid-column: span 2; }
 
-        .conversation-tools {
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            background: #f8fafc;
-            border-radius: 8px;
+        .conversation-tools, .user-management-tools {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--light-gray-color);
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--medium-gray-color);
         }
-
-        .tool-row {
-            display: flex;
-            gap: 0.5rem;
+        .tool-section h4, .conversation-tools h4 {
+            color: var(--dark-gray-color);
             margin-bottom: 1rem;
-            flex-wrap: wrap;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
+        .tool-row { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
 
-        .conversation-filters {
-            display: flex;
-            gap: 0.5rem;
-        }
 
-        .conversation-filters select {
-            padding: 0.5rem;
-            border: 1px solid #cbd5e0;
-            border-radius: 6px;
-            font-size: 0.8rem;
-        }
-
-        /* Conversation Stats */
-        .conversation-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .stat-icon {
-            font-size: 1.5rem;
-        }
-
-        .stat-info .stat-number {
-            display: block;
-            font-size: 1.25rem;
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 80px; /* Below header */
+            right: 20px; /* RTL: left */
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius-md);
+            color: var(--white-color);
             font-weight: bold;
-            color: #2d3748;
-        }
-
-        .stat-info .stat-label {
-            font-size: 0.7rem;
-            color: #718096;
-        }
-
-        /* Enhanced Conversations List */
-        .enhanced-conversations-list .conversation-item {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .enhanced-conversations-list .conversation-item:hover {
-            border-color: #4299e1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .enhanced-conversations-list .conversation-item.selected {
-            border-color: #4299e1;
-            background: #ebf8ff;
-        }
-
-        /* Conversation Details */
-        .conversation-details {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-top: 1rem;
-        }
-
-        .conversation-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-        }
-
-        .action-btn.resolve {
-            background: #48bb78;
-            color: white;
-        }
-
-        .action-btn.important {
-            background: #ed8936;
-            color: white;
-        }
-
-        .action-btn.follow {
-            background: #4299e1;
-            color: white;
-        }
-
-        .action-btn.note {
-            background: #718096;
-            color: white;
-        }
-
-        /* Additional Styles for Enhanced Features */
-        .status.active {
-            background: #c6f6d5;
-            color: #2f855a;
-        }
-
-        .status.inactive {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .mini-btn {
-            padding: 0.25rem 0.5rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.7rem;
-            margin: 0 0.1rem;
-            background: #e2e8f0;
-            color: #4a5568;
-            transition: all 0.2s;
-        }
-
-        .mini-btn:hover {
-            background: #cbd5e0;
-            transform: translateY(-1px);
-        }
-
-        .conversation-detail-header {
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .conversation-tags {
-            margin-top: 0.5rem;
-        }
-
-        .tag {
-            background: #4299e1;
-            color: white;
-            padding: 0.1rem 0.3rem;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            margin-left: 0.25rem;
-        }
-
-        .conversation-messages {
-            margin: 1rem 0;
-        }
-
-        .message-detail {
-            padding: 0.75rem;
-            margin: 0.5rem 0;
-            border-radius: 8px;
-        }
-
-        .user-message {
-            background: #ebf8ff;
-            border-right: 3px solid #4299e1;
-        }
-
-        .bot-message {
-            background: #f0fff4;
-            border-right: 3px solid #48bb78;
-        }
-
-        .conversation-metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .metric {
+            z-index: 2000;
+            box-shadow: var(--shadow-lg);
+            min-width: 250px;
             text-align: center;
         }
+        html[dir="rtl"] .notification { right: auto; left: 20px; }
 
-        .metric-label {
-            display: block;
-            font-size: 0.7rem;
-            color: #718096;
-            margin-bottom: 0.25rem;
-        }
-
-        .metric-value {
-            display: block;
-            font-weight: bold;
-            color: #2d3748;
-        }
-
-        .notification {
-            animation: slideInRight 0.3s ease;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(100px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Enhanced Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .conversation-management {
-                grid-column: span 1;
-            }
-            
-            .conversation-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .user-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .tool-row {
-                flex-direction: column;
-            }
-            
-            .retargeting-options, .analysis-settings {
-                flex-direction: column;
-            }
-            
-            .conversation-filters {
-                flex-direction: column;
-            }
-            
-            .conversation-actions {
-                flex-direction: column;
-            }
-            
-            .conversation-metrics {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Status indicators */
-        .status {
-            padding: 0.25rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-        }
-
-        .status.important {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .status.repeat {
-            background: #feebc8;
-            color: #dd6b20;
-        }
-
-        .status.closed {
-            background: #c6f6d5;
-            color: #2f855a;
-        }
+        .notification.success { background: var(--success-color); }
+        .notification.error { background: var(--danger-color); }
+        .notification.warning { background: var(--warning-color); }
+        .notification.info { background: var(--primary-color); }
 
         /* Loading animation */
-        .loading {
+        .loading-spinner { /* Renamed from .loading to be more specific */
             display: inline-block;
             width: 20px;
             height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #4299e1;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top-color: var(--primary-color);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            to { transform: rotate(360deg); }
         }
+        .message-bubble .loading-spinner { margin-left: 8px; }
+        html[dir="rtl"] .message-bubble .loading-spinner { margin-left: 0; margin-right: 8px; }
 
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .conversation-management { grid-column: span 1; }
+        }
+
         @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            
             .header {
                 flex-direction: column;
                 gap: 1rem;
-            }
-            
-            .nav-tabs {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .service-options {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .service-card {
-                padding: 1.5rem;
-            }
-            
-            .service-icon {
-                font-size: 2.5rem;
-            }
-            
-            .voice-btn-large {
-                width: 100px;
-                height: 100px;
-            }
-            
-            .voice-icon {
-                font-size: 1.5rem;
-            }
-            
-            .voice-text {
-                font-size: 0.7rem;
-            }
-            
-            .customer-interface {
                 padding: 1rem;
             }
+            .logo { font-size: 1.3rem; }
+            .nav-tabs { width: 100%; justify-content: space-around; }
+            .tab-btn { padding: 0.5rem 0.8rem; font-size: 0.9rem; }
             
-            .container {
-                padding: 0 0.5rem;
+            .container { margin: 1rem auto; padding: 0 0.5rem; }
+            .customer-interface-wrapper { padding: 1.5rem; }
+            .service-selection h2 { font-size: 1.6rem; margin-bottom: 1.5rem; }
+            .service-options { grid-template-columns: 1fr; gap: 1.5rem; }
+            .service-card { padding: 2rem; }
+            .service-icon { font-size: 3rem; }
+            .service-card h3 { font-size: 1.3rem; }
+
+            .service-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-bottom: 1.5rem;}
+            .service-header h3 { font-size: 1.5rem; }
+            .back-btn { padding: 0.5rem 1rem; margin-left: 0; margin-bottom: 0.5rem; width: 100%;} /* Full width for back button */
+            html[dir="rtl"] .back-btn { margin-right: 0; }
+
+
+            .chat-container { height: 350px; padding: 1rem; }
+            .message-input { padding: 0.8rem 1rem; font-size: 0.9rem; }
+            .btn-icon { width: 45px; height: 45px; font-size: 1.1rem; padding: 0.8rem;}
+
+            .voice-btn-large { width: 120px; height: 120px; }
+            .voice-icon { font-size: 2rem; }
+            .voice-text { font-size: 0.8rem; }
+            .voice-transcript, .voice-response { padding: 1rem; }
+
+            .dashboard-card { padding: 1.5rem; }
+            .dashboard-card h3 { font-size: 1.3rem; }
+
+            .conversation-stats, .user-stats, .conversation-metrics { grid-template-columns: 1fr; gap: 1rem;}
+            .stat-card { flex-direction: column; align-items: center; text-align: center; }
+            .stat-icon { margin-bottom: 0.5rem; }
+            
+            .tool-row, .retargeting-options, .analysis-settings, .conversation-filters, .conversation-actions {
+                flex-direction: column;
+                align-items: stretch; /* Make buttons full width */
             }
+            .tool-btn { width: 100%; justify-content: center; }
+            .filter-options { flex-direction: column; align-items: stretch; }
+            .filter-options select, .refresh-btn { width: 100%; margin-bottom: 0.5rem; }
+            .conversation-tools input[type="text"] { width: 100%;}
         }
 
-        /* RTL Support */
-        .rtl {
-            direction: rtl;
-            text-align: right;
+        @media (max-width: 480px) {
+            .logo { font-size: 1.2rem; }
+            .service-card { padding: 1.5rem; }
+            .service-icon { font-size: 2.5rem; }
+            .service-card h3 { font-size: 1.2rem; }
+            .voice-btn-large { width: 100px; height: 100px; }
+            .voice-icon { font-size: 1.8rem; }
         }
+        /* ... (Keep other specific dashboard styles from original like .status, .lead-item, etc.) ... */
+        .status {
+            padding: 0.25rem 0.75rem; /* More padding */
+            border-radius: 15px; /* Pill shape */
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+        .status.important { background: #fed7d7; color: #c53030; }
+        .status.repeat { background: #feebc8; color: #dd6b20; }
+        .status.closed { background: #c6f6d5; color: #2f855a; }
+        .status.active { background: #c6f6d5; color: #2f855a; }
+        .status.inactive { background: #fed7d7; color: #c53030; }
+        .status.جديد { background: var(--primary-color); color: var(--white-color);}
+        
+        /* Conversation Details */
+        .conversation-details {
+            background: var(--light-gray-color);
+            border: 1px solid var(--medium-gray-color);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .conversation-detail-header {
+            border-bottom: 1px solid var(--medium-gray-color);
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        .conversation-tags { margin-top: 0.5rem; }
+        .tag {
+            background: var(--primary-color);
+            color: var(--white-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.75rem;
+            margin-left: 0.25rem;
+            display: inline-block;
+            margin-bottom: 0.25rem;
+        }
+        html[dir="rtl"] .tag { margin-left: 0; margin-right: 0.25rem; }
 
-        /* Voice Recording Animation */
-        .recording {
-            animation: pulse 1s infinite;
+        .conversation-messages { margin: 1.5rem 0; }
+        .message-detail {
+            padding: 1rem;
+            margin: 0.75rem 0;
+            border-radius: var(--border-radius-md);
+            border: 1px solid transparent;
         }
+        .user-message {
+            background: #ebf8ff;
+            border-right: 4px solid var(--primary-color);
+        }
+        html[dir="rtl"] .user-message { border-right: none; border-left: 4px solid var(--primary-color); }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .bot-message {
+            background: #f0fff4;
+            border-right: 4px solid var(--success-color);
         }
+        html[dir="rtl"] .bot-message { border-right: none; border-left: 4px solid var(--success-color); }
+        .conversation-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .action-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .action-btn.resolve { background: var(--success-color); color: var(--white-color); }
+        .action-btn.important { background: var(--warning-color); color: var(--white-color); }
+        .action-btn.follow { background: var(--primary-color); color: var(--white-color); }
+        .action-btn.note { background: var(--dark-gray-color); color: var(--white-color); }
+        .action-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+        .conversation-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--medium-gray-color);
+        }
+        .metric { text-align: center; }
+        .metric-label { display: block; font-size: 0.8rem; color: #718096; margin-bottom: 0.25rem; }
+        .metric-value { display: block; font-weight: bold; color: var(--text-color); font-size: 1.1rem; }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <div class="header">
+    <header class="header">
         <div class="logo">🤖 نظام خدمة العملاء الذكي</div>
-        <div class="nav-tabs">
+        <nav class="nav-tabs">
             <button class="tab-btn active" onclick="showTab('customer')">واجهة العميل</button>
             <button class="tab-btn" onclick="showTab('dashboard')">لوحة التحكم</button>
-        </div>
-    </div>
+        </nav>
+    </header>
 
-    <div class="container">
-        <!-- Customer Interface -->
-        <div id="customer-tab" class="customer-interface">
-            <!-- Service Type Selection -->
-            <div class="service-selection">
+    <main class="container">
+        <!-- Customer Interface Wrapper -->
+        <div id="customer-tab" class="customer-interface-wrapper">
+            <!-- Service Type Selection (Initial View) -->
+            <section class="service-selection" id="service-selection-view">
                 <h2>اختر نوع الخدمة 🎯</h2>
                 <div class="service-options">
                     <div class="service-card" onclick="selectService('chat')">
@@ -1036,32 +779,29 @@
                         <p>تحدث معنا بصوتك مباشرة</p>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Chat Interface -->
-            <div id="chat-interface" class="chat-interface" style="display: none;">
+            <!-- Chat Interface (Hidden by default) -->
+            <section id="chat-interface" class="animated-interface" style="display: none;">
                 <div class="service-header">
                     <button class="back-btn" onclick="backToSelection()">← العودة</button>
                     <h3>💬 خدمة الدردشة النصية</h3>
                 </div>
-                
                 <div class="chat-container" id="chatContainer">
-                    <!-- الرسائل ستظهر هنا -->
+                    <!-- Messages will appear here -->
                 </div>
-                
                 <div class="input-container">
                     <input type="text" class="message-input" id="messageInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
-                    <button class="btn send-btn" onclick="sendMessage()" title="إرسال">📤</button>
+                    <button class="btn-icon send-btn" onclick="sendMessage()" title="إرسال">📤</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Voice Interface -->
-            <div id="voice-interface" class="voice-interface" style="display: none;">
+            <!-- Voice Interface (Hidden by default) -->
+            <section id="voice-interface" class="animated-interface" style="display: none;">
                 <div class="service-header">
                     <button class="back-btn" onclick="backToSelection()">← العودة</button>
                     <h3>🎤 خدمة العملاء الصوتية</h3>
                 </div>
-                
                 <div class="voice-chat-container">
                     <div class="voice-status" id="voiceStatus">
                         <div class="voice-animation">
@@ -1071,84 +811,78 @@
                         </div>
                         <p>اضغط على المايكروفون وابدأ التحدث</p>
                     </div>
-                    
                     <div class="voice-controls">
                         <button class="voice-btn-large" id="voiceBtnLarge" onclick="toggleVoiceRecording()">
                             <span class="voice-icon">🎤</span>
                             <span class="voice-text">ابدأ التحدث</span>
                         </button>
                     </div>
-                    
                     <div class="voice-transcript" id="voiceTranscript" style="display: none;">
                         <h4>ما قلته:</h4>
                         <p id="transcriptText"></p>
                     </div>
-                    
                     <div class="voice-response" id="voiceResponse" style="display: none;">
                         <h4>الرد:</h4>
                         <p id="responseText"></p>
-                        <button class="btn replay-btn" onclick="replayResponse()">🔊 إعادة تشغيل</button>
+                        <button class="replay-btn" onclick="replayResponse()">
+                            <span class="btn-icon-inner">🔊</span> إعادة تشغيل
+                        </button>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
-        <!-- Dashboard -->
-        <div id="dashboard-tab" class="dashboard">
-            <!-- إدارة المحادثات -->
+        <!-- Dashboard (Hidden by default) -->
+        <section id="dashboard-tab" class="dashboard" style="display: none;">
+            <!-- Conversation Management Card -->
             <div class="dashboard-card conversation-management">
                 <h3>📋 إدارة المحادثات المتقدمة</h3>
-                
-                <!-- تخصيص نظام المحادثة -->
                 <div class="conversation-tools">
-                    <div class="tool-row" style="flex-direction: column; align-items: flex-start;">
+                    <div class="tool-section">
                         <h4>⚙️ تخصيص نظام المحادثة (لصاحب المتجر)</h4>
-                        <label style="margin-bottom: 0.5rem;">
-                            أسلوب البوت:
-                            <input type="text" id="botStyle" placeholder="مثال: رسمي، ودي، فكاهي..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
-                        </label>
-                        <label style="margin-bottom: 0.5rem;">
-                            مهام البوت:
-                            <input type="text" id="botTasks" placeholder="مثال: الرد على الأسئلة، استقبال الطلبات..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
-                        </label>
-                        <label style="margin-bottom: 0.5rem;">
-                            متطلبات خاصة:
-                            <input type="text" id="botRequirements" placeholder="مثال: طلب رقم الطلب، التحقق من الهوية..." style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
-                        </label>
-                        <label style="margin-bottom: 0.5rem;">
-                            رقم الهاتف للإشعارات عند الحالات المعقدة:
-                            <input type="text" id="alertPhone" placeholder="05xxxxxxxx" style="margin-right: 0.5rem; padding: 0.25rem; border-radius: 4px; border: 1px solid #e2e8f0;">
-                        </label>
-                        <button class="tool-btn primary" onclick="saveBotSettings()">💾 حفظ الإعدادات</button>
+                        <div style="display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                            <label>أسلوب البوت:
+                                <input type="text" id="botStyle" placeholder="مثال: رسمي، ودي..." style="width: 100%; padding: 0.5rem; border-radius: var(--border-radius-sm); border: 1px solid var(--medium-gray-color);">
+                            </label>
+                            <label>مهام البوت:
+                                <input type="text" id="botTasks" placeholder="مثال: الرد على الأسئلة..." style="width: 100%; padding: 0.5rem; border-radius: var(--border-radius-sm); border: 1px solid var(--medium-gray-color);">
+                            </label>
+                            <label>متطلبات خاصة:
+                                <input type="text" id="botRequirements" placeholder="مثال: طلب رقم الطلب..." style="width: 100%; padding: 0.5rem; border-radius: var(--border-radius-sm); border: 1px solid var(--medium-gray-color);">
+                            </label>
+                            <label>رقم الهاتف للإشعارات المعقدة:
+                                <input type="text" id="alertPhone" placeholder="05xxxxxxxx" style="width: 100%; padding: 0.5rem; border-radius: var(--border-radius-sm); border: 1px solid var(--medium-gray-color);">
+                            </label>
+                        </div>
+                        <button class="tool-btn primary" onclick="saveBotSettings()" style="margin-top: 1rem;"><span class="btn-icon-inner">💾</span> حفظ الإعدادات</button>
                     </div>
-                    <div class="tool-row">
+                     <div class="tool-row" style="margin-top: 1.5rem;">
                         <button class="tool-btn secondary" onclick="exportConversations()">
-                            📊 تصدير المحادثات
+                            <span class="btn-icon-inner">📊</span> تصدير المحادثات
                         </button>
                         <button class="tool-btn warning" onclick="analyzeAllConversations()">
-                            📈 تحليل شامل
+                            <span class="btn-icon-inner">📈</span> تحليل شامل
                         </button>
                     </div>
                 </div>
                 
-                <!-- إحصائيات المحادثات -->
                 <div class="conversation-stats">
                     <div class="stat-card">
-                        <div class="stat-icon">💬</div>
+                        <div class="stat-icon" style="color: var(--primary-color);">💬</div>
                         <div class="stat-info">
                             <span class="stat-number" id="totalConversations">0</span>
                             <span class="stat-label">إجمالي المحادثات</span>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-icon" style="color: var(--secondary-color);">⏱️</div>
                         <div class="stat-info">
                             <span class="stat-number" id="avgResponseTime">0</span>
                             <span class="stat-label">متوسط وقت الرد (ثانية)</span>
                         </div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">😊</div>
+                        <div class="stat-icon" style="color: var(--success-color);">😊</div>
                         <div class="stat-info">
                             <span class="stat-number" id="satisfactionRate">0%</span>
                             <span class="stat-label">معدل الرضا</span>
@@ -1156,87 +890,61 @@
                     </div>
                 </div>
                 
-                <!-- قائمة المحادثات المحسنة -->
-                <div id="conversationsList" class="enhanced-conversations-list">
-                    <!-- قائمة المحادثات ستظهر هنا -->
+                <div id="conversationsList" class="enhanced-conversations-list" style="max-height: 400px; overflow-y: auto; margin-top:1.5rem; padding-right: 0.5rem;">
+                    <!-- Conversation list will appear here -->
                 </div>
                 
-                <!-- تفاصيل المحادثة المحددة -->
                 <div id="conversationDetails" class="conversation-details" style="display: none;">
-                    <h4>تفاصيل المحادثة</h4>
-                    <div id="conversationContent"></div>
-                    <div class="conversation-actions">
-                        <button class="action-btn resolve" onclick="markAsResolved()">✅ تم الحل</button>
-                        <button class="action-btn important" onclick="markAsImportant()">⭐ مهم</button>
-                        <button class="action-btn follow" onclick="scheduleFollowUp()">📅 متابعة لاحقاً</button>
-                        <button class="action-btn note" onclick="addNote()">📝 إضافة ملاحظة</button>
-                    </div>
+                    <!-- Selected conversation details will appear here -->
                 </div>
             </div>
 
-            <!-- بيانات المستخدمين -->
+            <!-- User Data Card -->
             <div class="dashboard-card">
                 <h3>👥 بيانات المستخدمين</h3>
-                
-                <!-- أدوات إدارة العملاء -->
                 <div class="user-management-tools">
-                    <div class="tool-section">
+                     <div class="tool-section">
                         <h4>🎯 إعادة الاستهداف</h4>
-                        <div class="retargeting-options">
-                            <button class="tool-btn primary" onclick="retargetInactiveUsers()">
-                                📧 استهداف العملاء غير النشطين
-                            </button>
-                            <button class="tool-btn secondary" onclick="retargetInterestedUsers()">
-                                💡 استهداف العملاء المهتمين
-                            </button>
-                            <button class="tool-btn success" onclick="sendPromotionalEmails()">
-                                🎁 إرسال عروض ترويجية
-                            </button>
+                        <div class="retargeting-options tool-row">
+                            <button class="tool-btn primary" onclick="retargetInactiveUsers()"><span class="btn-icon-inner">📧</span> استهداف غير النشطين</button>
+                            <button class="tool-btn secondary" onclick="retargetInterestedUsers()"><span class="btn-icon-inner">💡</span> استهداف المهتمين</button>
+                            <button class="tool-btn success" onclick="sendPromotionalEmails()"><span class="btn-icon-inner">🎁</span> إرسال عروض</button>
                         </div>
                     </div>
-                    
-                    <div class="tool-section">
+                     <div class="tool-section" style="margin-top: 1.5rem;">
                         <h4>⚙️ إعدادات التحليل</h4>
                         <div class="analysis-settings">
                             <label class="toggle-switch">
-                                <input type="checkbox" id="behaviorAnalysisToggle" checked onchange="toggleBehaviorAnalysis()">
-                                <span class="slider"></span>
-                                تفعيل تحليل سلوك العملاء
+                                <input type="checkbox" id="behaviorAnalysisToggle" checked onchange="toggleBehaviorAnalysis()"> <span class="slider"></span> تفعيل تحليل السلوك
                             </label>
                             <label class="toggle-switch">
-                                <input type="checkbox" id="autoEmailToggle" onchange="toggleAutoEmails()">
-                                <span class="slider"></span>
-                                إرسال رسائل تلقائية
+                                <input type="checkbox" id="autoEmailToggle" onchange="toggleAutoEmails()"> <span class="slider"></span> إرسال رسائل تلقائية
                             </label>
                             <label class="toggle-switch">
-                                <input type="checkbox" id="realTimeNotifications" onchange="toggleNotifications()">
-                                <span class="slider"></span>
-                                إشعارات فورية
+                                <input type="checkbox" id="realTimeNotifications" onchange="toggleNotifications()"> <span class="slider"></span> إشعارات فورية
                             </label>
                         </div>
                     </div>
                 </div>
                 
-                <!-- قائمة المستخدمين المحسنة -->
-                <div class="user-data-header">
+                <div class="user-data-header" style="margin-top:1.5rem;">
                     <div class="filter-options">
-                        <select id="userFilter" onchange="filterUsers()">
+                        <select id="userFilter" onchange="filterUsers()" style="padding: 0.5rem; border-radius: var(--border-radius-sm); border: 1px solid var(--medium-gray-color);">
                             <option value="all">جميع العملاء</option>
                             <option value="active">نشطين</option>
                             <option value="inactive">غير نشطين</option>
                             <option value="interested">مهتمين</option>
                             <option value="potential">محتملين</option>
                         </select>
-                        <button class="refresh-btn" onclick="refreshUserData()">🔄 تحديث</button>
+                        <button class="refresh-btn tool-btn primary" onclick="refreshUserData()"><span class="btn-icon-inner">🔄</span> تحديث</button>
                     </div>
                 </div>
                 
-                <div id="userDataList" class="enhanced-user-list">
-                    <!-- بيانات المستخدمين ستظهر هنا -->
+                <div id="userDataList" class="enhanced-user-list" style="max-height: 300px; overflow-y: auto; margin-top:1rem; padding-right: 0.5rem;">
+                    <!-- User data list will appear here -->
                 </div>
                 
-                <!-- إحصائيات سريعة -->
-                <div class="user-stats">
+                <div class="user-stats" style="margin-top:1.5rem;">
                     <div class="stat-item">
                         <span class="stat-number" id="totalUsers">0</span>
                         <span class="stat-label">إجمالي العملاء</span>
@@ -1252,1108 +960,848 @@
                 </div>
             </div>
 
-            <!-- تحليل سلوك المستخدم -->
+            <!-- Behavior Analysis Card -->
             <div class="dashboard-card">
                 <h3>📊 تحليل سلوك المستخدم</h3>
-                <div id="behaviorAnalysis">
-                    <!-- نتائج التحليل ستظهر هنا -->
+                <div id="behaviorAnalysis" style="max-height: 300px; overflow-y: auto; padding-right: 0.5rem;">
+                    <!-- Behavior analysis results -->
                 </div>
             </div>
 
-            <!-- تأهيل العملاء المحتملين -->
+            <!-- Lead Qualification Card -->
             <div class="dashboard-card">
                 <h3>🎯 تأهيل العملاء المحتملين</h3>
-                <div id="leadQualification">
-                    <!-- قائمة العملاء المحتملين ستظهر هنا -->
+                <div id="leadQualification" style="max-height: 300px; overflow-y: auto; padding-right: 0.5rem;">
+                    <!-- Lead qualification list -->
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script>
-        // متغيرات عامة
+        // --- Global Variables & Constants ---
         let conversationHistory = [];
         let isRecording = false;
         let recognition = null;
-        let currentConversationId = Date.now();
-        let currentService = null;
-        let lastResponse = '';
-        
-        // مفتاح Gemini API
-        const GEMINI_API_KEY = 'AIzaSyAquNVYw6VOmAKTtKtTPU7Tl3PVIG0sKhg';
+        let currentConversationId = null; // Will be set when a service starts
+        let currentService = null; // 'chat' or 'voice'
+        let lastBotAudioResponse = ''; // For replaying voice responses
+
+        // IMPORTANT: Store API Key securely in a real application (e.g., backend proxy or environment variable)
+        const GEMINI_API_KEY = 'AIzaSyAquNVYw6VOmAKTtKtTPU7Tl3PVIG0sKhg'; // Replace with your actual key
         const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-        // تهيئة النظام عند تحميل الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
+        // --- DOM Elements (Cached for performance) ---
+        const serviceSelectionView = document.getElementById('service-selection-view');
+        const chatInterfaceView = document.getElementById('chat-interface');
+        const voiceInterfaceView = document.getElementById('voice-interface');
+        const customerTabContent = document.getElementById('customer-tab');
+        const dashboardTabContent = document.getElementById('dashboard-tab');
+
+        // Chat specific elements
+        const chatContainer = document.getElementById('chatContainer');
+        const messageInput = document.getElementById('messageInput');
+
+        // Voice specific elements
+        const voiceStatusP = document.querySelector('#voiceStatus p');
+        const voiceAnimationDiv = document.querySelector('#voiceStatus .voice-animation');
+        const voiceBtnLarge = document.getElementById('voiceBtnLarge');
+        const voiceBtnText = voiceBtnLarge.querySelector('.voice-text');
+        const voiceTranscriptDiv = document.getElementById('voiceTranscript');
+        const transcriptTextP = document.getElementById('transcriptText');
+        const voiceResponseDiv = document.getElementById('voiceResponse');
+        const responseTextP = document.getElementById('responseText');
+        
+        // Dashboard elements
+        const botStyleInput = document.getElementById('botStyle');
+        const botTasksInput = document.getElementById('botTasks');
+        const botRequirementsInput = document.getElementById('botRequirements');
+        const alertPhoneInput = document.getElementById('alertPhone');
+
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
             initializeSpeechRecognition();
-            loadStoredData();
-            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
-            if (settings) {
-                if (settings.style) document.getElementById('botStyle').value = settings.style;
-                if (settings.tasks) document.getElementById('botTasks').value = settings.tasks;
-                if (settings.reqs) document.getElementById('botRequirements').value = settings.reqs;
-                if (settings.phone) document.getElementById('alertPhone').value = settings.phone;
-            }
+            loadBotSettings();
+            // Load other stored data if needed (e.g., for dashboard persistence)
+            // updateDashboard(); // Initial call if dashboard can be default view for some users
         });
 
-        // اختيار نوع الخدمة
-        function selectService(serviceType) {
-            currentService = serviceType;
-            
-            // إخفاء شاشة الاختيار
-            document.querySelector('.service-selection').style.display = 'none';
-            
-            if (serviceType === 'chat') {
-                // إظهار واجهة الدردشة
-                document.getElementById('chat-interface').style.display = 'block';
-                addWelcomeMessage();
-            } else if (serviceType === 'voice') {
-                // إظهار واجهة الصوت
-                document.getElementById('voice-interface').style.display = 'block';
-                updateVoiceStatus('اضغط على المايكروفون وابدأ التحدث');
+        function loadBotSettings() {
+            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            if (settings.style) botStyleInput.value = settings.style;
+            if (settings.tasks) botTasksInput.value = settings.tasks;
+            if (settings.reqs) botRequirementsInput.value = settings.reqs;
+            if (settings.phone) alertPhoneInput.value = settings.phone;
+        }
+
+        // --- Tab Navigation ---
+        function showTab(tabName) {
+            customerTabContent.style.display = tabName === 'customer' ? 'block' : 'none';
+            dashboardTabContent.style.display = tabName === 'dashboard' ? 'grid' : 'none';
+
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tabName === 'dashboard') {
+                updateDashboard();
+            } else {
+                // Reset to service selection if switching to customer tab
+                backToSelection(false); // false to not animate if already on customer tab
             }
         }
 
-        // العودة لشاشة الاختيار
-        function backToSelection() {
-            // إخفاء جميع الواجهات
-            document.getElementById('chat-interface').style.display = 'none';
-            document.getElementById('voice-interface').style.display = 'none';
-            
-            // إظهار شاشة الاختيار
-            document.querySelector('.service-selection').style.display = 'block';
-            
-            // إعادة تعيين المتغيرات
+        // --- Service Selection & Navigation ---
+        function selectService(serviceType) {
+            currentService = serviceType;
+            currentConversationId = Date.now(); // New ID for each new service session
+            conversationHistory = []; // Reset history for the new session
+
+            serviceSelectionView.style.display = 'none';
+
+            if (serviceType === 'chat') {
+                chatInterfaceView.style.display = 'block';
+                voiceInterfaceView.style.display = 'none';
+                addWelcomeMessageToChat();
+                messageInput.focus();
+            } else if (serviceType === 'voice') {
+                voiceInterfaceView.style.display = 'block';
+                chatInterfaceView.style.display = 'none';
+                resetVoiceInterface();
+                addWelcomeMessageToVoice();
+            }
+        }
+
+        function backToSelection(animate = true) {
+            if (currentService === 'voice' && isRecording) {
+                recognition.stop(); // Stop recording if active
+            }
             currentService = null;
-            
-            // مسح محتوى الدردشة
-            document.getElementById('chatContainer').innerHTML = '';
-            
-            // إعادة تعيين واجهة الصوت
+            currentConversationId = null;
+
+            chatInterfaceView.style.display = 'none';
+            voiceInterfaceView.style.display = 'none';
+            serviceSelectionView.style.display = 'block';
+
+            if (!animate) { // If switching tabs, no need to re-animate selection screen
+                 chatInterfaceView.classList.remove('animated-interface');
+                 voiceInterfaceView.classList.remove('animated-interface');
+            } else {
+                 chatInterfaceView.classList.add('animated-interface');
+                 voiceInterfaceView.classList.add('animated-interface');
+            }
+
+
+            // Clear chat content
+            if (chatContainer) chatContainer.innerHTML = '';
+            // Reset voice interface fully
             resetVoiceInterface();
         }
 
-        // تحديث حالة الصوت
-        function updateVoiceStatus(message) {
-            const statusElement = document.querySelector('.voice-status p');
-            if (statusElement) {
-                statusElement.textContent = message;
-            }
+        // --- Chat Service Logic ---
+        function addWelcomeMessageToChat() {
+            addChatMessage('أهلاً وسهلاً! أنا مساعدك الذكي. كيف يمكنني مساعدتك اليوم عبر الدردشة؟ 😊', 'bot');
         }
 
-        // إعادة تعيين واجهة الصوت
-        function resetVoiceInterface() {
-            document.getElementById('voiceTranscript').style.display = 'none';
-            document.getElementById('voiceResponse').style.display = 'none';
-            updateVoiceStatus('اضغط على المايكروفون وابدأ التحدث');
-            
-            const voiceBtn = document.getElementById('voiceBtnLarge');
-            voiceBtn.classList.remove('recording');
-            voiceBtn.querySelector('.voice-text').textContent = 'ابدأ التحدث';
-        }
-
-        // إعادة تشغيل الرد
-        function replayResponse() {
-            if (lastResponse) {
-                speakText(lastResponse);
-            }
-        }
-
-        // إضافة رسالة ترحيب
-        function addWelcomeMessage() {
-            addMessage('أهلاً وسهلاً! أنا مساعدك الذكي. كيف ممكن أساعدك اليوم؟ 😊', 'bot');
-        }
-
-        // تهيئة تحويل الصوت إلى نص
-        function initializeSpeechRecognition() {
-            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-                recognition = new SpeechRecognition();
-                recognition.lang = 'ar-SA'; // اللهجة السعودية
-                recognition.continuous = false;
-                recognition.interimResults = false;
-
-                recognition.onresult = function(event) {
-                    const transcript = event.results[0][0].transcript;
-                    
-                    if (currentService === 'voice') {
-                        // واجهة الصوت - عرض النص المُحول وإرسال الرسالة
-                        document.getElementById('transcriptText').textContent = transcript;
-                        document.getElementById('voiceTranscript').style.display = 'block';
-                        sendVoiceMessage(transcript);
-                    } else {
-                        // واجهة الدردشة - وضع النص في حقل الإدخال وإرسال
-                        const messageInput = document.getElementById('messageInput');
-                        if (messageInput) {
-                            messageInput.value = transcript;
-                            sendMessage();
-                        }
-                    }
-                };
-
-                recognition.onerror = function(event) {
-                    console.error('خطأ في التعرف على الصوت:', event.error);
-                    if (currentService === 'voice') {
-                        updateVoiceStatus('❌ حدث خطأ في التعرف على الصوت. حاول مرة أخرى');
-                    }
-                    stopRecording();
-                };
-
-                recognition.onend = function() {
-                    stopRecording();
-                };
-            }
-        }
-
-        // إرسال رسالة صوتية
-        async function sendVoiceMessage(message) {
-            updateVoiceStatus('🤖 جاري توليد الرد...');
-            
-            try {
-                // إرسال إلى Gemini API
-                const response = await sendToGemini(message);
-                
-                // عرض الرد
-                document.getElementById('responseText').textContent = response;
-                document.getElementById('voiceResponse').style.display = 'block';
-                
-                // حفظ الرد للإعادة تشغيل
-                lastResponse = response;
-                
-                // تشغيل الرد صوتياً
-                speakText(response);
-                
-                // حفظ المحادثة
-                saveConversation(message, response);
-                
-                // تحليل سلوك المستخدم
-                analyzeUserBehavior(message, response);
-                
-                updateVoiceStatus('✅ تم! يمكنك التحدث مرة أخرى');
-                
-                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
-                    notifyComplexCase(message);
-                }
-                
-            } catch (error) {
-                updateVoiceStatus('❌ حدث خطأ في الاتصال. حاول مرة أخرى');
-                console.error('خطأ في إرسال الرسالة الصوتية:', error);
-            }
-        }
-
-        // تبديل تسجيل الصوت
-        function toggleVoiceRecording() {
-            if (!recognition) {
-                alert('المتصفح لا يدعم التعرف على الصوت');
-                return;
-            }
-
-            if (isRecording) {
-                recognition.stop();
-            } else {
-                recognition.start();
-                startRecording();
-            }
-        }
-
-        // بدء التسجيل
-        function startRecording() {
-            isRecording = true;
-            
-            if (currentService === 'voice') {
-                // واجهة الصوت
-                const voiceBtn = document.getElementById('voiceBtnLarge');
-                voiceBtn.classList.add('recording');
-                voiceBtn.querySelector('.voice-text').textContent = 'جاري التسجيل...';
-                updateVoiceStatus('🎤 جاري الاستماع... تحدث الآن');
-            } else {
-                // واجهة الدردشة (إذا كانت موجودة)
-                const voiceBtn = document.getElementById('voiceBtn');
-                if (voiceBtn) {
-                    voiceBtn.classList.add('recording');
-                    voiceBtn.innerHTML = '🔴';
-                    voiceBtn.title = 'إيقاف التسجيل';
-                }
-            }
-        }
-
-        // إيقاف التسجيل
-        function stopRecording() {
-            isRecording = false;
-            
-            if (currentService === 'voice') {
-                // واجهة الصوت
-                const voiceBtn = document.getElementById('voiceBtnLarge');
-                voiceBtn.classList.remove('recording');
-                voiceBtn.querySelector('.voice-text').textContent = 'ابدأ التحدث';
-                updateVoiceStatus('⏳ جاري معالجة ما قلته...');
-            } else {
-                // واجهة الدردشة
-                const voiceBtn = document.getElementById('voiceBtn');
-                if (voiceBtn) {
-                    voiceBtn.classList.remove('recording');
-                    voiceBtn.innerHTML = '🎤';
-                    voiceBtn.title = 'تسجيل صوتي';
-                }
-            }
-        }
-
-        // التعامل مع الضغط على Enter
         function handleKeyPress(event) {
-            if (event.key === 'Enter') {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
                 sendMessage();
             }
         }
 
-        // إرسال رسالة
         async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
+            const messageText = messageInput.value.trim();
+            if (!messageText) return;
 
-            // إضافة رسالة المستخدم
-            addMessage(message, 'user');
-            input.value = '';
-
-            // إضافة مؤشر التحميل
-            const loadingId = addLoadingMessage();
+            addChatMessage(messageText, 'user');
+            messageInput.value = '';
+            const loadingId = addChatLoadingIndicator();
 
             try {
-                // إرسال إلى Gemini API
-                const response = await sendToGemini(message);
-                
-                // إزالة مؤشر التحميل
-                removeLoadingMessage(loadingId);
-                
-                // إضافة رد البوت
-                addMessage(response, 'bot');
-                
-                // تشغيل الرد صوتياً
-                speakText(response);
-                
-                // حفظ المحادثة
-                saveConversation(message, response);
-                
-                // تحليل سلوك المستخدم
-                analyzeUserBehavior(message, response);
-                
-                // إذا اكتشفنا كلمة "معقد" أو "لا أستطيع" في الرد، أرسل إشعار
-                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
-                    notifyComplexCase(message);
-                }
-                
+                const botResponse = await sendToGemini(messageText);
+                removeChatLoadingIndicator(loadingId);
+                addChatMessage(botResponse, 'bot');
+                // speakText(botResponse); // Optional: speak chat bot responses
+                saveToConversationHistory(messageText, botResponse);
+                analyzeUserBehavior(messageText, botResponse); // For dashboard
+                checkComplexCase(messageText, botResponse);
             } catch (error) {
-                removeLoadingMessage(loadingId);
-                addMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'bot');
-                console.error('خطأ في إرسال الرسالة:', error);
+                console.error('Error sending chat message:', error);
+                removeChatLoadingIndicator(loadingId);
+                addChatMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'bot');
             }
         }
 
-        // إرسال الرسالة إلى Gemini API
-        async function sendToGemini(message) {
-            // إعداد السياق والتاريخ
-            const botSettings = JSON.parse(localStorage.getItem('botSettings') || '{}');
-            const context = `أنت مساعد خدمة عملاء ذكي تتحدث باللهجة السعودية.
-            ${
-                botSettings.style ? `الأسلوب المطلوب: ${botSettings.style}.` : ''
-            }
-            ${
-                botSettings.tasks ? `مهامك: ${botSettings.tasks}.` : ''
-            }
-            ${
-                botSettings.reqs ? `المتطلبات الخاصة: ${botSettings.reqs}.` : ''
-            }
-            كن ودوداً ومفيداً واستخدم تعبيرات مثل "أهلاً وسهلاً"، "وش تبي تعرف"، "أكيد"، "تبيه؟".
-            إذا سأل العميل عن خصومات أو عروض، اعرض عليه خصم 10%.
-            
-            المحادثات السابقة:
-            ${conversationHistory.slice(-5).map(conv => `العميل: ${conv.user}\nالمساعد: ${conv.bot}`).join('\n')}`;
+        function addChatMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = text;
+            messageDiv.appendChild(bubbleDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
-            const requestBody = {
-                contents: [{
-                    parts: [{
-                        text: `${context}\n\nالرسالة الحالية: ${message}`
-                    }]
-                }],
-                generationConfig: {
-                    temperature: 0.7,
-                    topK: 40,
-                    topP: 0.95,
-                    maxOutputTokens: 1024,
+        function addChatLoadingIndicator() {
+            const loadingId = 'loading-' + Date.now();
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message bot';
+            messageDiv.id = loadingId;
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = '<span class="loading-spinner"></span> جاري الكتابة...';
+            messageDiv.appendChild(bubbleDiv);
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            return loadingId;
+        }
+
+        function removeChatLoadingIndicator(loadingId) {
+            const loadingElement = document.getElementById(loadingId);
+            if (loadingElement) loadingElement.remove();
+        }
+
+        // --- Voice Service Logic ---
+        function initializeSpeechRecognition() {
+            if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+                console.warn('Speech Recognition API not supported in this browser.');
+                // Optionally disable voice features or show a message
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA';
+            recognition.continuous = false; // Process after user stops speaking
+            recognition.interimResults = false;
+
+            recognition.onstart = () => {
+                isRecording = true;
+                voiceBtnLarge.classList.add('recording');
+                voiceBtnText.textContent = 'جاري التسجيل...';
+                updateVoiceStatusUI('🎤 جاري الاستماع... تحدث الآن', true);
+                voiceTranscriptDiv.style.display = 'none';
+                voiceResponseDiv.style.display = 'none';
+            };
+
+            recognition.onresult = async (event) => {
+                const transcript = event.results[0][0].transcript;
+                transcriptTextP.textContent = transcript;
+                voiceTranscriptDiv.style.display = 'block';
+                updateVoiceStatusUI('⏳ جاري معالجة طلبك...', true);
+                try {
+                    const botResponse = await sendToGemini(transcript);
+                    responseTextP.textContent = botResponse;
+                    voiceResponseDiv.style.display = 'block';
+                    lastBotAudioResponse = botResponse;
+                    speakText(botResponse);
+                    saveToConversationHistory(transcript, botResponse);
+                    analyzeUserBehavior(transcript, botResponse); // For dashboard
+                    updateVoiceStatusUI('✅ تم! يمكنك التحدث مرة أخرى أو إعادة الاستماع.', false);
+                    checkComplexCase(transcript, botResponse);
+                } catch (error) {
+                    console.error('Error processing voice command:', error);
+                    responseTextP.textContent = 'عذراً، حدث خطأ في معالجة طلبك.';
+                    voiceResponseDiv.style.display = 'block';
+                    updateVoiceStatusUI('❌ خطأ. حاول مرة أخرى.', false);
                 }
             };
 
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+                let errorMessage = '❌ حدث خطأ في التعرف على الصوت.';
+                if (event.error === 'no-speech') errorMessage = 'لم يتم اكتشاف أي صوت. حاول التحدث بوضوح.';
+                if (event.error === 'audio-capture') errorMessage = 'مشكلة في المايكروفون. تأكد من صلاحيات الوصول.';
+                if (event.error === 'not-allowed') errorMessage = 'تم رفض الوصول للمايكروفون.';
+                updateVoiceStatusUI(errorMessage, false);
+                stopVoiceRecordingInternal(); // Ensure recording state is reset
+            };
+
+            recognition.onend = () => {
+                stopVoiceRecordingInternal();
+            };
+        }
+        
+        function addWelcomeMessageToVoice() {
+            const welcomeText = "أهلاً بك في خدمة العملاء الصوتية! كيف أقدر أساعدك؟";
+            updateVoiceStatusUI(welcomeText, false); // false for not showing animation
+            // speakText(welcomeText); // Auto-speak welcome
+        }
+
+
+        function toggleVoiceRecording() {
+            if (!recognition) {
+                showNotification('المتصفح لا يدعم التعرف على الصوت.', 'warning');
+                return;
+            }
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    // This can happen if recognition is already starting or in an error state
+                    console.warn("Could not start recognition: ", e.message);
+                    isRecording = false; // Ensure state is correct
+                    voiceBtnLarge.classList.remove('recording');
+                    voiceBtnText.textContent = 'ابدأ التحدث';
+                    updateVoiceStatusUI('لم يتمكن من بدء التسجيل. حاول مرة أخرى.', false);
+                }
+            }
+        }
+        
+        function stopVoiceRecordingInternal() {
+            isRecording = false;
+            voiceBtnLarge.classList.remove('recording');
+            voiceBtnText.textContent = 'ابدأ التحدث';
+            // Don't change status if response is being processed or shown
+            if (!voiceResponseDiv.style.display || voiceResponseDiv.style.display === 'none') {
+                 // updateVoiceStatusUI('اضغط على المايكروفون وابدأ التحدث', false);
+            }
+        }
+
+
+        function updateVoiceStatusUI(message, showAnimation) {
+            voiceStatusP.textContent = message;
+            voiceAnimationDiv.style.display = showAnimation ? 'flex' : 'none';
+        }
+
+        function resetVoiceInterface() {
+            if (recognition && isRecording) recognition.stop();
+            transcriptTextP.textContent = '';
+            responseTextP.textContent = '';
+            voiceTranscriptDiv.style.display = 'none';
+            voiceResponseDiv.style.display = 'none';
+            updateVoiceStatusUI('اضغط على المايكروفون وابدأ التحدث', true); // Show animation initially
+            lastBotAudioResponse = '';
+        }
+
+        function replayResponse() {
+            if (lastBotAudioResponse) {
+                speakText(lastBotAudioResponse);
+            } else {
+                showNotification('لا يوجد رد لإعادة تشغيله.', 'info');
+            }
+        }
+
+        // --- Shared Helper Functions (API, LocalStorage, etc.) ---
+        async function sendToGemini(message) {
+            const botSettings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            let systemInstruction = `أنت مساعد خدمة عملاء ذكي تتحدث باللهجة السعودية. اسمك Bright AI
+            كن ودوداً ومفيداً. استخدم تعبيرات سعودية طبيعية.
+            إذا سأل العميل عن خصومات أو عروض، يمكنك ذكر أن هناك عروض دورية ويمكنه متابعة الموقع أو الاستفسار عن عروض محددة.
+            لا تعرض خصومات محددة بشكل تلقائي إلا إذا تم برمجتك لذلك صراحة.`;
+
+            if (botSettings.style) systemInstruction += `\nأسلوبك العام: ${botSettings.style}.`;
+            if (botSettings.tasks) systemInstruction += `\nمهامك الرئيسية تتضمن: ${botSettings.tasks}.`;
+            if (botSettings.reqs) systemInstruction += `\nتذكر هذه المتطلبات الخاصة: ${botSettings.reqs}.`;
+
+            const historyForGemini = conversationHistory.slice(-6).map(conv => ([
+                { role: "user", parts: [{ text: conv.user }] },
+                { role: "model", parts: [{ text: conv.bot }] }
+            ])).flat();
+            
+            const contents = [
+                ...historyForGemini,
+                { role: "user", parts: [{ text: message }] }
+            ];
+
+            const requestBody = {
+                contents: contents,
+                generationConfig: {
+                    temperature: 0.75, // Slightly higher for more natural conversation
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1024,
+                },
+                systemInstruction: { // Using system instruction for better context
+                    parts: [{text: systemInstruction}]
+                }
+            };
+            
+            // console.log("Sending to Gemini:", JSON.stringify(requestBody, null, 2));
+
             const response = await fetch(GEMINI_API_URL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestBody)
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorData = await response.json();
+                console.error('Gemini API Error:', errorData);
+                throw new Error(`Gemini API request failed: ${response.status} ${response.statusText}. Details: ${JSON.stringify(errorData.error?.message || errorData)}`);
             }
 
             const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-        }
+            // console.log("Received from Gemini:", JSON.stringify(data, null, 2));
 
-        // إضافة رسالة إلى الدردشة
-        function addMessage(text, sender) {
-            const chatContainer = document.getElementById('chatContainer');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}`;
-            
-            const bubbleDiv = document.createElement('div');
-            bubbleDiv.className = 'message-bubble';
-            bubbleDiv.textContent = text;
-            
-            messageDiv.appendChild(bubbleDiv);
-            chatContainer.appendChild(messageDiv);
-            
-            // التمرير إلى أسفل
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            
-            return messageDiv;
-        }
-
-        // إضافة مؤشر التحميل
-        function addLoadingMessage() {
-            const chatContainer = document.getElementById('chatContainer');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message bot';
-            messageDiv.id = 'loading-' + Date.now();
-            
-            const bubbleDiv = document.createElement('div');
-            bubbleDiv.className = 'message-bubble';
-            bubbleDiv.innerHTML = '<div class="loading"></div> جاري الكتابة...';
-            
-            messageDiv.appendChild(bubbleDiv);
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            
-            return messageDiv.id;
-        }
-
-        // إزالة مؤشر التحميل
-        function removeLoadingMessage(loadingId) {
-            const loadingElement = document.getElementById(loadingId);
-            if (loadingElement) {
-                loadingElement.remove();
+            if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+                return data.candidates[0].content.parts[0].text;
+            } else if (data.promptFeedback && data.promptFeedback.blockReason) {
+                 console.warn("Gemini content blocked:", data.promptFeedback.blockReason, data.promptFeedback.safetyRatings);
+                 return `عفواً، لا يمكنني الرد على هذا الطلب حالياً بسبب قيود المحتوى (${data.promptFeedback.blockReason}). هل يمكنني مساعدتك بشيء آخر؟`;
             }
+            throw new Error('Invalid response structure from Gemini API.');
         }
 
-        // تشغيل النص صوتياً
         function speakText(text) {
             if ('speechSynthesis' in window) {
+                // Cancel any previous utterances to prevent overlap
+                speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ar-SA';
-                utterance.rate = 0.9;
+                utterance.rate = 0.95; // Slightly faster for natural feel
                 utterance.pitch = 1;
                 speechSynthesis.speak(utterance);
             }
         }
 
-        // حفظ المحادثة
-        function saveConversation(userMessage, botResponse) {
-            const conversation = {
-                id: currentConversationId,
+        function saveToConversationHistory(userMessage, botResponse) {
+            const conversationTurn = {
                 user: userMessage,
                 bot: botResponse,
-                timestamp: new Date().toLocaleString('ar-SA'),
-                status: 'جديد'
+                timestamp: new Date().toISOString(), // Use ISO for easier sorting/parsing
+                service: currentService
             };
-            
-            conversationHistory.push(conversation);
-            
-            // حفظ في localStorage
-            localStorage.setItem('conversations', JSON.stringify(conversationHistory));
-            
-            // تحديث لوحة التحكم
-            updateDashboard();
-        }
+            conversationHistory.push(conversationTurn);
 
-        // تحليل سلوك المستخدم
-        async function analyzeUserBehavior(userMessage, botResponse) {
-            try {
-                const analysisPrompt = `حلل سلوك هذا العميل بناءً على رسالته:
-                "${userMessage}"
-                
-                حدد:
-                1. نوايا الشراء (عالية/متوسطة/منخفضة)
-                2. التردد في القرار (نعم/لا)
-                3. الاهتمام بالعروض (نعم/لا)
-                4. توصية للمتابعة
-                
-                أجب بتنسيق JSON مثل:
-                {
-                    "purchaseIntent": "عالية",
-                    "hesitation": "لا",
-                    "interestInOffers": "نعم",
-                    "recommendation": "العميل مهتم بالشراء، أرسل له عرض خاص"
-                }`;
-
-                const response = await sendToGemini(analysisPrompt);
-                
-                // عرض نتائج التحليل
-                alert(`تقرير التحليل الشامل:\n\n${analysis}`);
-                
-                try {
-                    const analysis = JSON.parse(response);
-                    saveUserAnalysis(analysis);
-                } catch (e) {
-                    // إذا لم يكن JSON صحيح، احفظ النص كما هو
-                    saveUserAnalysis({ recommendation: response });
-                }
-            } catch (error) {
-                console.error('خطأ في تحليل سلوك المستخدم:', error);
-            }
-        }
-
-        // حفظ تحليل المستخدم
-        function saveUserAnalysis(analysis) {
-            let analyses = JSON.parse(localStorage.getItem('userAnalyses') || '[]');
-            analyses.push({
-                ...analysis,
-                timestamp: new Date().toLocaleString('ar-SA'),
-                conversationId: currentConversationId
+            // Save to a master list in localStorage for the dashboard
+            let allConversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
+            allConversations.push({
+                id: currentConversationId, // Group turns by conversation ID
+                ...conversationTurn
             });
-            localStorage.setItem('userAnalyses', JSON.stringify(analyses));
-            updateDashboard();
+            localStorage.setItem('allConversations', JSON.stringify(allConversations));
         }
-
-        // تبديل التبويبات
-        function showTab(tabName) {
-            // إخفاء جميع التبويبات
-            document.getElementById('customer-tab').style.display = tabName === 'customer' ? 'block' : 'none';
-            document.getElementById('dashboard-tab').style.display = tabName === 'dashboard' ? 'grid' : 'none';
-            
-            // تحديث أزرار التبويبات
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            if (tabName === 'dashboard') {
-                updateDashboard();
+        
+        function checkComplexCase(userMessage, botResponse) {
+            const lowerBotResponse = botResponse.toLowerCase();
+            const complexKeywords = ['معقد', 'لا أستطيع', 'لا يمكنني', 'صعب جدا', 'للدعم الفني', 'تواصل مع الدعم'];
+            if (complexKeywords.some(keyword => lowerBotResponse.includes(keyword))) {
+                notifyComplexCase(userMessage);
             }
         }
 
-        // تحديث لوحة التحكم
-        function updateDashboard() {
-            updateConversationsList();
-            updateUserDataList();
-            updateBehaviorAnalysis();
-            updateLeadQualification();
-        }
-
-        // تحديث قائمة المحادثات المحسنة
-        function updateConversationsList() {
-            const container = document.getElementById('conversationsList');
-            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
-            
-            container.innerHTML = '';
-            
-            // إضافة بيانات وهمية محسنة للمحادثات
-            const enhancedConversations = conversations.length > 0 ? conversations : [
-                {
-                    id: 1,
-                    user: 'مرحباً، أريد معرفة المزيد عن منتجاتكم',
-                    bot: 'أهلاً وسهلاً! سعداء بخدمتك. ما نوع المنتج اللي تبي تعرف عنه؟',
-                    timestamp: new Date().toLocaleString('ar-SA'),
-                    status: 'جديد',
-                    priority: 'متوسط',
-                    customerName: 'أحمد محمد',
-                    responseTime: 2.5,
-                    satisfaction: 'غير محدد',
-                    tags: ['استفسار', 'منتجات']
-                },
-                {
-                    id: 2,
-                    user: 'عندكم خصومات؟',
-                    bot: 'أكيد! عندنا خصم خاص لك اليوم 10%. تبيه؟',
-                    timestamp: new Date(Date.now() - 3600000).toLocaleString('ar-SA'),
-                    status: 'مهم',
-                    priority: 'عالي',
-                    customerName: 'فاطمة أحمد',
-                    responseTime: 1.8,
-                    satisfaction: 'راضي',
-                    tags: ['خصم', 'عرض']
-                },
-                {
-                    id: 3,
-                    user: 'كيف أقدر أطلب؟',
-                    bot: 'سهل جداً! تقدر تطلب من خلال الموقع أو تتصل علينا مباشرة',
-                    timestamp: new Date(Date.now() - 7200000).toLocaleString('ar-SA'),
-                    status: 'مغلق',
-                    priority: 'منخفض',
-                    customerName: 'خالد سعد',
-                    responseTime: 3.2,
-                    satisfaction: 'راضي جداً',
-                    tags: ['طلب', 'إرشاد']
-                }
-            ];
-            
-            enhancedConversations.slice(-10).reverse().forEach(conv => {
-                const item = document.createElement('div');
-                item.className = 'conversation-item';
-                item.onclick = () => selectConversation(conv);
-                
-                const priorityColor = conv.priority === 'عالي' ? '#e53e3e' : 
-                                    conv.priority === 'متوسط' ? '#dd6b20' : '#38a169';
-                
-                item.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="flex: 1;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                                <strong>${conv.customerName || 'عميل'}</strong>
-                                <span style="background: ${priorityColor}; color: white; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.7rem;">
-                                    ${conv.priority}
-                                </span>
-                            </div>
-                            <div style="color: #4a5568; margin-bottom: 0.25rem;">
-                                <strong>العميل:</strong> ${conv.user.substring(0, 40)}...
-                            </div>
-                            <div style="color: #718096; font-size: 0.8rem; margin-bottom: 0.25rem;">
-                                <strong>الرد:</strong> ${conv.bot.substring(0, 40)}...
-                            </div>
-                            <div style="display: flex; gap: 1rem; font-size: 0.7rem; color: #a0aec0;">
-                                <span>⏱️ ${conv.responseTime}ث</span>
-                                <span>😊 ${conv.satisfaction}</span>
-                                <span>🏷️ ${conv.tags ? conv.tags.join(', ') : ''}</span>
-                            </div>
-                            <small style="color: #a0aec0;">${conv.timestamp}</small>
-                        </div>
-                        <div style="text-align: left;">
-                            <span class="status ${getStatusClass(conv.status)}">${conv.status}</span>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-            
-            // تحديث إحصائيات المحادثات
-            updateConversationStats(enhancedConversations);
-        }
-
-        // تحديث إحصائيات المحادثات
-        function updateConversationStats(conversations) {
-            document.getElementById('totalConversations').textContent = conversations.length;
-            
-            const avgResponseTime = conversations.reduce((sum, conv) => sum + (conv.responseTime || 0), 0) / conversations.length;
-            document.getElementById('avgResponseTime').textContent = avgResponseTime.toFixed(1);
-            
-            const satisfiedCount = conversations.filter(conv => 
-                conv.satisfaction && (conv.satisfaction.includes('راضي') || conv.satisfaction.includes('ممتاز'))
-            ).length;
-            const satisfactionRate = conversations.length > 0 ? (satisfiedCount / conversations.length * 100).toFixed(0) : 0;
-            document.getElementById('satisfactionRate').textContent = satisfactionRate + '%';
-        }
-
-        // اختيار محادثة لعرض التفاصيل
-        function selectConversation(conversation) {
-            // إزالة التحديد من المحادثات الأخرى
-            document.querySelectorAll('.conversation-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            
-            // تحديد المحادثة الحالية
-            event.currentTarget.classList.add('selected');
-            
-            // عرض تفاصيل المحادثة
-            const detailsContainer = document.getElementById('conversationDetails');
-            const contentContainer = document.getElementById('conversationContent');
-            
-            contentContainer.innerHTML = `
-                <div class="conversation-detail-header">
-                    <h5>${conversation.customerName || 'عميل'} - ${conversation.timestamp}</h5>
-                    <div class="conversation-tags">
-                        ${conversation.tags ? conversation.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : ''}
-                    </div>
-                </div>
-                <div class="conversation-messages">
-                    <div class="message-detail user-message">
-                        <strong>العميل:</strong> ${conversation.user}
-                    </div>
-                    <div class="message-detail bot-message">
-                        <strong>المساعد:</strong> ${conversation.bot}
-                    </div>
-                </div>
-                <div class="conversation-metrics">
-                    <div class="metric">
-                        <span class="metric-label">وقت الرد:</span>
-                        <span class="metric-value">${conversation.responseTime || 0} ثانية</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">مستوى الرضا:</span>
-                        <span class="metric-value">${conversation.satisfaction || 'غير محدد'}</span>
-                    </div>
-                    <div class="metric">
-                        <span class="metric-label">الأولوية:</span>
-                        <span class="metric-value">${conversation.priority || 'متوسط'}</span>
-                    </div>
-                </div>
-            `;
-            
-            detailsContainer.style.display = 'block';
-            
-            // حفظ المحادثة المحددة
-            window.selectedConversation = conversation;
-        }
-
-        // تصدير المحادثات
-        function exportConversations() {
-            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
-            const dataStr = JSON.stringify(conversations, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(dataBlob);
-            link.download = 'conversations_' + new Date().toISOString().split('T')[0] + '.json';
-            link.click();
-            
-            showNotification('تم تصدير المحادثات بنجاح', 'success');
-        }
-
-        // تحليل شامل للمحادثات
-        async function analyzeAllConversations() {
-            const conversations = JSON.parse(localStorage.getItem('conversations') || '[]');
-            
-            if (conversations.length === 0) {
-                showNotification('لا توجد محادثات للتحليل', 'warning');
-                return;
-            }
-            
-            showNotification('جاري إجراء التحليل الشامل...', 'info');
-            
-            try {
-                const analysisPrompt = `حلل هذه المحادثات وقدم تقرير شامل:
-                ${conversations.slice(-10).map(conv => `العميل: ${conv.user}\nالمساعد: ${conv.bot}`).join('\n---\n')}
-                
-                قدم تحليل يشمل:
-                1. أكثر المواضيع المطلوبة
-                2. مستوى رضا العملاء
-                3. نقاط التحسين
-                4. توصيات للتطوير`;
-                
-                const analysis = await sendToGemini(analysisPrompt);
-                
-                // عرض نتائج التحليل
-                alert(`تقرير التحليل الشامل:\n\n${analysis}`);
-                
-            } catch (error) {
-                showNotification('حدث خطأ في التحليل الشامل', 'error');
-                console.error(error);
+        function notifyComplexCase(userMessage) {
+            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
+            if (settings.phone) {
+                const notificationMessage = `🔔 إشعار حالة معقدة! المستخدم سأل: "${userMessage.substring(0, 100)}...". يرجى المتابعة.`;
+                console.log(`Simulating SMS to ${settings.phone}: ${notificationMessage}`);
+                showNotification('تم إرسال إشعار للمشرف بحالة معقدة.', 'warning');
             }
         }
 
-        // تصفية المحادثات
-        function filterConversations() {
-            const filter = document.getElementById('conversationFilter').value;
-            updateConversationsList();
-            showNotification(`تم تطبيق تصفية: ${filter}`, 'info');
-        }
+        function showNotification(message, type = 'info', duration = 3000) {
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) existingNotification.remove();
 
-        // ترتيب المحادثات
-        function sortConversations() {
-            const sort = document.getElementById('conversationSort').value;
-            updateConversationsList();
-            showNotification(`تم ترتيب المحادثات حسب: ${sort}`, 'info');
-        }
-
-        // وضع علامة كمحلول
-        function markAsResolved() {
-            if (window.selectedConversation) {
-                showNotification(`تم وضع علامة "محلول" للمحادثة`, 'success');
-            }
-        }
-
-        // وضع علامة كمهم
-        function markAsImportant() {
-            if (window.selectedConversation) {
-                showNotification(`تم وضع علامة "مهم" للمحادثة`, 'warning');
-            }
-        }
-
-        // إضافة ملاحظة
-        function addNote() {
-            if (window.selectedConversation) {
-                const note = prompt('أضف ملاحظة:');
-                if (note) {
-                    showNotification(`تم إضافة الملاحظة: ${note}`, 'info');
-                }
-            }
-        }
-
-        // عرض الإشعارات
-        function showNotification(message, type = 'info') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
             notification.textContent = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 1rem;
-                border-radius: 8px;
-                color: white;
-                font-weight: bold;
-                z-index: 1000;
-                animation: slideIn 0.3s ease;
-            `;
-            
-            switch(type) {
-                case 'success': notification.style.background = '#48bb78'; break;
-                case 'error': notification.style.background = '#e53e3e'; break;
-                case 'warning': notification.style.background = '#ed8936'; break;
-                default: notification.style.background = '#4299e1';
-            }
+            // Animation
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateY(-20px)';
             
             document.body.appendChild(notification);
-            
+
+            requestAnimationFrame(() => {
+                notification.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            });
+
             setTimeout(() => {
-                notification.remove();
-            }, 3000);
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, duration);
         }
 
-        // تحديث قائمة بيانات المستخدمين المحسنة
-        function updateUserDataList() {
-            const container = document.getElementById('userDataList');
-            const userData = JSON.parse(localStorage.getItem('userData') || '[]');
+        // --- Dashboard Logic ---
+        // (Most dashboard functions from the original can be kept, adapting to new data structures if needed)
+        // Key changes: load 'allConversations' and process them.
+
+        function updateDashboard() {
+            // console.log("Updating dashboard...");
+            updateConversationsListForDashboard();
+            updateUserDataListForDashboard(); // Assuming this uses separate data or derives from conversations
+            updateBehaviorAnalysisForDashboard();
+            updateLeadQualificationForDashboard();
+            updateDashboardStats();
+        }
+        
+        function saveBotSettings() {
+            const settings = {
+                style: botStyleInput.value.trim(),
+                tasks: botTasksInput.value.trim(),
+                reqs: botRequirementsInput.value.trim(),
+                phone: alertPhoneInput.value.trim()
+            };
+            localStorage.setItem('botSettings', JSON.stringify(settings));
+            showNotification('تم حفظ إعدادات البوت بنجاح!', 'success');
+        }
+
+        function updateConversationsListForDashboard() {
+            const container = document.getElementById('conversationsList');
+            if (!container) return;
             
-            container.innerHTML = '';
+            let allConversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
             
-            // بيانات وهمية محسنة للعرض
-            const sampleData = [
-                { 
-                    id: 1,
-                    name: 'أحمد محمد',
-                    email: 'ahmed@example.com', 
-                    phone: '0501234567', 
-                    lastVisit: new Date().toLocaleString('ar-SA'),
-                    status: 'نشط',
-                    interactions: 15,
-                    purchaseProbability: 85,
-                    category: 'مهتم'
-                },
-                { 
-                    id: 2,
-                    name: 'فاطمة أحمد',
-                    email: 'fatima@example.com', 
-                    phone: '0507654321', 
-                    lastVisit: new Date(Date.now() - 86400000).toLocaleString('ar-SA'),
-                    status: 'غير نشط',
-                    interactions: 8,
-                    purchaseProbability: 45,
-                    category: 'محتمل'
-                },
-                { 
-                    id: 3,
-                    name: 'خالد سعد',
-                    email: 'khalid@example.com', 
-                    phone: '0509876543', 
-                    lastVisit: new Date(Date.now() - 172800000).toLocaleString('ar-SA'),
-                    status: 'غير نشط',
-                    interactions: 3,
-                    purchaseProbability: 20,
-                    category: 'عادي'
+            // Group by conversationId and take the first turn as representative
+            const uniqueConversations = allConversations.reduce((acc, curr) => {
+                if (!acc[curr.id]) {
+                    // Create a more detailed representative object for the dashboard
+                    const lastTurn = allConversations.filter(c => c.id === curr.id).pop();
+                    acc[curr.id] = {
+                        id: curr.id,
+                        user: curr.user, // First user message of this conversation
+                        bot: lastTurn ? lastTurn.bot : curr.bot, // Last bot response
+                        timestamp: curr.timestamp, // Timestamp of the first message
+                        service: curr.service,
+                        status: 'جديد', // Placeholder, can be enhanced
+                        priority: Math.random() > 0.7 ? 'عالي' : (Math.random() > 0.4 ? 'متوسط' : 'منخفض'),
+                        customerName: `عميل ${String(curr.id).slice(-4)}`,
+                        responseTime: (Math.random() * 5 + 1).toFixed(1),
+                        satisfaction: ['راضي', 'غير محدد', 'راضي جداً'][Math.floor(Math.random()*3)],
+                        tags: curr.service === 'chat' ? ['دردشة'] : ['صوتي', 'استفسار']
+                    };
                 }
-            ];
-            
-            sampleData.forEach(user => {
+                return acc;
+            }, {});
+
+            const displayConversations = Object.values(uniqueConversations).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+            container.innerHTML = ''; // Clear previous items
+            if (displayConversations.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: #718096; padding:1rem;">لا توجد محادثات لعرضها.</p>';
+                return;
+            }
+
+            displayConversations.slice(0, 15).forEach(conv => { // Display latest 15
                 const item = document.createElement('div');
-                item.className = 'user-data-item';
+                item.className = 'conversation-item';
+                item.onclick = () => selectConversationForDetails(conv.id);
+                
+                const priorityColor = conv.priority === 'عالي' ? 'var(--danger-color)' : 
+                                    conv.priority === 'متوسط' ? 'var(--warning-color)' : 'var(--success-color)';
+                
                 item.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div><strong>${user.name}</strong></div>
-                            <div><small>📧 ${user.email}</small></div>
-                            <div><small>📱 ${user.phone}</small></div>
-                            <div><small>💬 ${user.interactions} تفاعل</small></div>
-                        </div>
-                        <div style="text-align: left;">
-                            <div class="status ${user.status === 'نشط' ? 'active' : 'inactive'}">${user.status}</div>
-                            <div><small>احتمالية الشراء: ${user.purchaseProbability}%</small></div>
-                            <div><small>آخر زيارة: ${user.lastVisit}</small></div>
-                            <div class="user-actions" style="margin-top: 0.5rem;">
-                                <button class="mini-btn" onclick="sendTargetedEmail(${user.id})">📧</button>
-                                <button class="mini-btn" onclick="viewUserProfile(${user.id})">👁️</button>
-                                <button class="mini-btn" onclick="scheduleFollowUp(${user.id})">📅</button>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                                <strong style="font-size: 1.05em;">${conv.customerName}</strong>
+                                <span style="background: ${priorityColor}; color: white; padding: 0.15rem 0.4rem; border-radius: 10px; font-size: 0.7rem;">
+                                    ${conv.priority}
+                                </span>
+                                <span class="tag">${conv.service}</span>
                             </div>
+                            <div style="color: var(--dark-gray-color); margin-bottom: 0.25rem; font-size:0.9em;">
+                                <strong>العميل:</strong> ${conv.user.substring(0, 50)}${conv.user.length > 50 ? '...' : ''}
+                            </div>
+                            <div style="color: #718096; font-size: 0.85em; margin-bottom: 0.35rem;">
+                                <strong>الرد:</strong> ${conv.bot.substring(0, 50)}${conv.bot.length > 50 ? '...' : ''}
+                            </div>
+                            <div style="display: flex; gap: 1rem; font-size: 0.75rem; color: #a0aec0; flex-wrap: wrap;">
+                                <span>⏱️ ${conv.responseTime} ث</span>
+                                <span>😊 ${conv.satisfaction}</span>
+                                ${conv.tags.map(tag => `<span class="tag" style="background-color: #e2e8f0; color: #4a5568;">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div style="text-align: left; display:flex; flex-direction: column; align-items: flex-end; gap: 0.3rem;">
+                            <span class="status ${conv.status.toLowerCase()}">${conv.status}</span>
+                            <small style="color: #a0aec0; font-size: 0.75em;">${new Date(conv.timestamp).toLocaleString('ar-SA', {dateStyle:'short', timeStyle:'short'})}</small>
                         </div>
                     </div>
                 `;
                 container.appendChild(item);
             });
+        }
+        
+        let selectedConversationForDetailsId = null;
+
+        function selectConversationForDetails(conversationId) {
+            selectedConversationForDetailsId = conversationId;
+            const allConversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
+            const conversationTurns = allConversations.filter(c => c.id === conversationId);
+
+            if (conversationTurns.length === 0) {
+                showNotification('لم يتم العثور على تفاصيل المحادثة.', 'error');
+                return;
+            }
             
-            // تحديث الإحصائيات
-            updateUserStats(sampleData);
+            // Highlight selected item
+            document.querySelectorAll('#conversationsList .conversation-item').forEach(item => item.classList.remove('selected'));
+            // This requires conversation items to have an ID or a way to find the clicked one
+            // For now, this is a visual cue to implement if needed. Example:
+            // const clickedItem = Array.from(document.querySelectorAll('#conversationsList .conversation-item')).find(item => item.textContent.includes(conversationId));
+            // if(clickedItem) clickedItem.classList.add('selected');
+
+
+            const detailsContainer = document.getElementById('conversationDetails');
+            const representativeTurn = conversationTurns[0]; // Use first turn for general info
+
+            let messagesHtml = conversationTurns.map(turn => `
+                <div class="message-detail user-message">
+                    <strong>العميل (${new Date(turn.timestamp).toLocaleTimeString('ar-SA', {timeStyle:'short'})}):</strong> ${turn.user}
+                </div>
+                <div class="message-detail bot-message">
+                    <strong>المساعد:</strong> ${turn.bot}
+                </div>
+            `).join('');
+
+            detailsContainer.innerHTML = `
+                <div class="conversation-detail-header">
+                    <h5>محادثة العميل ${String(representativeTurn.id).slice(-4)} - ${new Date(representativeTurn.timestamp).toLocaleString('ar-SA')}</h5>
+                    <div class="conversation-tags">
+                        ${(representativeTurn.tags || []).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+                <div class="conversation-messages" style="max-height: 300px; overflow-y:auto; padding-right: 0.5rem;">
+                    ${messagesHtml}
+                </div>
+                <div class="conversation-metrics">
+                    <div class="metric">
+                        <span class="metric-label">نوع الخدمة:</span>
+                        <span class="metric-value">${representativeTurn.service || 'N/A'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">الحالة:</span>
+                        <span class="metric-value" id="convDetailStatus">${representativeTurn.status || 'جديد'}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">الأولوية:</span>
+                        <span class="metric-value">${representativeTurn.priority || 'متوسط'}</span>
+                    </div>
+                </div>
+                <div class="conversation-actions">
+                    <button class="action-btn resolve" onclick="updateConversationStatus('تم الحل')"><span class="btn-icon-inner">✅</span> تم الحل</button>
+                    <button class="action-btn important" onclick="updateConversationStatus('مهم')"><span class="btn-icon-inner">⭐</span> مهم</button>
+                    <button class="action-btn follow" onclick="scheduleFollowUpDashboard()"><span class="btn-icon-inner">📅</span> متابعة</button>
+                    <button class="action-btn note" onclick="addNoteToConversation()"><span class="btn-icon-inner">📝</span> إضافة ملاحظة</button>
+                </div>
+            `;
+            detailsContainer.style.display = 'block';
+            detailsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function updateConversationStatus(newStatus) {
+            if (!selectedConversationForDetailsId) return;
+            // Here, you would typically update this in your backend/localStorage
+            // For demo, just update the UI and show notification
+            document.getElementById('convDetailStatus').textContent = newStatus;
+            showNotification(`تم تحديث حالة المحادثة إلى "${newStatus}"`, 'success');
+            // Optionally, re-render the conversations list to reflect the change
+            updateConversationsListForDashboard();
         }
 
-        // تحديث إحصائيات المستخدمين
-        function updateUserStats(userData) {
-            document.getElementById('totalUsers').textContent = userData.length;
-            document.getElementById('activeUsers').textContent = userData.filter(u => u.status === 'نشط').length;
-            document.getElementById('potentialLeads').textContent = userData.filter(u => u.purchaseProbability > 60).length;
+        function scheduleFollowUpDashboard() {
+            if (!selectedConversationForDetailsId) return;
+            showNotification(`تم جدولة متابعة للمحادثة ${selectedConversationForDetailsId}`, 'info');
         }
 
-        // إعادة استهداف العملاء غير النشطين
-        function retargetInactiveUsers() {
-            const inactiveUsers = ['fatima@example.com', 'khalid@example.com'];
+        function addNoteToConversation() {
+            if (!selectedConversationForDetailsId) return;
+            const note = prompt('أدخل ملاحظتك للمحادثة:');
+            if (note) {
+                // Store this note associated with selectedConversationForDetailsId
+                showNotification(`تم إضافة ملاحظة: "${note}"`, 'success');
+            }
+        }
+
+
+        function updateDashboardStats() {
+            const allConversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
+            const uniqueConvIds = new Set(allConversations.map(c => c.id));
             
-            inactiveUsers.forEach(email => {
-                sendAutomatedEmail(email, 'إعادة الاستهداف', 
-                    'مرحباً! لاحظنا أنك لم تزر موقعنا مؤخراً. لدينا عروض خاصة لك! 🎁');
-            });
-            
-            showNotification('تم إرسال رسائل إعادة الاستهداف لـ ' + inactiveUsers.length + ' عميل', 'success');
+            document.getElementById('totalConversations').textContent = uniqueConvIds.size;
+
+            // Placeholder for other stats - these would need more complex calculation
+            // or be derived from the sample data/real data for users.
+            const avgResponse = (Math.random() * 3 + 1.5).toFixed(1); // Mock
+            document.getElementById('avgResponseTime').textContent = avgResponse;
+            const satisfaction = (Math.random() * 30 + 65).toFixed(0); // Mock
+            document.getElementById('satisfactionRate').textContent = satisfaction + '%';
+
+            // User stats - these are currently based on sample data in updateUserDataListForDashboard
         }
 
-        // استهداف العملاء المهتمين
-        function retargetInterestedUsers() {
-            const interestedUsers = ['ahmed@example.com'];
-            
-            interestedUsers.forEach(email => {
-                sendAutomatedEmail(email, 'عرض خاص', 
-                    'بناءً على اهتمامك، لدينا عرض خاص لك بخصم 15%! 💰');
-            });
-            
-            showNotification('تم إرسال عروض خاصة لـ ' + interestedUsers.length + ' عميل مهتم', 'success');
+        function exportConversations() {
+            const conversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
+            if (conversations.length === 0) {
+                showNotification('لا توجد محادثات لتصديرها.', 'warning');
+                return;
+            }
+            const dataStr = JSON.stringify(conversations, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json;charset=utf-8'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `conversations_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            showNotification('تم تصدير المحادثات بنجاح!', 'success');
         }
 
-        // إرسال عروض ترويجية
-        function sendPromotionalEmails() {
-            const allUsers = ['ahmed@example.com', 'fatima@example.com', 'khalid@example.com'];
-            
-            allUsers.forEach(email => {
-                sendAutomatedEmail(email, 'عروض الأسبوع', 
-                    'لا تفوت عروض هذا الأسبوع! خصومات تصل إلى 50% 🔥');
-            });
-            
-            showNotification('تم إرسال العروض الترويجية لجميع العملاء', 'success');
-        }
+        async function analyzeAllConversations() {
+            const conversations = JSON.parse(localStorage.getItem('allConversations') || '[]');
+            if (conversations.length === 0) {
+                showNotification('لا توجد محادثات للتحليل.', 'warning');
+                return;
+            }
+            showNotification('جاري إجراء التحليل الشامل...', 'info');
+            // Create a summary of conversations for analysis
+            const summaryPrompt = `
+                حلل مجموعة المحادثات التالية بين عملاء ومساعد خدمة عملاء. قدم تقريراً موجزاً يتضمن:
+                1.  أكثر 3 مواضيع تم الاستفسار عنها.
+                2.  تقييم عام لمستوى رضا العملاء (مثال: جيد، متوسط، يحتاج لتحسين).
+                3.  اقتراحات لتحسين الخدمة أو الردود.
+                4.  أمثلة على استفسارات معقدة أو متكررة.
 
-        // إرسال رسالة إلكترونية تلقائية
-        function sendAutomatedEmail(email, subject, message) {
-            // محاكاة إرسال الإيميل
-            console.log(`إرسال إيميل إلى: ${email}`);
-            console.log(`الموضوع: ${subject}`);
-            console.log(`الرسالة: ${message}`);
-            
-            // حفظ سجل الإرسال
-            const emailLog = JSON.parse(localStorage.getItem('emailLog') || '[]');
-            emailLog.push({
-                email,
-                subject,
-                message,
-                timestamp: new Date().toLocaleString('ar-SA'),
-                status: 'تم الإرسال'
-            });
-            localStorage.setItem('emailLog', JSON.stringify(emailLog));
+                المحادثات (مختصرة):
+                ${conversations.slice(-10).map((conv, idx) => `محادثة ${idx+1} (ID: ${conv.id}):\nالعميل: ${conv.user.substring(0,100)}...\nالمساعد: ${conv.bot.substring(0,100)}...`).join('\n---\n')}
+            `;
+            try {
+                const analysisResult = await sendToGemini(summaryPrompt);
+                // Displaying in an alert for simplicity. A modal or dedicated section would be better.
+                alert(`تقرير التحليل الشامل:\n\n${analysisResult}`);
+                showNotification('تم إكمال التحليل الشامل.', 'success');
+            } catch (error) {
+                console.error("Error in comprehensive analysis:", error);
+                showNotification('فشل التحليل الشامل. حاول مرة أخرى.', 'error');
+            }
         }
-
-        // تفعيل/إلغاء تحليل السلوك
-        function toggleBehaviorAnalysis() {
-            const isEnabled = document.getElementById('behaviorAnalysisToggle').checked;
-            localStorage.setItem('behaviorAnalysisEnabled', isEnabled);
-            showNotification(isEnabled ? 'تم تفعيل تحليل السلوك' : 'تم إلغاء تحليل السلوك', 'info');
+        
+        // --- User Behavior & Lead Qualification (Dashboard) ---
+        // These functions will populate the respective dashboard cards
+        // For now, they use placeholder data or data derived from localStorage if `userAnalyses` is populated
+        function analyzeUserBehavior(userMessage, botResponse) {
+            // This function is called after each interaction.
+            // It should save analysis data to localStorage to be displayed by updateBehaviorAnalysisForDashboard
+            const analysis = { // Simplified analysis for demo
+                conversationId: currentConversationId,
+                timestamp: new Date().toISOString(),
+                userQuery: userMessage,
+                botResponse: botResponse,
+                keywords: userMessage.toLowerCase().match(/\b(\w{4,})\b/g) || [], // Extract some keywords
+                sentiment: Math.random() > 0.5 ? 'إيجابي' : 'محايد', // Mock sentiment
+                recommendation: `العميل استفسر عن '${userMessage.substring(0,20)}...'. قد يكون مهتمًا بـ X.`
+            };
+            let analyses = JSON.parse(localStorage.getItem('userAnalyses') || '[]');
+            analyses.push(analysis);
+            localStorage.setItem('userAnalyses', JSON.stringify(analyses));
         }
-
-        // تفعيل/إلغاء الرسائل التلقائية
-        function toggleAutoEmails() {
-            const isEnabled = document.getElementById('autoEmailToggle').checked;
-            localStorage.setItem('autoEmailsEnabled', isEnabled);
-            showNotification(isEnabled ? 'تم تفعيل الرسائل التلقائية' : 'تم إلغاء الرسائل التلقائية', 'info');
-        }
-
-        // تفعيل/إلغاء الإشعارات
-        function toggleNotifications() {
-            const isEnabled = document.getElementById('realTimeNotifications').checked;
-            localStorage.setItem('notificationsEnabled', isEnabled);
-            showNotification(isEnabled ? 'تم تفعيل الإشعارات الفورية' : 'تم إلغاء الإشعارات الفورية', 'info');
-        }
-
-        // تصفية المستخدمين
-        function filterUsers() {
-            const filter = document.getElementById('userFilter').value;
-            // تطبيق التصفية (يمكن تطويرها أكثر)
-            updateUserDataList();
-            showNotification(`تم تطبيق تصفية: ${filter}`, 'info');
-        }
-
-        // تحديث بيانات المستخدمين
-        function refreshUserData() {
-            updateUserDataList();
-            showNotification('تم تحديث بيانات المستخدمين', 'success');
-        }
-
-        // إرسال رسالة مستهدفة
-        function sendTargetedEmail(userId) {
-            showNotification(`تم إرسال رسالة مستهدفة للمستخدم ${userId}`, 'success');
-        }
-
-        // عرض ملف المستخدم
-        function viewUserProfile(userId) {
-            showNotification(`عرض ملف المستخدم ${userId}`, 'info');
-        }
-
-        // جدولة متابعة
-        function scheduleFollowUp(userId) {
-            showNotification(`تم جدولة متابعة للمستخدم ${userId}`, 'info');
-        }
-
-        // تحديث تحليل السلوك
-        function updateBehaviorAnalysis() {
+        
+        function updateBehaviorAnalysisForDashboard() {
             const container = document.getElementById('behaviorAnalysis');
+            if(!container) return;
             const analyses = JSON.parse(localStorage.getItem('userAnalyses') || '[]');
-            
             container.innerHTML = '';
-            
-            analyses.slice(-5).reverse().forEach(analysis => {
+             if (analyses.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: #718096; padding:1rem;">لا توجد بيانات تحليل سلوك.</p>';
+                return;
+            }
+            analyses.slice(-10).reverse().forEach(a => { // Show latest 10
                 const item = document.createElement('div');
-                item.className = 'analysis-result';
+                item.className = 'analysis-result'; // Use existing class
+                item.style.marginBottom = '1rem';
                 item.innerHTML = `
-                    <div><strong>التوصية:</strong> ${analysis.recommendation}</div>
-                    <small>${analysis.timestamp}</small>
+                    <p><strong>استفسار:</strong> ${a.userQuery.substring(0, 50)}...</p>
+                    <p><strong>التوصية/الملخص:</strong> ${a.recommendation}</p>
+                    <small style="color: #718096;">${new Date(a.timestamp).toLocaleString('ar-SA')}</small>
                 `;
                 container.appendChild(item);
             });
         }
 
-        // تحديث تأهيل العملاء المحتملين
-        function updateLeadQualification() {
+        function updateLeadQualificationForDashboard() {
             const container = document.getElementById('leadQualification');
-            
-            // بيانات وهمية للعملاء المحتملين
+            if(!container) return;
+            // Mock data for lead qualification
             const leads = [
-                { name: 'أحمد محمد', probability: 85, status: 'مؤهل - أرسل عرض', type: 'high' },
-                { name: 'فاطمة أحمد', probability: 60, status: 'متوسط - تابع لاحقاً', type: 'medium' },
-                { name: 'خالد سعد', probability: 30, status: 'غير مؤهل - تابع لاحقاً', type: 'low' }
+                { name: 'عميل محتمل ألف', probability: 85, status: 'مؤهل عالي - تواصل الآن', type: 'high' },
+                { name: 'عميل محتمل باء', probability: 60, status: 'متوسط - أرسل معلومات إضافية', type: 'medium' },
+                { name: 'عميل محتمل جيم', probability: 30, status: 'منخفض - راقب النشاط', type: 'low' }
             ];
-            
             container.innerHTML = '';
-            
+            if (leads.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: #718096; padding:1rem;">لا يوجد عملاء محتملين للعرض.</p>';
+                return;
+            }
             leads.forEach(lead => {
                 const item = document.createElement('div');
-                item.className = `lead-item probability-${lead.type}`;
+                item.className = `lead-item probability-${lead.type}`; // Use existing classes
+                item.style.marginBottom = '1rem';
                 item.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
                             <strong>${lead.name}</strong>
-                            <br><small>احتمالية الشراء: ${lead.probability}%</small>
+                            <br><small>احتمالية: ${lead.probability}%</small>
                         </div>
-                        <div style="text-align: left;">
-                            <div style="font-weight: bold; color: #2d3748;">${lead.status}</div>
-                        </div>
+                        <div style="font-weight: bold; font-size:0.9em;">${lead.status}</div>
                     </div>
                 `;
                 container.appendChild(item);
             });
         }
-
-        // الحصول على فئة الحالة
-        function getStatusClass(status) {
-            switch(status) {
-                case 'مهم': return 'important';
-                case 'مكرر': return 'repeat';
-                case 'مغلق': return 'closed';
-                default: return '';
-            }
-        }
-
-        // توليد رد بديل
-        async function generateAlternativeResponse() {
-            if (conversationHistory.length === 0) {
-                alert('لا توجد محادثات لتوليد رد بديل لها');
+        
+        // --- User Data Management (Dashboard) ---
+        // Mock data and functions for user list in dashboard
+        function updateUserDataListForDashboard() {
+            const container = document.getElementById('userDataList');
+            if(!container) return;
+            // Sample user data
+            const sampleUsers = [
+                { id: 1, name: 'خالد عبدالله', email: 'khaled@mail.sa', phone: '0501234567', status: 'نشط', interactions: 12, purchaseProbability: 75, lastVisit: new Date(Date.now() - 3600000 * 5).toISOString() },
+                { id: 2, name: 'نورة محمد', email: 'noura@mail.sa', phone: '0557654321', status: 'غير نشط', interactions: 3, purchaseProbability: 40, lastVisit: new Date(Date.now() - 86400000 * 3).toISOString() },
+                { id: 3, name: 'سالم أحمد', email: 'salem@mail.sa', phone: '0539876543', status: 'نشط', interactions: 8, purchaseProbability: 60, lastVisit: new Date(Date.now() - 3600000 * 24).toISOString() }
+            ];
+            container.innerHTML = '';
+            if (sampleUsers.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: #718096; padding:1rem;">لا يوجد بيانات عملاء للعرض.</p>';
                 return;
             }
-            
-            const lastConversation = conversationHistory[conversationHistory.length - 1];
-            
-            try {
-                const alternativePrompt = `اقترح رد بديل أفضل لهذه الرسالة من العميل:
-                "${lastConversation.user}"
-                
-                الرد الحالي كان:
-                "${lastConversation.bot}"
-                
-                اقترح رد أفضل باللهجة السعودية:`;
-                
-                const alternative = await sendToGemini(alternativePrompt);
-                alert(`الرد البديل المقترح:\n\n${alternative}`);
-                
-            } catch (error) {
-                alert('حدث خطأ في توليد الرد البديل');
-                console.error(error);
-            }
+
+            sampleUsers.forEach(user => {
+                const item = document.createElement('div');
+                // Using .user-data-item from original HTML (assuming it has appropriate styles)
+                item.className = 'user-data-item enhanced-user-list-item'; // Add a more specific class if needed
+                item.style.border = '1px solid #e2e8f0'; item.style.borderRadius='8px'; item.style.padding='1rem'; item.style.marginBottom='0.75rem';
+
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: bold;">${user.name}</div>
+                            <div style="font-size: 0.85em; color: #718096;">📧 ${user.email} | 📱 ${user.phone}</div>
+                            <div style="font-size: 0.8em; color: #a0aec0;">آخر زيارة: ${new Date(user.lastVisit).toLocaleDateString('ar-SA')} | ${user.interactions} تفاعلات</div>
+                        </div>
+                        <div style="text-align: left;">
+                            <span class="status ${user.status === 'نشط' ? 'active' : 'inactive'}">${user.status}</span>
+                            <div style="font-size: 0.8em; margin-top: 0.25rem;">شراء: ${user.purchaseProbability}%</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+
+            // Update user stats based on this sample data
+            document.getElementById('totalUsers').textContent = sampleUsers.length;
+            document.getElementById('activeUsers').textContent = sampleUsers.filter(u => u.status === 'نشط').length;
+            document.getElementById('potentialLeads').textContent = sampleUsers.filter(u => u.purchaseProbability > 50).length;
         }
 
-        // حفظ إعدادات تخصيص البوت
-        function saveBotSettings() {
-            const style = document.getElementById('botStyle').value.trim();
-            const tasks = document.getElementById('botTasks').value.trim();
-            const reqs = document.getElementById('botRequirements').value.trim();
-            const phone = document.getElementById('alertPhone').value.trim();
-            const settings = { style, tasks, reqs, phone };
-            localStorage.setItem('botSettings', JSON.stringify(settings));
-            showNotification('تم حفظ إعدادات البوت بنجاح', 'success');
-        }
+        function retargetInactiveUsers() { showNotification('سيتم استهداف العملاء غير النشطين بحملة بريد إلكتروني.', 'info'); }
+        function retargetInterestedUsers() { showNotification('سيتم إرسال عروض مخصصة للعملاء المهتمين.', 'info'); }
+        function sendPromotionalEmails() { showNotification('جاري إعداد حملة عروض ترويجية لجميع العملاء.', 'info'); }
+        function toggleBehaviorAnalysis() { showNotification(`تحليل سلوك العملاء ${document.getElementById('behaviorAnalysisToggle').checked ? 'مُفعّل' : 'مُعطّل'}.`, 'info'); }
+        function toggleAutoEmails() { showNotification(`الرسائل التلقائية ${document.getElementById('autoEmailToggle').checked ? 'مُفعّلة' : 'مُعطّلة'}.`, 'info'); }
+        function toggleNotifications() { showNotification(`الإشعارات الفورية ${document.getElementById('realTimeNotifications').checked ? 'مُفعّلة' : 'مُعطّلة'}.`, 'info'); }
+        function filterUsers() { showNotification(`تم تطبيق فلتر المستخدمين: ${document.getElementById('userFilter').value}`, 'info'); updateUserDataListForDashboard(); }
+        function refreshUserData() { showNotification('تم تحديث بيانات المستخدمين.', 'success'); updateUserDataListForDashboard(); }
 
-        // إشعار عند الحالات المعقدة (محاكاة)
-        function notifyComplexCase(userMessage) {
-            const settings = JSON.parse(localStorage.getItem('botSettings') || '{}');
-            if (settings.phone) {
-                // محاكاة إرسال SMS
-                console.log(`🔔 إرسال إشعار إلى ${settings.phone}: حالة معقدة - "${userMessage}"`);
-                showNotification('تم إرسال إشعار للمساعد بسبب حالة معقدة', 'warning');
-            }
-        }
-
-        // مثال: استدعاء الإشعار عند اكتشاف حالة معقدة في الرد من البوت
-        async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            if (!message) return;
-            addMessage(message, 'user');
-            input.value = '';
-            const loadingId = addLoadingMessage();
-            try {
-                const response = await sendToGemini(message);
-                removeLoadingMessage(loadingId);
-                addMessage(response, 'bot');
-                speakText(response);
-                saveConversation(message, response);
-                analyzeUserBehavior(message, response);
-                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
-                    notifyComplexCase(message);
-                }
-            } catch (error) {
-                removeLoadingMessage(loadingId);
-                addMessage('عذراً، حدث خطأ في الاتصال. يرجى المحاولة مرة أخرى.', 'bot');
-                console.error('خطأ في إرسال الرسالة:', error);
-            }
-        }
-
-        // نفس المنطق لرسائل الصوت
-        async function sendVoiceMessage(message) {
-            updateVoiceStatus('🤖 جاري توليد الرد...');
-            try {
-                const response = await sendToGemini(message);
-                document.getElementById('responseText').textContent = response;
-                document.getElementById('voiceResponse').style.display = 'block';
-                lastResponse = response;
-                speakText(response);
-                saveConversation(message, response);
-                analyzeUserBehavior(message, response);
-                updateVoiceStatus('✅ تم! يمكنك التحدث مرة أخرى');
-                if (response.includes('معقد') || response.includes('لا أستطيع') || response.includes('يرجى التواصل مع الدعم')) {
-                    notifyComplexCase(message);
-                }
-            } catch (error) {
-                updateVoiceStatus('❌ حدث خطأ في الاتصال. حاول مرة أخرى');
-                console.error('خطأ في إرسال الرسالة الصوتية:', error);
-            }
-        }
     </script>
 </body>
 </html>
